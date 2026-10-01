@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WebGl terrain mesh — h3nr7</title>
+<link rel="icon" href="../logo/h3nr7-glyph.png">
+<link rel="stylesheet" href="../h3nr7.css">
+</head>
+<!--
+  Article / document template: the layout of h3nr7.com/articles/:slug.
+  Masthead (wordmark, title, standfirst, date) → soft rule → hero → body.
+  Two even columns (3 + 3) for two blocks of the same kind of content (prose
+  beside more prose); 4 + 2 is for a record beside an index. Drop the
+  .h3-page-wide / .h3-cols wrappers for a single 68ch reading column.
+-->
+<body>
+<nav class="h3-chrome" aria-label="Site">
+  <a class="h3-button h3-button-square" href="#" aria-label="Back">
+    <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+  </a>
+  <button class="h3-button" type="button" aria-expanded="false">Contact</button>
+</nav>
+
+<main class="h3-page h3-page-wide">
+  <header class="h3-masthead">
+    <p class="h3-wordmark"><a href="#"><span data-scramble>h3nr7</span></a></p>
+    <h1>WebGl terrain mesh</h1>
+    <p class="h3-standfirst">Create terrain mesh from NASA satellite data</p>
+    <p class="h3-date">18 May 2020</p>
+  </header>
+
+  <span class="h3-rule h3-rule-soft" role="presentation"></span>
+
+  <div class="h3-gridfield h3-hero" style="aspect-ratio: 2 / 1; border-radius: var(--radius-md)">
+    <span class="h3-monogram">WT</span>
+  </div>
+
+  <div class="h3-cols">
+    <div class="h3-span-3 h3-prose">
+      <h2>Rendering from satellite and elevation data</h2>
+      <p>I tested several heightmap formats as the source for the terrain mesh, from 8-bit greyscale JPEGs to GeoTIFFs. JPEG is fast to load and decode in the browser, but it is a poor fit for elevation data:</p>
+      <ul>
+        <li>Low precision — 8 bits gives only 256 height levels, so terrain ends up stepped.</li>
+        <li>Compression artefacts — lossy compression adds noise that shows up as bumps.</li>
+        <li>No absolute scale — each image is scaled to its own min and max.</li>
+      </ul>
+      <h3>Why GeoTIFF fixes it</h3>
+      <p>It stores 16- or 32-bit elevation values along with georeferencing metadata, so every vertex has real coordinates and overlays line up.</p>
+      <blockquote>Decoding on the server keeps the client light: the browser gets a ready-to-use grid of heights.</blockquote>
+    </div>
+    <div class="h3-span-3 h3-prose">
+      <h2>Building a miniature world</h2>
+      <p>I then used the same pipeline to build a miniature 3D model of Mallorca from two inputs: a heightmap for displacement and a satellite image as the albedo texture.</p>
+      <ol>
+        <li>Subdivide a plane and displace each vertex by its sampled height.</li>
+        <li>UV-map the satellite image onto the displaced mesh.</li>
+      </ol>
+      <p>You can visit the project <a href="#">here</a>.</p>
+    </div>
+  </div>
+
+  <span class="h3-rule h3-rule-close" role="presentation"></span>
+  <footer class="h3-footer">
+    <p>Otherwise I am always up for a coffee and/or a <a href="#">chat</a>.</p>
+  </footer>
+</main>
+<script src="../h3-scramble.js"></script>
+</body>
+</html>

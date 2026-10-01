@@ -1,0 +1,456 @@
+/*
+ * h3nr7 design system: portable stylesheet.
+ *
+ * Values and class names are lifted from h3nr7.com (packages/ui/src/styles/
+ * tokens.css + apps/web/app/app.css). The reasons behind them are in
+ * references/*.md. Keep comments here short: this file gets pasted into pages.
+ *
+ * Fonts: Mrs Eaves + Inter. On h3nr7.com they come from an Adobe kit that only
+ * serves that domain, so the stacks also name the desktop families; the
+ * skill bundles both and scripts/inline.py embeds them into a file.
+ */
+
+/* ------------------------------------------------------------- tokens */
+:root {
+  color-scheme: light;
+
+  /* Colour: named by role, never by appearance. Monochrome on purpose. */
+  --colour-page: #f6f6f7;
+  --colour-surface: #ffffff;
+  --colour-hover: #e8e8ea;
+  --colour-ink: #17171a;
+  --colour-ink-muted: #595a5f;
+  --colour-ink-faint: #8a8b90;
+  --colour-line: #e2e2e5;
+  --colour-accent: #17171a;
+  --colour-accent-ink: #ffffff;
+  --colour-focus: var(--colour-ink);
+
+  /* Type */
+  /* Fallbacks have real italics: 'Baskerville Old Face' has none, so it is not here. */
+  --font-display: mrs-eaves, 'Mrs Eaves OT', 'Mrs Eaves', Baskerville, 'Libre Baskerville',
+    'Times New Roman', Times, serif;
+  --font-body: inter-18pt, Inter, 'Inter 18pt', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'SF Mono', 'Cascadia Mono', Menlo, Consolas, monospace;
+
+  /* Modular scale at 1.25, named by step */
+  --text-2xs: 0.694rem;
+  --text-xs: 0.833rem;
+  --text-sm: 0.9rem;
+  --text-base: 1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.563rem;
+  --text-2xl: 1.953rem;
+  --text-3xl: 2.441rem;
+  --text-4xl: 3.052rem;
+  /* Off-scale on purpose: the 48pt statement, and the 24pt name above it */
+  --text-landing: clamp(3rem, 2.58rem + 1.76vw, 4rem);
+  --text-landing-name: clamp(1.5rem, 1.29rem + 0.88vw, 2rem);
+
+  /* Leading falls as size rises; 0.95 is for display type only */
+  --leading-display: 0.95;
+  --leading-tight: 1.15;
+  --leading-normal: 1.5;
+  --leading-loose: 1.7;
+
+  /* The kit draws Inter at 100/400/600/700 only: 500 renders as 400 */
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* 4px base */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+
+  /* Doubling */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-xl: 16px;
+
+  /* Widths: every max-width comes from one of these */
+  --measure-page: 64rem;
+  --measure: 68ch;
+  --measure-landing: 60rem;
+  --measure-form: 24rem;
+
+  /* Motion */
+  --duration-fast: 120ms;
+  --duration-normal: 200ms;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --z-canvas: 0;
+  --z-content: 10;
+  --z-chrome: 20;
+  --z-hovercard: 50;
+  --z-overlay: 100;
+}
+
+/* The page column and the landing move together, 4rem apart */
+@media (min-width: 96rem) {
+  :root { --measure-page: 76rem; --measure-landing: 72rem; }
+}
+@media (min-width: 120rem) {
+  :root { --measure-page: 94rem; --measure-landing: 90rem; }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    color-scheme: dark;
+    --colour-page: #0e0e10;
+    --colour-surface: #17171a;
+    --colour-hover: #24242a;
+    --colour-ink: #f2f2f3;
+    --colour-ink-muted: #a6a7ac;
+    --colour-ink-faint: #6f7076;
+    --colour-line: #2a2a2f;
+    --colour-accent: #f2f2f3;
+    --colour-accent-ink: #0e0e10;
+  }
+}
+:root[data-theme='dark'] {
+  color-scheme: dark;
+  --colour-page: #0e0e10;
+  --colour-surface: #17171a;
+  --colour-hover: #24242a;
+  --colour-ink: #f2f2f3;
+  --colour-ink-muted: #a6a7ac;
+  --colour-ink-faint: #6f7076;
+  --colour-line: #2a2a2f;
+  --colour-accent: #f2f2f3;
+  --colour-accent-ink: #0e0e10;
+}
+
+/* ------------------------------------------------- reset (≈ preflight) */
+*, ::before, ::after { box-sizing: border-box; margin: 0; padding: 0; border: 0 solid var(--colour-line); }
+h1, h2, h3, h4, h5, h6 { font-size: inherit; font-weight: inherit; }
+ol, ul { list-style: none; }
+a { color: inherit; text-decoration: inherit; }
+img, svg, video { display: block; max-width: 100%; height: auto; }
+button, input, select, textarea { font: inherit; color: inherit; background: transparent; letter-spacing: inherit; }
+button { cursor: pointer; }
+
+/* --------------------------------------------------------------- base */
+html {
+  background: var(--colour-page);
+  color: var(--colour-ink);
+  font-family: var(--font-body);
+  line-height: var(--leading-normal);
+  -webkit-text-size-adjust: 100%;
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures contextual;
+}
+body { min-height: 100dvh; }
+
+/* Display: Mrs Eaves OT Italic, the only cut in use, ALWAYS with its ligatures
+   on — liga (fi ff fl ft fr ffi ffl…) and dlig (st ct sp ee ae oe it tt ty ky
+   gi gy py Th THE TT AV…). Any non-zero letter-spacing switches them off, so
+   display type is never tracked; font-synthesis: none so a missing roman or
+   bold is never faked. */
+h1, h2, h3, h4, .h3-prose h6, .h3-display, .h3-landing-name, .h3-landing-lede, .h3-wordmark {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  font-synthesis: style;  /* never a faux bold; a slanted fallback only if Mrs Eaves is absent */
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+  letter-spacing: normal;
+  text-rendering: optimizeLegibility;
+}
+.h3-lining { font-variant-numeric: lining-nums tabular-nums; }
+code, kbd, pre { font-family: var(--font-mono); font-size: 0.9em; }
+
+/* Focus: inputs keep a ring; links and buttons supply their own affordance */
+:where(input, select, textarea, summary, [tabindex]:not([tabindex='-1'])):focus-visible {
+  outline: 2px solid var(--colour-focus);
+  outline-offset: 2px;
+}
+:where(a, button, [tabindex='-1']):focus-visible { outline: none; }
+
+.h3-visually-hidden {
+  position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+/* ------------------------------------------------------------- layout */
+.h3-page { max-width: var(--measure); margin: 0 auto; padding: var(--space-12) var(--space-4) var(--space-24); }
+.h3-home { max-width: var(--measure-page); margin: 0 auto; padding: 0 var(--space-4) var(--space-24); }
+.h3-cols > * + * { margin-top: var(--space-8); }  /* stacked on a phone */
+@media (min-width: 48rem) {
+  .h3-cols > * + * { margin-top: 0; }
+  .h3-page-wide { max-width: var(--measure-page); }
+  /* The CV/article grid: six tracks, 3rem gutter. 4+2 for a record beside an
+     index, 3+3 for two columns of the same kind of thing. */
+  .h3-cols { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--space-12); align-items: start; }
+  .h3-span-2 { grid-column: span 2; }
+  .h3-span-3 { grid-column: span 3; }
+  .h3-span-4 { grid-column: span 4; }
+  .h3-span-6 { grid-column: 1 / -1; }
+  .h3-cols > * > :is(h1, h2, h3, h4, h5, h6):first-child { margin-top: 0; }
+}
+
+/* ----------------------------------------------------------- billboard */
+.h3-landing { padding-block: var(--space-12) var(--space-16); max-width: var(--measure-landing); margin-inline: auto; }
+.h3-landing-name, .h3-landing-lede { font-style: italic; }
+.h3-landing-name {
+  font-size: var(--text-landing-name);
+  line-height: var(--leading-display);
+  font-weight: var(--weight-regular);
+  margin: 0 0 0.8rem;
+}
+.h3-landing-lede {
+  font-size: var(--text-landing);
+  line-height: var(--leading-display);
+  color: var(--colour-ink);
+  text-wrap: pretty;
+}
+/* A list set as one sentence: titles separated by a full stop and a space */
+.h3-run, .h3-run > li { display: inline; }
+.h3-landing-links {
+  display: flex; flex-wrap: wrap; gap: var(--space-6); margin-top: var(--space-12);
+  font-family: var(--font-body); font-size: var(--text-sm);
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+.h3-landing-links a { color: var(--colour-ink-muted); }
+.h3-landing-links a:is(:hover, :focus-visible) { color: var(--colour-ink); }
+
+/* ------------------------------------------------------------ masthead */
+/* Wordmark, then title, both display italic at the name size; the wordmark is
+   muted so a reader can tell the site from the piece. */
+.h3-masthead h1, .h3-wordmark {
+  font-style: italic; font-size: var(--text-landing-name);
+  line-height: var(--leading-display); font-weight: var(--weight-regular); margin: 0;
+}
+.h3-wordmark { color: var(--colour-ink-muted); margin: 0 0 var(--space-6); }
+.h3-standfirst { font-size: var(--text-base); color: var(--colour-ink-muted); margin-top: var(--space-1); }
+.h3-date { font-size: var(--text-xs); color: var(--colour-ink-faint); }
+
+/* The rule: a 1px ink line that draws itself on from the left. */
+.h3-rule {
+  display: block; height: 1px; background: var(--colour-ink);
+  margin-block: var(--space-12) var(--space-16);
+  transform-origin: left center;
+  animation: h3-rule-in 1000ms var(--ease-out) 1000ms both;
+}
+.h3-rule-soft { background: var(--colour-ink-muted); }  /* under an article masthead */
+.h3-rule-close { margin-block: var(--space-12) var(--space-6); animation-delay: 2000ms; }  /* sits down on a footer */
+@keyframes h3-rule-in { from { transform: scaleX(0); } }
+
+/* Eyebrow labels: small caps-and-tracking in the BODY face, never Mrs Eaves */
+.h3-label, .h3-prose h2 {
+  font-family: var(--font-body);
+  font-style: normal;  /* h1–h4 are italic by default; a label is not display type */
+  font-variant-ligatures: common-ligatures contextual;
+  font-variant-numeric: normal;
+  font-size: var(--text-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--colour-ink-faint);
+}
+h2.h3-label { margin: var(--space-12) 0 var(--space-4); }
+
+/* ---------------------------------------------------------------- prose */
+.h3-prose p { margin: 0 0 var(--space-4); }
+.h3-prose h1 {
+  font-style: italic; font-size: var(--text-landing-name); line-height: var(--leading-display);
+  margin: var(--space-12) 0 var(--space-4);
+}
+.h3-prose h2 { margin: var(--space-12) 0 var(--space-4); }
+.h3-prose h3 { font-style: italic; font-size: var(--text-xl); line-height: var(--leading-tight); margin: var(--space-8) 0 var(--space-1); }
+.h3-prose :is(h4, h5, h6) { line-height: var(--leading-normal); color: var(--colour-ink-faint); }
+.h3-prose :is(h4, h5) { font-family: var(--font-body); font-style: normal; font-variant-ligatures: common-ligatures contextual; }
+.h3-prose h4 { font-size: var(--text-base); margin: 0 0 var(--space-1); }
+.h3-prose h5 { font-size: var(--text-xs); }
+.h3-prose h6 { font-size: var(--text-base); }
+.h3-prose :is(ul, ol), .h3-points { margin: 0 0 var(--space-4); list-style-position: inside; }
+.h3-prose ul, .h3-points { list-style-type: disc; list-style-type: '⁌ '; }
+.h3-prose ol { list-style-type: decimal; }
+.h3-prose li { margin-bottom: var(--space-2); }
+.h3-prose li > p:first-child { display: inline; }
+.h3-prose blockquote {
+  margin: var(--space-8) 0; padding-left: var(--space-4);
+  border-left: 1px solid var(--colour-line); color: var(--colour-ink-muted); font-style: italic;
+}
+.h3-prose img, .h3-hero { border-radius: var(--radius-md); }
+.h3-hero { margin-bottom: var(--space-8); width: 100%; }
+.h3-prose figure { margin: var(--space-8) 0; }
+figcaption { font-size: var(--text-xs); color: var(--colour-ink-faint); margin-top: var(--space-2); }
+.h3-prose > :first-child { margin-top: 0; }
+.h3-prose > :last-child { margin-bottom: 0; }
+
+/* ----------------------------------------------------------- CV entries */
+.h3-entry { margin-bottom: var(--space-12); }
+.h3-entry h3 { font-style: italic; font-size: var(--text-xl); line-height: var(--leading-tight); margin: 0 0 var(--space-1); }
+.h3-entry h3:has(+ .h3-period) { margin-bottom: 0; }
+.h3-period, .h3-keywords, .h3-skills { font-size: var(--text-xs); color: var(--colour-ink-faint); }
+.h3-period { margin: 0 0 var(--space-4); }
+.h3-keywords, .h3-skills { margin: var(--space-2) 0; }
+.h3-entry > * + :not(h3, .h3-period, .h3-keywords) { margin-top: var(--space-2); }
+.h3-skills li { display: inline; }
+.h3-skills li + li::before { content: ' · '; }
+.h3-points li + li { margin-top: var(--space-2); }
+.h3-summary { margin-bottom: var(--space-6); }
+.h3-footer { font-size: var(--text-sm); color: var(--colour-ink-faint); }
+.h3-footer p + p { margin-top: var(--space-2); }
+.h3-footer a { color: var(--colour-ink); }
+
+/* ---------------------------------------------------------------- links */
+/* Two hairlines: a grey rail at rest, an ink line that sweeps in left to right.
+   Controls inside prose keep their own look: hence the :not(). */
+.h3-link, .h3-prose a:not(.h3-cta, .h3-button, .h3-icon-button), .h3-landing-links a, .h3-footer a {
+  padding-bottom: 2px;
+  background-image: linear-gradient(var(--colour-ink), var(--colour-ink)), linear-gradient(var(--colour-line), var(--colour-line));
+  background-repeat: no-repeat;
+  background-position: 0 100%, 0 100%;
+  background-size: 0 1px, 100% 1px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size var(--duration-normal) var(--ease-out), color var(--duration-fast) ease;
+}
+.h3-prose a:not(.h3-cta, .h3-button, .h3-icon-button) { color: var(--colour-ink); }
+:is(.h3-link, .h3-prose a:not(.h3-cta, .h3-button, .h3-icon-button), .h3-landing-links a, .h3-footer a):is(:hover, :focus-visible) { background-size: 100% 1px, 100% 1px; }
+
+/* Hollow letters: on display type that opens elsewhere, the fill drains and
+   the contour stays. Opt-in; never on small text. */
+@supports (-webkit-text-stroke: 1px currentColor) {
+  .h3-hollow { -webkit-text-stroke: 0.6px transparent; transition: color 180ms ease, -webkit-text-stroke-color 180ms ease; }
+  .h3-hollow:is(:hover, :focus-visible) { color: transparent; -webkit-text-stroke-color: var(--colour-ink); }
+}
+
+/* -------------------------------------------------------------- controls */
+/* Quiet chrome: 28px, only the ground moves. Active state reads from ARIA. */
+.h3-button {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-1);
+  min-height: 1.75rem; padding: 2px var(--space-2); border-radius: var(--radius-md);
+  background: var(--colour-surface); color: var(--colour-ink);
+  font-family: var(--font-body); font-size: var(--text-xs); font-weight: var(--weight-medium); line-height: 1;
+  transition: background-color var(--duration-fast) ease, color var(--duration-fast) ease;
+}
+.h3-button:is(:hover, :focus-visible) { background: var(--colour-hover); }
+.h3-button:is([aria-expanded='true'], [aria-pressed='true']) { background: var(--colour-accent); color: var(--colour-accent-ink); }
+.h3-button-square { width: 1.75rem; height: 1.75rem; padding: 2px; }
+/* The one filled action on a page */
+.h3-cta {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: var(--space-2) var(--space-4); border-radius: var(--radius-md);
+  background: var(--colour-accent); color: var(--colour-accent-ink); line-height: var(--leading-normal);
+  transition: background-color var(--duration-fast) var(--ease-out), color var(--duration-fast) var(--ease-out);
+}
+.h3-cta:is(:hover, :focus-visible) { background: var(--colour-hover); color: var(--colour-ink); }
+/* A clickable mark inside a card: the mark never changes, the ground does */
+.h3-icon-button {
+  display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 1.75rem; height: 1.75rem; border-radius: var(--radius-md); color: var(--colour-ink);
+  transition: background-color var(--duration-fast) ease;
+}
+.h3-icon-button:is(:hover, :focus-visible) { background: var(--colour-hover); }
+.h3-chrome { position: fixed; top: max(1rem, env(safe-area-inset-top, 0px)); right: 1rem; z-index: var(--z-chrome); display: flex; gap: var(--space-1); }
+
+/* ---------------------------------------------------------------- cards */
+.h3-panel { display: flex; flex-direction: column; gap: var(--space-1); width: 20rem; }
+.h3-card { padding: var(--space-3); border-radius: var(--radius-lg); background: var(--colour-surface); font-size: var(--text-sm); line-height: var(--leading-normal); }
+.h3-card-row { display: flex; align-items: center; justify-content: space-between; gap: var(--space-2); }
+.h3-card-title { flex: 1; min-width: 0; font-weight: var(--weight-medium); color: var(--colour-ink); }
+.h3-card-rule { display: block; height: 1px; margin: var(--space-3) 0; background: var(--colour-ink); transform-origin: left center; animation: h3-rule-in 420ms var(--ease-out) 160ms both; }
+.h3-person { display: flex; align-items: center; gap: var(--space-3); }
+.h3-person-avatar { position: relative; flex: none; width: 4rem; height: 4rem; border-radius: var(--radius-lg); overflow: hidden; display: grid; place-items: center; font-size: var(--text-xs); font-weight: var(--weight-medium); }
+.h3-person-avatar img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.h3-person-detail { display: flex; flex-direction: column; flex: 1; min-width: 0; }
+.h3-person-name { font-weight: var(--weight-semibold); color: var(--colour-ink); }
+.h3-person-title, .h3-person-url { color: var(--colour-ink-muted); overflow-wrap: anywhere; }
+.h3-social { display: flex; gap: var(--space-1); margin-inline-start: -0.375rem; }
+.h3-notice { padding: var(--space-3) var(--space-4); border: 1px solid var(--colour-line); border-radius: var(--radius-md); color: var(--colour-ink-muted); font-size: var(--text-sm); }
+
+/* Flat: a hairline and a radius. Nothing on this system casts a shadow. */
+.h3-dialog { padding: var(--space-6); border: 1px solid var(--colour-line); border-radius: var(--radius-xl); background: var(--colour-surface); color: var(--colour-ink); }
+.h3-scrim { position: fixed; inset: 0; z-index: var(--z-overlay); background: color-mix(in srgb, var(--colour-page) 75%, transparent); backdrop-filter: blur(3px); }
+
+/* The hover card: three round corners and one square, the point of contact */
+.h3-hovercard { display: inline-block; overflow: hidden; border: 1px solid var(--colour-ink); background: var(--colour-ink); border-radius: var(--radius-xl) var(--radius-xl) var(--radius-xl) 0; }
+.h3-hovercard[data-flip-x] { border-radius: var(--radius-xl) var(--radius-xl) 0 var(--radius-xl); }
+.h3-hovercard[data-flip-y] { border-radius: 0 var(--radius-xl) var(--radius-xl) var(--radius-xl); }
+.h3-hovercard img { display: block; }
+
+/* The placeholder grid: what an image slot shows when there is no image */
+.h3-gridfield {
+  position: relative; display: grid; place-items: center; background-color: #0d0d0f;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0 13px, rgb(255 255 255 / 0.13) 13px 14px),
+    repeating-linear-gradient(90deg, transparent 0 13px, rgb(255 255 255 / 0.13) 13px 14px);
+}
+.h3-monogram {
+  font-family: var(--font-display); font-style: italic; font-synthesis: style;
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual; font-variant-numeric: lining-nums;
+  font-size: 30px; line-height: 1; color: rgb(255 255 255 / 0.82); letter-spacing: normal;
+}
+
+/* Square tiles that drain to grey under the pointer */
+.h3-gallery { display: grid; gap: var(--space-4); grid-template-columns: repeat(var(--cols, 3), 1fr); }
+.h3-gallery > * { aspect-ratio: 1; overflow: hidden; border-radius: var(--radius-md); }
+.h3-gallery img { width: 100%; height: 100%; object-fit: cover; transition: filter 450ms var(--ease-out); }
+@media (hover: hover) { .h3-gallery > :hover img { filter: grayscale(1); } }
+
+.h3-field { display: grid; gap: var(--space-1); max-width: var(--measure-form); }
+.h3-field input, .h3-field textarea { padding: var(--space-2) var(--space-3); border: 1px solid var(--colour-line); border-radius: var(--radius-md); background: var(--colour-page); color: var(--colour-ink); }
+.h3-field-hint { color: var(--colour-ink-faint); font-size: var(--text-sm); }
+.h3-field-error { color: var(--colour-ink); font-size: var(--text-sm); }
+
+.h3-loading-bar { position: fixed; top: 0; left: 0; width: 100%; height: 2px; background: var(--colour-line); overflow: hidden; z-index: calc(var(--z-overlay) + 2); }
+.h3-loading-bar::after { content: ''; position: absolute; inset: 0 auto 0 0; width: 40%; background: var(--colour-ink); animation: h3-sweep 1100ms var(--ease-out) infinite; }
+@keyframes h3-sweep { from { transform: translateX(-100%); } to { transform: translateX(350%); } }
+
+/* -------------------------------------------- soft titles + split-flap */
+/* Blurred and dimmed at rest, sharp on hover/focus. Only where hover exists:
+   on touch nothing could ever un-blur it. */
+@property --h3-breath { syntax: '<number>'; inherits: false; initial-value: 0; }
+@media (hover: hover) {
+  .h3-soft {
+    filter: blur(calc(var(--h3-soft-blur, 3.8px) * (1 + var(--h3-breath) * var(--h3-soft-depth, 0))));
+    opacity: calc(var(--h3-soft-opacity, 0.55) * (1 - var(--h3-breath) * var(--h3-soft-depth, 0)));
+    transition: filter 230ms var(--ease-out), opacity 230ms var(--ease-out);
+  }
+  .h3-soft[data-breathe] { --h3-soft-depth: 0.18; animation: h3-breathe 5200ms ease-in-out infinite alternate; }
+  :is(a, button):is(:hover, :focus-visible) .h3-soft, .h3-soft:hover, .h3-soft[data-awake] {
+    filter: blur(0); opacity: 1; transition-duration: 184ms;
+  }
+  .h3-run-stop { display: inline-block; filter: blur(3.8px); opacity: 0.55; }
+}
+@keyframes h3-breathe { from { --h3-breath: 0; } to { --h3-breath: 1; } }
+/* Cells written by assets/h3-scramble.js */
+.h3-scramble-word { display: inline-block; white-space: nowrap; }
+.h3-scramble-char { display: inline-block; text-align: center; transform: translateY(calc((1 - var(--flap, 1)) * -0.08em)); }
+a:has(> [data-scramble]), button:has(> [data-scramble]), .h3-landing-name:has(> [data-scramble]) { cursor: pointer; }
+
+/* --------------------------------------------------------------- motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .h3-soft[data-breathe], .h3-loading-bar::after { animation: none; }
+  .h3-scramble-char { transform: none; }
+}
+
+/* ---------------------------------------------------------------- print */
+@media print {
+  html, body { background: #fff; color: #000; }
+  .h3-chrome, .h3-no-print { display: none !important; }
+  .h3-page { max-width: none; padding: 0; }
+  .h3-cols { display: block; }
+  .h3-rule, .h3-card-rule { animation: none; transform: none; }
+  .h3-entry, section { break-inside: avoid; }
+  h2, h3 { break-after: avoid; }
+  .h3-soft { filter: none; opacity: 1; }
+  a { background: none; }
+}

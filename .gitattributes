@@ -1,0 +1,11 @@
+# LF everywhere: SKILL.md's frontmatter is parsed line by line, and a CRLF
+# checkout on Windows would break both package.py and the upload.
+* text=auto eol=lf
+
+*.png binary
+*.jpg binary
+*.ttf binary
+*.otf binary
+*.woff2 binary
+*.zip binary
+*.ai binary

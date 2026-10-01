@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>iam h3nr7</title>
+<link rel="icon" href="../logo/h3nr7-glyph.png">
+<link rel="stylesheet" href="../h3nr7.css">
+</head>
+<!--
+  CV / profile template: the layout of iam.h3nr7.com.
+  Heading block (wordmark h1, role line, contact) → summary in display italic
+  → ink rule → record on a 6-track grid: 4 for the record, 2 for the index.
+  Placeholder content in [brackets]; replace it, never invent real history.
+  Prints to one column (see @media print in h3nr7.css).
+-->
+<body>
+<main class="h3-page h3-page-wide">
+  <header style="display:flex; flex-wrap:wrap; gap:var(--space-4); justify-content:space-between; align-items:flex-start; margin-bottom:var(--space-6)">
+    <div>
+      <h1 class="h3-landing-name" style="margin:0"><span data-scramble>iam h3nr7</span></h1>
+      <p class="h3-standfirst" style="margin:var(--space-1) 0 var(--space-3)">Henry YP Ho · Platform &amp; Product Engineer</p>
+      <p class="h3-standfirst" style="display:flex; flex-wrap:wrap; gap:var(--space-3); margin:0">
+        <span>London</span><span>iam@h3nr7.com</span><span>h3nr7.com</span>
+      </p>
+    </div>
+    <button class="h3-button h3-no-print" type="button" onclick="print()">Print this CV</button>
+  </header>
+
+  <p class="h3-landing-name h3-summary">[Two or three sentences, in the first person, on what you build and the kind of problem you like. Read once, as part of the masthead.]</p>
+
+  <span class="h3-rule" role="presentation"></span>
+
+  <div class="h3-cols">
+    <div class="h3-span-4">
+      <section>
+        <h2 class="h3-label" style="margin-top:0">Experience</h2>
+        <article class="h3-entry">
+          <h3>[Role] — [Company]</h3>
+          <p class="h3-period">[Jan 2023] — Present</p>
+          <p>[One line on the remit.]</p>
+          <ul class="h3-points">
+            <li>[What was built, and the number that says it mattered.]</li>
+            <li>[A second outcome, not a duty.]</li>
+          </ul>
+          <p class="h3-keywords">[TypeScript · React · WebGL · AWS]</p>
+        </article>
+        <article class="h3-entry">
+          <h3>[Role] — [Company]</h3>
+          <p class="h3-period">[Mar 2019] — [Dec 2022]</p>
+          <p>[One or two sentences.]</p>
+          <p class="h3-keywords">[Node.js · Three.js · Postgres]</p>
+        </article>
+      </section>
+    </div>
+    <div class="h3-span-2">
+      <section>
+        <h2 class="h3-label" style="margin-top:0">Skills</h2>
+        <div class="h3-entry">
+          <h3>[Group]</h3>
+          <ul class="h3-skills"><li>[Skill]</li><li>[Skill]</li><li>[Skill]</li><li>[Skill]</li></ul>
+        </div>
+      </section>
+      <section>
+        <h2 class="h3-label" style="margin-top:0">Education</h2>
+        <article class="h3-entry">
+          <h3>[Qualification]</h3>
+          <p class="h3-period">[Institution], [Year]</p>
+        </article>
+      </section>
+    </div>
+  </div>
+
+  <span class="h3-rule h3-rule-close" role="presentation"></span>
+  <footer class="h3-footer h3-no-print">
+    <p>Drop me an <a href="mailto:iam@h3nr7.com">email</a> for the full CV.</p>
+    <p>Otherwise I am always up for a coffee and/or a <a href="#">chat</a>.</p>
+  </footer>
+</main>
+<script src="../h3-scramble.js"></script>
+</body>
+</html>

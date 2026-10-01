@@ -1,0 +1,274 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>h3nr7 design system</title>
+<link rel="icon" href="logo/h3nr7-glyph.png">
+<link rel="stylesheet" href="h3nr7.css">
+<style>
+  /* Specimen-only layout. Everything else on this page is h3nr7.css. */
+  .spec section { margin-top: var(--space-16); }
+  .row { display: flex; flex-wrap: wrap; gap: var(--space-8); align-items: flex-end; }
+  .cap { font-size: var(--text-xs); color: var(--colour-ink-faint); margin-top: var(--space-2); }
+  .tile { width: 160px; height: 160px; border-radius: var(--radius-lg); overflow: hidden; }
+  .tile img { width: 100%; height: 100%; }
+  .grid-2 { display: grid; gap: var(--space-4); grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); }
+  .sw { display: grid; grid-template-columns: 2.5rem 1fr; column-gap: var(--space-3); align-items: center; }
+  .sw-chip { grid-row: span 3; width: 2.5rem; height: 2.5rem; border-radius: var(--radius-md); border: 1px solid var(--colour-line); }
+  .sw-name { font-size: var(--text-sm); font-weight: var(--weight-semibold); }
+  .sw-hex, .sw-role { font-size: var(--text-xs); color: var(--colour-ink-faint); }
+  .sc { display: grid; grid-template-columns: 3rem 1fr 5rem; align-items: baseline; gap: var(--space-4); padding: var(--space-2) 0; border-bottom: 1px solid var(--colour-line); }
+  .sc-k, .sc-n { font-size: var(--text-xs); color: var(--colour-ink-faint); }
+  .sp { display: flex; align-items: center; gap: var(--space-3); font-size: var(--text-xs); color: var(--colour-ink-faint); margin-bottom: var(--space-1); }
+  .sp-bar { display: inline-block; height: 0.5rem; background: var(--colour-ink); }
+  .rd { display: inline-flex; flex-direction: column; gap: var(--space-2); font-size: var(--text-xs); color: var(--colour-ink-faint); margin-right: var(--space-6); }
+  .rd-box { width: 4rem; height: 4rem; background: var(--colour-surface); border: 1px solid var(--colour-ink); }
+  .ic { display: inline-flex; flex-direction: column; align-items: center; gap: var(--space-2); width: 6rem; margin: 0 0 var(--space-4); }
+  .ic > span { display: grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: var(--radius-md); background: var(--colour-surface); }
+  .ic figcaption { margin: 0; }
+  .demo-ground { padding: var(--space-6); border-radius: var(--radius-xl); background: var(--colour-hover); }
+</style>
+</head>
+<body>
+<nav class="h3-chrome" aria-label="Specimen">
+  <button class="h3-button" type="button" aria-pressed="false" id="theme">Dark</button>
+</nav>
+<main class="h3-page h3-page-wide spec">
+  <header class="h3-masthead">
+    <p class="h3-wordmark"><span data-scramble>h3nr7</span></p>
+    <h1><span data-scramble>Design system</span></h1>
+    <p class="h3-standfirst">Ink on paper, Mrs Eaves for the voice, Inter for the rest, hairlines for structure.</p>
+    <p class="h3-date">Source: h3nr7.com v4 · tokens.css and app.css</p>
+  </header>
+  <span class="h3-rule h3-rule-soft" role="presentation"></span>
+
+  <section style="margin-top:0">
+    <h2 class="h3-label" style="margin-top:0">Mark</h2>
+    <div class="row">
+      <div><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="271.50 203.00 550.75 737.75" width="150" height="201" role="img" aria-label="h3nr7">
+<g fill="currentColor">
+<path transform="matrix(483.2744,0,0,-483.2744,258.0474,501.42768)" d="M.027999878 0H.1329956L.15899658 .14379883C.17599488 .2396698 .22799683 .28559876 .2539978 .28559876 .28399659 .28559876 .2889862 .2616272 .27999879 .20970154L.2559967 .07714844C.24699402 .028274537 .2679901-.01171875 .32598878-.01171875 .35899354-.01171875 .3869934 .0002746582 .4079895 .01927185V.04623413C.3999939 .040252687 .3829956 .030273438 .37298585 .030273438 .35598756 .030273438 .35499574 .04423523 .35899354 .06617737L.3849945 .20980835C.4019928 .30360414 .36999513 .34960938 .31098939 .34960938 .2649994 .34960938 .21099854 .31759645 .17999268 .26765443L.24198914 .6171875 .07598877 .59825137 .07199097 .5722656C.12199402 .5722656 .12799073 .56121829 .11099243 .46894837L.027999878 0Z"/>
+<path transform="matrix(483.2744,0,0,-483.2744,519.4989,846.0023)" d="M.36898805 .33163453 .069992069-.109375C.039993287-.15437317 .053985597-.18536377 .07798767-.19337464 .11299133-.20536804 .1329956-.17436219 .1579895-.12837219L.44699098 .4036255 .45199586 .43164063H.26098634C.17098999 .43164063 .1579895 .44363404 .16999817 .5106354H.14898682L.056991579 .23562622H.08299255L.09098816 .2556305C.11099243 .30563355 .12599182 .33163453 .20899964 .33163453H.36898805Z"/>
+<path transform="matrix(483.2744,0,0,-483.2744,656.26559,501.42768)" d="M.34199525 .28163148C.34799195 .31462098 .32998658 .3486328 .28399659 .3486328 .2519989 .3486328 .21199036 .32662965 .18699646 .2676239 .18798828 .31669618 .16499329 .34570313 .115997318 .34570313 .083999637 .34570313 .052993776 .33169557 .032989503 .31469728V.28770448C.040985109 .29470826 .057998659 .30369569 .067993167 .30369569 .08198547 .30369569 .085998538 .28871156 .08198547 .26672364L.034988405 0H.13999939L.16099549 .11488342C.17799378 .2097168 .21699524 .28363038 .23999024 .28363038 .2559967 .28363038 .2539978 .27563478 .2559967 .26365663 .2579956 .25161744 .2709961 .23661804 .29100038 .23661804 .32598878 .23661804 .33898927 .265625 .34199525 .28163148Z"/>
+<path transform="matrix(483.2744,0,0,-483.2744,305.8916,795.25857)" d="M.26098634 .28559876C.29100038 .28559876 .29599 .2616272 .2869873 .20970154L.2630005 .07714844C.2539978 .028274537 .2749939-.01171875 .33299256-.01171875 .3659973-.01171875 .3939972 .0002746582 .4149933 .01927185V.04623413C.40699769 .040252687 .3899994 .030273438 .37998963 .030273438 .36299134 .030273438 .3619995 .04423523 .3659973 .06617737L.3919983 .20980835C.40899659 .30360414 .375 .34960938 .31599427 .34960938 .269989 .34960938 .21798706 .31759645 .18699646 .26765443 .18899536 .3136902 .16699219 .34570313 .115997318 .34570313 .083999637 .34570313 .052993776 .33169557 .032989503 .31469728V.28770448C.040985109 .29470826 .057998659 .30369569 .067993167 .30369569 .08198547 .30369569 .085998538 .28871156 .08198547 .26672364L.034988405 0H.13999939L.1659851 .1438446C.18299866 .2396698 .23498535 .28559876 .26098634 .28559876Z"/>
+<path transform="matrix(483.2744,0,0,-483.2744,441.6917,501.42768)" d="M.21199036 .11532593C.2579956 .10331726 .2649994 .05834961 .2649994 .025360108 .2649994-.07260132 .23199463-.14355469 .16699219-.14355469 .05999756-.14355469 .07899475-.050598146 .041992189-.050598146 .024993897-.050598146 .0129852299-.06060791 .009994507-.07559204 .0029907227-.11357117 .05899048-.18656922 .17599488-.18656922 .2619934-.18656922 .394989-.124572757 .394989-.00062561038 .394989 .07533264 .32798768 .12132263 .24499512 .14131165L.2889862 .16828919C.3639984 .21427918 .43899537 .26724244 .43899537 .33522035 .43899537 .41918946 .35398866 .4501953 .2659912 .4501953 .16299439 .4501953 .08799744 .38519288 .07598877 .32022096 .069992069 .28623963 .08198547 .2522583 .114990238 .2272644L.15299988 .258255C.14199829 .27923585 .13999939 .2992401 .14299011 .31822206 .1519928 .36720277 .18798828 .40318299 .23999024 .40318299 .2869873 .40318299 .31098939 .37020875 .31098939 .33122254 .31098939 .27523805 .28399659 .23226929 .24099732 .1962738L.15699768 .12532044C.14698792 .11732483 .1349945 .10432434 .1329956 .09233093 .1309967 .079330448 .14399719 .066345218 .1559906 .066345218 .1769867 .066345218 .19099427 .09832764 .21199036 .11532593Z"/>
+</g>
+</svg><p class="cap">h3nr7-mark.svg · currentColor</p></div>
+      <div><div class="tile"><img src="logo/h3nr7-tile-dark.svg" alt="h3nr7, white on black"></div><p class="cap">tile-dark</p></div>
+      <div><div class="tile" style="outline:1px solid var(--colour-line)"><img src="logo/h3nr7-tile-light.svg" alt="h3nr7, black on white"></div><p class="cap">tile-light</p></div>
+      <div><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32" height="32" role="img" aria-label="h3nr7">
+<path fill="currentColor" d="M32 0V32H0Z"/>
+</svg><p class="cap">glyph · ≤ 32px</p></div>
+      <div><p class="h3-landing-name" style="margin:0">h3nr7</p><p class="cap">text wordmark</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="h3-label">Colour</h2>
+    <div class="grid-2"><div class="sw"><span class="sw-chip" style="background:var(--colour-page)"></span><span class="sw-name">--colour-page</span><span class="sw-hex">#f6f6f7 · #0e0e10</span><span class="sw-role">the ground</span></div>
+<div class="sw"><span class="sw-chip" style="background:var(--colour-surface)"></span><span class="sw-name">--colour-surface</span><span class="sw-hex">#ffffff · #17171a</span><span class="sw-role">raised plane: cards, buttons at rest, dialogs</span></div>
+<div class="sw"><span class="sw-chip" style="background:var(--colour-hover)"></span><span class="sw-name">--colour-hover</span><span class="sw-hex">#e8e8ea · #24242a</span><span class="sw-role">hover ground, skeletons</span></div>
+<div class="sw"><span class="sw-chip" style="background:var(--colour-ink)"></span><span class="sw-name">--colour-ink</span><span class="sw-hex">#17171a · #f2f2f3</span><span class="sw-role">text, rules, filled controls, focus</span></div>
+<div class="sw"><span class="sw-chip" style="background:var(--colour-ink-muted)"></span><span class="sw-name">--colour-ink-muted</span><span class="sw-hex">#595a5f · #a6a7ac</span><span class="sw-role">secondary lines</span></div>
+<div class="sw"><span class="sw-chip" style="background:var(--colour-ink-faint)"></span><span class="sw-name">--colour-ink-faint</span><span class="sw-hex">#8a8b90 · #6f7076</span><span class="sw-role">metadata: labels, dates, captions</span></div>
+<div class="sw"><span class="sw-chip" style="background:var(--colour-line)"></span><span class="sw-name">--colour-line</span><span class="sw-hex">#e2e2e5 · #2a2a2f</span><span class="sw-role">borders not meant to be noticed, link rail</span></div>
+<div class="sw"><span class="sw-chip" style="background:var(--colour-accent)"></span><span class="sw-name">--colour-accent</span><span class="sw-hex">#17171a · #f2f2f3</span><span class="sw-role">the filled state</span></div>
+<div class="sw"><span class="sw-chip" style="background:var(--colour-accent-ink)"></span><span class="sw-name">--colour-accent-ink</span><span class="sw-hex">#ffffff · #0e0e10</span><span class="sw-role">text on accent</span></div></div>
+  </section>
+
+  <section>
+    <h2 class="h3-label">Type</h2>
+    <p class="h3-landing-lede">A techie journal of tinkering things.</p>
+    <p class="cap">Statement · Mrs Eaves OT Italic · --text-landing (48–64px) · leading 0.95</p>
+    <p class="h3-display" style="font-size:var(--text-3xl);line-height:var(--leading-tight);margin-top:var(--space-8)">first office coffee aesthetic street act spy kitty THE</p>
+    <p class="cap">Ligatures, always on · liga: fi ff ffi fl ft · dlig: st ct sp ee ae it tt ty Th THE TT AV · never tracked</p>
+    <div class="h3-cols" style="margin-top:var(--space-8)">
+      <div class="h3-span-3">
+        <p class="h3-landing-name" style="margin:0">WebGl terrain mesh</p>
+        <p class="cap">Title · italic · --text-landing-name</p>
+        <h3 style="font-style:italic;font-size:var(--text-xl);line-height:var(--leading-tight);margin-top:var(--space-6)">Platform &amp; Product Engineer — Company</h3>
+        <p class="cap">Entry title · italic · --text-xl · the ct in Product is a ligature</p>
+        <p class="h3-label" style="margin-top:var(--space-6)">Experience</p>
+        <p class="cap">Label · Inter · sm · uppercase · 0.08em · faint</p>
+      </div>
+      <div class="h3-span-3">
+        <p>Body is Inter at 16px on a 1.5 leading, set on a 68ch measure. It carries everything practical: prose, buttons, captions, navigation.</p>
+        <p class="h3-standfirst">Standfirst · muted · base</p>
+        <p class="h3-date">Date · faint · xs · 18 May 2020</p>
+        <p class="h3-keywords">Keywords · TypeScript · React · WebGL</p>
+      </div>
+    </div>
+    <div style="margin-top:var(--space-8)"><div class="sc"><span class="sc-k">2xs</span><span class="sc-v" style="font-size:var(--text-2xs)">Tinkering things</span><span class="sc-n">0.694rem</span></div>
+<div class="sc"><span class="sc-k">xs</span><span class="sc-v" style="font-size:var(--text-xs)">Tinkering things</span><span class="sc-n">0.833rem</span></div>
+<div class="sc"><span class="sc-k">sm</span><span class="sc-v" style="font-size:var(--text-sm)">Tinkering things</span><span class="sc-n">0.9rem</span></div>
+<div class="sc"><span class="sc-k">base</span><span class="sc-v" style="font-size:var(--text-base)">Tinkering things</span><span class="sc-n">1rem</span></div>
+<div class="sc"><span class="sc-k">lg</span><span class="sc-v" style="font-size:var(--text-lg)">Tinkering things</span><span class="sc-n">1.25rem</span></div>
+<div class="sc"><span class="sc-k">xl</span><span class="sc-v" style="font-size:var(--text-xl)">Tinkering things</span><span class="sc-n">1.563rem</span></div>
+<div class="sc"><span class="sc-k">2xl</span><span class="sc-v" style="font-size:var(--text-2xl)">Tinkering things</span><span class="sc-n">1.953rem</span></div>
+<div class="sc"><span class="sc-k">3xl</span><span class="sc-v" style="font-size:var(--text-3xl)">Tinkering things</span><span class="sc-n">2.441rem</span></div>
+<div class="sc"><span class="sc-k">4xl</span><span class="sc-v" style="font-size:var(--text-4xl)">Tinkering things</span><span class="sc-n">3.052rem</span></div></div>
+  </section>
+
+  <section>
+    <h2 class="h3-label">Space and radius</h2>
+    <div class="h3-cols"><div class="h3-span-3"><div class="sp"><span class="sp-bar" style="width:var(--space-1)"></span><span>1 · 0.25rem</span></div>
+<div class="sp"><span class="sp-bar" style="width:var(--space-2)"></span><span>2 · 0.5rem</span></div>
+<div class="sp"><span class="sp-bar" style="width:var(--space-3)"></span><span>3 · 0.75rem</span></div>
+<div class="sp"><span class="sp-bar" style="width:var(--space-4)"></span><span>4 · 1rem</span></div>
+<div class="sp"><span class="sp-bar" style="width:var(--space-6)"></span><span>6 · 1.5rem</span></div>
+<div class="sp"><span class="sp-bar" style="width:var(--space-8)"></span><span>8 · 2rem</span></div>
+<div class="sp"><span class="sp-bar" style="width:var(--space-12)"></span><span>12 · 3rem</span></div>
+<div class="sp"><span class="sp-bar" style="width:var(--space-16)"></span><span>16 · 4rem</span></div>
+<div class="sp"><span class="sp-bar" style="width:var(--space-24)"></span><span>24 · 6rem</span></div></div><div class="h3-span-3"><div class="rd"><span class="rd-box" style="border-radius:var(--radius-sm)"></span><span>sm · 2px</span></div>
+<div class="rd"><span class="rd-box" style="border-radius:var(--radius-md)"></span><span>md · 4px</span></div>
+<div class="rd"><span class="rd-box" style="border-radius:var(--radius-lg)"></span><span>lg · 8px</span></div>
+<div class="rd"><span class="rd-box" style="border-radius:var(--radius-xl)"></span><span>xl · 16px</span></div></div></div>
+  </section>
+
+  <section>
+    <h2 class="h3-label">Controls and links</h2>
+    <div class="row" style="align-items:center">
+      <button class="h3-button" type="button">Contact</button>
+      <button class="h3-button" type="button" aria-pressed="true">Pressed</button>
+      <button class="h3-button h3-button-square" type="button" aria-label="Link"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+</svg></button>
+      <a class="h3-cta" href="#">Back to home</a>
+      <span>A <a class="h3-link" href="#">link in a sentence</a>, swept on hover.</span>
+    </div>
+    <nav class="h3-landing-links"><a href="#">Articles</a><a href="#">GitHub</a><a href="#">Contact</a></nav>
+  </section>
+
+  <section>
+    <h2 class="h3-label">Cards, panel, person</h2>
+    <div class="h3-cols">
+      <div class="h3-span-3 demo-ground">
+        <div class="h3-panel" style="width:auto">
+          <div class="h3-card h3-card-row"><span class="h3-card-title">Let's have a chat</span><a class="h3-icon-button" href="#" aria-label="Book a meeting"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+</svg></a></div>
+          <div class="h3-card">
+            <div class="h3-person">
+              <span class="h3-person-avatar">HH<img src="images/portrait-600.jpg" alt=""></span>
+              <div class="h3-person-detail">
+                <div class="h3-card-row"><span class="h3-person-name">Henry YP Ho</span><a class="h3-icon-button" href="#" aria-label="Open the profile site"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+</svg></a></div>
+                <span class="h3-person-title">Platform &amp; Product Engineer</span>
+                <span class="h3-person-url">iam.h3nr7.com</span>
+              </div>
+            </div>
+            <span class="h3-card-rule"></span>
+            <div class="h3-social"><a class="h3-icon-button" href="#" aria-label="x"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+</svg></a><a class="h3-icon-button" href="#" aria-label="github"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+  <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+</svg></a><a class="h3-icon-button" href="#" aria-label="linkedin"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+</svg></a><a class="h3-icon-button" href="#" aria-label="youtube"><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+</svg></a></div>
+          </div>
+        </div>
+      </div>
+      <div class="h3-span-3">
+        <p class="h3-notice">GitHub and Medium are unavailable, so this list is incomplete.</p>
+        <div class="h3-field" style="margin-top:var(--space-6)">
+          <label for="pp">Passphrase</label>
+          <input id="pp" placeholder="three words">
+          <p class="h3-field-hint">It is in the email that sent you here.</p>
+        </div>
+        <div class="h3-dialog" style="margin-top:var(--space-6)">A dialog: surface, 1px line, 16px radius, no shadow.</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="h3-label">Imagery</h2>
+    <div class="row">
+      <div><span class="h3-hovercard"><span class="h3-gridfield" style="width:220px;height:124px"><span class="h3-monogram">R3</span></span></span><p class="cap">Hover card · square corner = point of contact</p></div>
+      <div style="width:22rem"><ul class="h3-gallery" style="--cols:3">
+        <li class="h3-gridfield"><span class="h3-monogram">A</span></li><li class="h3-gridfield"><span class="h3-monogram">B</span></li><li class="h3-gridfield"><span class="h3-monogram">C</span></li>
+      </ul><p class="cap">Gallery · placeholder grid · drains to grey on hover</p></div>
+    </div>
+  </section>
+
+  <section>
+    <h2 class="h3-label">Motion</h2>
+    <p class="h3-landing-lede" style="font-size:var(--text-3xl)">
+      <a href="#"><span class="h3-soft" data-breathe data-scramble>Soft at rest</span></a>, <a href="#"><span class="h3-soft" data-breathe data-scramble>sharp under the pointer</span></a>.
+    </p>
+    <p class="cap">.h3-soft + data-breathe + data-scramble · the rule above drew itself on from the left</p>
+  </section>
+
+  <section>
+    <h2 class="h3-label">Icons</h2>
+    <div><figure class="ic"><span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M19 12H5"/>
+  <path d="m12 19-7-7 7-7"/>
+</svg></span><figcaption>arrow-left</figcaption></figure>
+<figure class="ic"><span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M5 12h14"/>
+  <path d="m12 5 7 7-7 7"/>
+</svg></span><figcaption>arrow-right</figcaption></figure>
+<figure class="ic"><span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+</svg></span><figcaption>chat</figcaption></figure>
+<figure class="ic"><span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M21 14v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5"/>
+  <path d="M15 3h6v6"/>
+  <path d="M10 14 21 3"/>
+</svg></span><figcaption>external-link</figcaption></figure>
+<figure class="ic"><span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+  <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"/>
+</svg></span><figcaption>github</figcaption></figure>
+<figure class="ic"><span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+  <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zm0 10.162a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+</svg></span><figcaption>instagram</figcaption></figure>
+<figure class="ic"><span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/>
+  <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/>
+</svg></span><figcaption>link</figcaption></figure>
+<figure class="ic"><span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+  <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+</svg></span><figcaption>linkedin</figcaption></figure>
+<figure class="ic"><span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M6 9V3h12v6"/>
+  <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+  <path d="M6 14h12v7H6z"/>
+</svg></span><figcaption>printer</figcaption></figure>
+<figure class="ic"><span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M4 9.5h3L12 5.5v13L7 14.5H4z" fill="currentColor" stroke="none"/>
+  <path d="M16 9.5l5 5"/>
+  <path d="M21 9.5l-5 5"/>
+</svg></span><figcaption>sound-off</figcaption></figure>
+<figure class="ic"><span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M4 9.5h3L12 5.5v13L7 14.5H4z" fill="currentColor" stroke="none"/>
+  <path d="M15.5 9a4.2 4.2 0 0 1 0 6"/>
+  <path d="M18.2 6.6a7.6 7.6 0 0 1 0 10.8"/>
+</svg></span><figcaption>sound-on</figcaption></figure>
+<figure class="ic"><span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+</svg></span><figcaption>x</figcaption></figure>
+<figure class="ic"><span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+  <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+</svg></span><figcaption>youtube</figcaption></figure></div>
+  </section>
+
+  <span class="h3-rule h3-rule-close" role="presentation"></span>
+  <footer class="h3-footer"><p>Otherwise I am always up for a coffee and/or a <a href="#">chat</a>.</p></footer>
+</main>
+<script src="h3-scramble.js"></script>
+<script>
+  const b = document.getElementById('theme');
+  const dark = () => document.documentElement.dataset.theme === 'dark' ||
+    (!document.documentElement.dataset.theme && matchMedia('(prefers-color-scheme: dark)').matches);
+  const label = () => { b.textContent = dark() ? 'Light' : 'Dark'; b.setAttribute('aria-pressed', String(dark())); };
+  b.addEventListener('click', () => { document.documentElement.dataset.theme = dark() ? 'light' : 'dark'; label(); });
+  label();
+</script>
+</body>
+</html>

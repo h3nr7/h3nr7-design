@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<title>Social card — h3nr7</title>
+<link rel="stylesheet" href="../h3nr7.css">
+<style>
+  /* 1200×630, the og:image / LinkedIn / X card size. Screenshot the .card.
+     The site's own social card is simply the mark tile (logo/h3nr7-tile-dark-1280.png);
+     this layout is for a card that names a specific piece. */
+  body { padding: 24px; }
+  .card {
+    width: 1200px; height: 630px; display: grid; grid-template-columns: 1fr 630px;
+    background: var(--colour-page); color: var(--colour-ink); overflow: hidden;
+  }
+  .card-text { padding: 72px 64px; display: flex; flex-direction: column; }
+  .card-text .h3-wordmark { font-size: 2rem; margin-bottom: var(--space-8); }
+  .card-text h1 { font-style: italic; font-size: 4rem; line-height: var(--leading-display); margin: 0; text-wrap: pretty; }
+  .card-text .h3-standfirst { font-size: 1.375rem; margin-top: var(--space-4); }
+  .card-text .h3-date { margin-top: auto; font-size: 1.125rem; }
+  .card-mark { background: #000; display: grid; place-items: center; }
+  .card-mark img { width: 52%; height: auto; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="card-text">
+    <p class="h3-wordmark">h3nr7</p>
+    <h1>WebGl terrain mesh</h1>
+    <p class="h3-standfirst">Create terrain mesh from NASA satellite data</p>
+    <p class="h3-date">18 May 2020</p>
+  </div>
+  <div class="card-mark"><img src="../logo/h3nr7-mark-white.svg" alt="h3nr7"></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<!-- data-theme="light": a deck pins its own palette. Light slides stay light and the
+     .slide-dark ones stay dark whatever the OS is set to — and so does the PDF. -->
+<html lang="en-GB" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Slides — h3nr7</title>
+<link rel="stylesheet" href="../h3nr7.css">
+<style>
+  /* 16:9 at 1280×720. Each .slide is one page when printed to PDF. Type sizes
+     here are the deck's own: the page scale is for reading distance, a slide
+     is read from across a room. */
+  @page { size: 1280px 720px; margin: 0; }
+  /* On screen the deck sits on the hover grey so a light slide keeps its edge,
+     zoomed to fit narrow windows (the script sets --fit) so nothing scrolls sideways. */
+  html { overflow-x: hidden; }
+  body { display: grid; gap: 24px; padding: 24px; justify-content: center; background: var(--colour-hover); }
+  .slide {
+    position: relative; width: 1280px; height: 720px; overflow: hidden; zoom: var(--fit, 1);
+    padding: 72px 96px; background: var(--colour-page); color: var(--colour-ink);
+    display: flex; flex-direction: column; border-radius: var(--radius-lg);
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  /* A slide is always 1280 wide, so its grid never waits for the 48rem breakpoint. */
+  .slide .h3-cols { display: grid; grid-template-columns: repeat(6, 1fr); gap: var(--space-12); align-items: start; }
+  .slide .h3-cols > * + * { margin-top: 0; }
+  .slide .h3-span-2 { grid-column: span 2; }
+  .slide .h3-span-3 { grid-column: span 3; }
+  .slide .h3-span-4 { grid-column: span 4; }
+  /* Present mode: P or F, then arrows / space / click; Esc leaves. */
+  body.presenting { display: block; padding: 0; background: #000; overflow: hidden; }
+  body.presenting .slide { display: none; position: fixed; top: 50%; left: 50%; zoom: 1; border-radius: 0;
+    transform: translate(-50%, -50%) scale(var(--present, 1)); }
+  body.presenting .slide.current { display: flex; }
+  .slide-foot { margin-top: auto; display: flex; justify-content: space-between; align-items: baseline; font-size: var(--text-sm); color: var(--colour-ink-faint); }
+  .slide-foot .h3-wordmark { margin: 0; font-size: 1.5rem; }
+  .slide h1.h3-landing-lede { font-size: 4.5rem; max-width: 18ch; }
+  .slide h2.h3-display { font-style: italic; font-size: 3.25rem; line-height: var(--leading-tight); margin: 0; }
+  .slide .h3-label { margin: 0 0 var(--space-6); }
+  .slide .h3-prose { font-size: 1.25rem; }
+  .slide .h3-cols { margin-top: var(--space-12); }
+  .slide-dark { --colour-page: #0e0e10; --colour-ink: #f2f2f3; --colour-ink-muted: #a6a7ac; --colour-ink-faint: #6f7076; --colour-line: #2a2a2f; }
+  @media print {
+    html, body { display: block; padding: 0; background: none; }
+    .slide { zoom: 1; break-after: page; border-radius: 0; }
+    /* h3nr7.css collapses .h3-cols to one column for paper; a slide keeps its grid. */
+    .slide .h3-cols { display: grid; }
+    .slide-dark { background: #0e0e10 !important; color: #f2f2f3 !important; }
+  }
+</style>
+</head>
+<!--
+  Slides template. One <section class="slide"> per slide; copy the kinds you
+  need. Title → section → content → statement → image → close. A deck uses
+  one statement per slide, the rule for structure, and no colour.
+  Present: open in a browser, press P (or F), arrows/space/click to move, Esc to
+  leave. PDF: print it (1280×720 pages, one per slide) — see references/outputs.md.
+-->
+<body>
+
+<section class="slide">
+  <p class="h3-landing-name" style="margin-bottom: var(--space-12)">h3nr7</p>
+  <h1 class="h3-landing-lede">How monocular depth keeps video in context</h1>
+  <div class="slide-foot"><span>Henry YP Ho · Platform &amp; Product Engineer</span><span>October 2026</span></div>
+</section>
+
+<section class="slide">
+  <p class="h3-label">Part one</p>
+  <h2 class="h3-display">Rendering from satellite and elevation data</h2>
+  <span class="h3-rule" style="margin-block: var(--space-12) 0; animation: none"></span>
+  <div class="slide-foot"><p class="h3-wordmark">h3nr7</p><span>02</span></div>
+</section>
+
+<section class="slide">
+  <h2 class="h3-display" style="font-size: 2.5rem">Why JPEG fails as elevation</h2>
+  <div class="h3-cols">
+    <div class="h3-span-3 h3-prose">
+      <ul>
+        <li>8 bits gives 256 height levels: terrain steps.</li>
+        <li>Lossy compression shows up as bumps.</li>
+        <li>No absolute scale between tiles.</li>
+      </ul>
+    </div>
+    <div class="h3-span-3 h3-prose">
+      <p>GeoTIFF stores 16- or 32-bit heights with georeferencing, so every vertex has a real coordinate.</p>
+    </div>
+  </div>
+  <div class="slide-foot"><p class="h3-wordmark">h3nr7</p><span>03</span></div>
+</section>
+
+<section class="slide slide-dark">
+  <h1 class="h3-landing-lede" style="margin-top: auto; max-width: 22ch">Decoding on the server keeps the client light.</h1>
+  <div class="slide-foot" style="margin-top: var(--space-12)"><p class="h3-wordmark">h3nr7</p><span>04</span></div>
+</section>
+
+<section class="slide">
+  <div class="h3-gridfield" style="flex: 1; border-radius: var(--radius-md)"><span class="h3-monogram">MA</span></div>
+  <figcaption style="margin-top: var(--space-3)">A miniature Mallorca: heightmap displacement, satellite albedo.</figcaption>
+  <div class="slide-foot" style="margin-top: var(--space-6)"><p class="h3-wordmark">h3nr7</p><span>05</span></div>
+</section>
+
+<section class="slide slide-dark" style="justify-content: center; align-items: center">
+  <img src="../logo/h3nr7-mark-white.svg" alt="h3nr7" style="height: 260px; width: auto">
+  <p style="margin-top: var(--space-12); color: var(--colour-ink-muted)">iam@h3nr7.com · h3nr7.com</p>
+</section>
+
+<script>
+  // Fit to narrow windows, and a minimal present mode. No dependencies.
+  const slides = [...document.querySelectorAll('.slide')];
+  let i = 0;
+  const fit = () => {
+    document.documentElement.style.setProperty('--fit', Math.min(1, (innerWidth - 48) / 1280).toFixed(4));
+    document.documentElement.style.setProperty('--present', Math.min(innerWidth / 1280, innerHeight / 720).toFixed(4));
+  };
+  const show = (n) => {
+    i = Math.max(0, Math.min(slides.length - 1, n));
+    slides.forEach((s, k) => s.classList.toggle('current', k === i));
+  };
+  const present = (on) => {
+    document.body.classList.toggle('presenting', on);
+    if (on) { show(i); document.documentElement.requestFullscreen?.().catch(() => {}); }
+    else if (document.fullscreenElement) document.exitFullscreen();
+  };
+  addEventListener('resize', fit);
+  addEventListener('keydown', (e) => {
+    const on = document.body.classList.contains('presenting');
+    if (!on && (e.key === 'p' || e.key === 'f')) return present(true);
+    if (!on) return;
+    if (e.key === 'Escape') present(false);
+    else if (['ArrowRight', 'ArrowDown', 'PageDown', ' '].includes(e.key)) { e.preventDefault(); show(i + 1); }
+    else if (['ArrowLeft', 'ArrowUp', 'PageUp'].includes(e.key)) { e.preventDefault(); show(i - 1); }
+  });
+  addEventListener('click', () => document.body.classList.contains('presenting') && show(i + 1));
+  document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement) present(false); });
+  fit();
+</script>
+</body>
+</html>
