@@ -5,7 +5,6 @@ dist/
 # places inside the skill stay on this machine; only the README is tracked.
 source/fonts/*
 !source/fonts/README.md
-skills/h3nr7-design/assets/fonts/MrsEaves*
 
 __pycache__/
 *.pyc
