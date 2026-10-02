@@ -1,0 +1,31 @@
+<!-- @dsCard group="Text" height=330 -->
+<!doctype html>
+<html lang="en-GB">
+<head><meta charset="utf-8"><title>Ligatures — preview</title>
+<style>
+  body { padding: 20px 24px; }
+  .lg-row { margin: 0 0 var(--space-4); }
+  p.h3-display.lg-spec { font-size: var(--text-3xl); line-height: var(--leading-tight); font-feature-settings: normal; }
+  p.h3-display.lg-off { font-variant-ligatures: none; }
+  p.h3-display.lg-tracked { letter-spacing: 0.02em; }
+  .lg-status { margin-top: var(--space-4); }
+</style>
+</head>
+<body>
+<div class="lg-row"><p class="h3-date">On — the brand: liga + dlig + calt</p><p class="h3-display lg-spec">first office coffee aesthetic street act spy kitty THE</p></div>
+<div class="lg-row"><p class="h3-date">Off</p><p class="h3-display lg-spec lg-off">first office coffee aesthetic street act spy kitty THE</p></div>
+<div class="lg-row"><p class="h3-date">Broken by 0.02em tracking</p><p class="h3-display lg-spec lg-tracked">first office coffee aesthetic street act spy kitty THE</p></div>
+<p class="h3-notice lg-status" id="lg-status">Checking the font…</p>
+<script>
+(function () {
+  var el = document.getElementById('lg-status');
+  function report() {
+    var ok = false;
+    try { ok = document.fonts.check('italic 32px "Mrs Eaves OT"') && Array.from(document.fonts).some(function (f) { return /Mrs Eaves OT/i.test(f.family) && f.status === 'loaded'; }); } catch (e) {}
+    el.textContent = ok ? 'Mrs Eaves OT Italic is loaded: the first line shows its ligatures.' : 'Mrs Eaves OT Italic did not load here: this is a fallback serif, without the ligatures.';
+  }
+  try { document.fonts.load('italic 32px "Mrs Eaves OT"', 'fi st ct').then(report, report); setTimeout(report, 3000); } catch (e) { report(); }
+})();
+</script>
+</body>
+</html>

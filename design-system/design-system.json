@@ -1,0 +1,315 @@
+{
+ "v": 3,
+ "layout": "files",
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-10-01T14:43:50Z"
+ },
+ "title": "h3nr7",
+ "namespace": "h3nr7",
+ "libraries": [],
+ "sections": {},
+ "groups": [
+  "Logos",
+  "Icons",
+  "Images",
+  "Reference"
+ ],
+ "assetGroups": {
+  "Logos": {
+   "name": "Logos",
+   "tile": "l",
+   "order": [
+    "h3nr7-mark.svg",
+    "h3nr7-mark-black.svg",
+    "h3nr7-mark-black.png",
+    "h3nr7-mark-white.svg",
+    "h3nr7-mark-white.png",
+    "h3nr7-tile-dark.svg",
+    "h3nr7-tile-dark.png",
+    "h3nr7-tile-dark-1280.png",
+    "h3nr7-tile-light.svg",
+    "h3nr7-tile-light.png",
+    "h3nr7-glyph.svg",
+    "h3nr7-glyph.png"
+   ],
+   "files": {
+    "h3nr7-mark.svg": {
+     "name": "h3nr7-mark.svg",
+     "blob": "15e894869f7e971d577c8f3e02b33857",
+     "size": 4343,
+     "type": "image/svg+xml"
+    },
+    "h3nr7-mark-black.svg": {
+     "name": "h3nr7-mark-black.svg",
+     "blob": "361479f8dd142bc33643acd59a858e0a",
+     "size": 4338,
+     "type": "image/svg+xml"
+    },
+    "h3nr7-mark-black.png": {
+     "name": "h3nr7-mark-black.png",
+     "blob": "5b4bd1d0a563ff1e9b47d5be7f0dc47e",
+     "size": 39225,
+     "type": "image/png"
+    },
+    "h3nr7-mark-white.svg": {
+     "name": "h3nr7-mark-white.svg",
+     "blob": "45541d59d98e8f29d133f14f9f846a4e",
+     "size": 4338,
+     "type": "image/svg+xml"
+    },
+    "h3nr7-mark-white.png": {
+     "name": "h3nr7-mark-white.png",
+     "blob": "c8e861e72405373f5b8028d7a08cec40",
+     "size": 41261,
+     "type": "image/png"
+    },
+    "h3nr7-tile-dark.svg": {
+     "name": "h3nr7-tile-dark.svg",
+     "blob": "81ec0b8be1a9686d6ee7ec5e95173923",
+     "size": 4382,
+     "type": "image/svg+xml"
+    },
+    "h3nr7-tile-dark.png": {
+     "name": "h3nr7-tile-dark.png",
+     "blob": "c47de8f4e1f27ab1ee3ada36a063640b",
+     "size": 35306,
+     "type": "image/png"
+    },
+    "h3nr7-tile-dark-1280.png": {
+     "name": "h3nr7-tile-dark-1280.png",
+     "blob": "933903c0aa9a62bdb1c360f98d8e974b",
+     "size": 56177,
+     "type": "image/png"
+    },
+    "h3nr7-tile-light.svg": {
+     "name": "h3nr7-tile-light.svg",
+     "blob": "02b6b5b0608f37462ce844df896b8793",
+     "size": 4382,
+     "type": "image/svg+xml"
+    },
+    "h3nr7-tile-light.png": {
+     "name": "h3nr7-tile-light.png",
+     "blob": "9e89d499ba9af79d38f2e5381bd8ba30",
+     "size": 38292,
+     "type": "image/png"
+    },
+    "h3nr7-glyph.svg": {
+     "name": "h3nr7-glyph.svg",
+     "blob": "3357c8c467add027caac1430b6156066",
+     "size": 191,
+     "type": "image/svg+xml"
+    },
+    "h3nr7-glyph.png": {
+     "name": "h3nr7-glyph.png",
+     "blob": "e9859e206750cb755f6cfc5e69c740e1",
+     "size": 2611,
+     "type": "image/png"
+    }
+   }
+  },
+  "Icons": {
+   "name": "Icons",
+   "tile": "xs",
+   "order": [
+    "arrow-left.svg",
+    "arrow-right.svg",
+    "chat.svg",
+    "external-link.svg",
+    "link.svg",
+    "printer.svg",
+    "sound-on.svg",
+    "sound-off.svg",
+    "x.svg",
+    "github.svg",
+    "linkedin.svg",
+    "youtube.svg",
+    "instagram.svg"
+   ],
+   "files": {
+    "arrow-left.svg": {
+     "name": "arrow-left.svg",
+     "blob": "d679b724a76249bf82e810bea49bb99d",
+     "size": 252,
+     "type": "image/svg+xml"
+    },
+    "arrow-right.svg": {
+     "name": "arrow-right.svg",
+     "blob": "7b0110a3c1ec2dea0d9203d5685af9cc",
+     "size": 251,
+     "type": "image/svg+xml"
+    },
+    "chat.svg": {
+     "name": "chat.svg",
+     "blob": "541310172068eb9ed251426c781b177d",
+     "size": 270,
+     "type": "image/svg+xml"
+    },
+    "external-link.svg": {
+     "name": "external-link.svg",
+     "blob": "0c1fc2544a519d292f8e97db4cf70a6f",
+     "size": 327,
+     "type": "image/svg+xml"
+    },
+    "link.svg": {
+     "name": "link.svg",
+     "blob": "e08a705f43cc5193b83a26f0724dba3b",
+     "size": 349,
+     "type": "image/svg+xml"
+    },
+    "printer.svg": {
+     "name": "printer.svg",
+     "blob": "ea75aa1302b4faac9382aaddc50ee06b",
+     "size": 349,
+     "type": "image/svg+xml"
+    },
+    "sound-on.svg": {
+     "name": "sound-on.svg",
+     "blob": "86fef0af78e5f2a7ad3b4d627dd8ddb7",
+     "size": 370,
+     "type": "image/svg+xml"
+    },
+    "sound-off.svg": {
+     "name": "sound-off.svg",
+     "blob": "301259f3c4a91978aada8c5ce80d07db",
+     "size": 338,
+     "type": "image/svg+xml"
+    },
+    "x.svg": {
+     "name": "x.svg",
+     "blob": "08377bcda7ca3ba4b84d941d7d096796",
+     "size": 286,
+     "type": "image/svg+xml"
+    },
+    "github.svg": {
+     "name": "github.svg",
+     "blob": "759ad46c8788d318ec6e6e0e5a7124eb",
+     "size": 843,
+     "type": "image/svg+xml"
+    },
+    "linkedin.svg": {
+     "name": "linkedin.svg",
+     "blob": "899674d42ff99620ccf483f521bbc2fd",
+     "size": 565,
+     "type": "image/svg+xml"
+    },
+    "youtube.svg": {
+     "name": "youtube.svg",
+     "blob": "799241ff7dc32855eaf853ac75501dda",
+     "size": 479,
+     "type": "image/svg+xml"
+    },
+    "instagram.svg": {
+     "name": "instagram.svg",
+     "blob": "9da1cb36c86fbff9a3b387f3926d472e",
+     "size": 1034,
+     "type": "image/svg+xml"
+    }
+   }
+  },
+  "Images": {
+   "name": "Images",
+   "tile": "m",
+   "order": [
+    "portrait-600.jpg",
+    "portrait-1200.jpg"
+   ],
+   "files": {
+    "portrait-600.jpg": {
+     "name": "portrait-600.jpg",
+     "blob": "451fc7a0ae6bfb6ef3a14630ac28d574",
+     "size": 36471,
+     "type": "image/jpeg"
+    },
+    "portrait-1200.jpg": {
+     "name": "portrait-1200.jpg",
+     "blob": "0007191a0fddeee836ca22db1e965749",
+     "size": 135521,
+     "type": "image/jpeg"
+    }
+   }
+  },
+  "Reference": {
+   "name": "Reference",
+   "tile": "l",
+   "order": [
+    "billboard-rest-light.jpg",
+    "billboard-rest-dark.jpg",
+    "billboard-hover-light.jpg",
+    "billboard-mobile-light.jpg",
+    "article-light.jpg",
+    "article-dark.jpg",
+    "contact-panel-light.png",
+    "contact-panel-dark.png",
+    "ligatures.png"
+   ],
+   "files": {
+    "billboard-rest-light.jpg": {
+     "name": "billboard-rest-light.jpg",
+     "blob": "7876dc5bd9e3e1770b23f862a418641a",
+     "size": 16662,
+     "type": "image/jpeg"
+    },
+    "billboard-rest-dark.jpg": {
+     "name": "billboard-rest-dark.jpg",
+     "blob": "3b197190d570e58d0e7d9b159b1dd8e7",
+     "size": 17208,
+     "type": "image/jpeg"
+    },
+    "billboard-hover-light.jpg": {
+     "name": "billboard-hover-light.jpg",
+     "blob": "0333e5862c0c35c65d077421d7308082",
+     "size": 21841,
+     "type": "image/jpeg"
+    },
+    "billboard-mobile-light.jpg": {
+     "name": "billboard-mobile-light.jpg",
+     "blob": "8f26f0914dbbb010f3eb0abb55e1d94c",
+     "size": 19953,
+     "type": "image/jpeg"
+    },
+    "article-light.jpg": {
+     "name": "article-light.jpg",
+     "blob": "26e0d374ae42a4f2854d0f0c54a90d61",
+     "size": 208504,
+     "type": "image/jpeg"
+    },
+    "article-dark.jpg": {
+     "name": "article-dark.jpg",
+     "blob": "80b4456469834c3464bfd4bd72d55e6e",
+     "size": 115544,
+     "type": "image/jpeg"
+    },
+    "contact-panel-light.png": {
+     "name": "contact-panel-light.png",
+     "blob": "83c5e9eec8d7bc2d35eedab9c6cca616",
+     "size": 22269,
+     "type": "image/png"
+    },
+    "contact-panel-dark.png": {
+     "name": "contact-panel-dark.png",
+     "blob": "6289b701bbd2a7ad3c1bb76ec18535c5",
+     "size": 22807,
+     "type": "image/png"
+    },
+    "ligatures.png": {
+     "name": "ligatures.png",
+     "blob": "469ff5377866f72f762b450cd50e088d",
+     "size": 55121,
+     "type": "image/png"
+    }
+   }
+  }
+ },
+ "blobs": {},
+ "docs": {
+  "readme": "project/README.md",
+  "sections": []
+ },
+ "lastChange": {
+  "by": "Henry",
+  "at": "2026-10-02T00:06:35Z",
+  "via": "Claude",
+  "note": "Added components/bundle.js (the split-flap script) so component previews run live and load the fonts."
+ }
+}
