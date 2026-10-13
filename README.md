@@ -1,5 +1,7 @@
 # h3nr7-design
 
+![hero](./examples/opening.png)
+
 The h3nr7.com design system, packaged as a **Claude skill** so Claude Desktop (and claude.ai,
 and Claude Code) can make things that look like h3nr7: pages, artifacts, CVs, slides,
 documents, social cards, charts.
