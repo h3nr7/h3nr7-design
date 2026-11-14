@@ -84,7 +84,9 @@ python scripts/html2epub.py work/page.html -o "out/Title.epub" --keep-build work
 
 Useful options: `--author` (default Henry YP Ho), `--title`, `--label` (cover label line),
 `--split h2|h3|none` (chapter boundary, default h2), `--cover image.jpg`, `--no-cover`,
-`--no-display-font` (leave Mrs Eaves out, for a copy others will read), `--no-obfuscate`.
+`--no-display-font` (leave Mrs Eaves out, for a copy others will read), `--profile eink`
+(Kindle, Boox, Kobo: see "Which reader" below), `--obfuscate` (off by default; see Fonts).
+Ask which reader the book is for before building; it decides `--profile`.
 
 What the converter does to the CSS, so nothing surprises you:
 
@@ -100,7 +102,7 @@ What the converter does to the CSS, so nothing surprises you:
 | tables, `pre` | wrap inside the page | same reason |
 | page `@font-face` (inline woff2) | the design skill's TTFs, only the families used | the real files, every reader takes TTF |
 
-`assets/epub.css` is appended last: reader margins, pagination (headings stay with what
+`assets/epub.css` is appended last (plus `assets/epub-eink.css` with `--profile eink`): reader margins, pagination (headings stay with what
 follows; figures, cells, panels and table rows stay whole), wrapping, and a fix for
 techdoc.css's narrow-screen meta spacing. Edit it rather than the page when the book alone
 needs a change.
@@ -135,11 +137,28 @@ is in it. If he wants it on his computer and the desktop app is connected, write
 ## Fonts and sharing
 
 Mrs Eaves is a licensed Emigre face (Preview and Print embedding). An EPUB embeds the font
-file, so a book with Mrs Eaves in it is **for Henry's own reading**. The converter obfuscates
-embedded fonts the standard IDPF way (readers undo it; the file inside is not a usable font),
-which is what the format offers for licensed faces, but it does not change the licence. For a
-copy that goes to anyone else, build with `--no-display-font` (display type falls back to the
-Baskerville stack) or send a PDF. Never send the font files themselves. Inter is OFL and fine.
+file, so a book with Mrs Eaves in it is **for Henry's own reading**. For a copy that goes to
+anyone else, build with `--no-display-font` (display type falls back to the Baskerville stack)
+or send a PDF. Never send the font files themselves. Inter is OFL and fine.
+
+Fonts are embedded plainly by default. `--obfuscate` applies the standard IDPF obfuscation,
+but only Apple Books, Thorium, calibre and Adobe-based readers undo it; Kindle, Aquile and
+many e-ink apps silently drop obfuscated fonts and fall back to their own. Use it only for a
+book that will only ever be read in Apple Books. It does not change the licence either way.
+
+## Which reader
+
+The book carries everything; each reader then decides how much of it to use. Tell Henry the
+one setting his reader needs, in the same message as the file.
+
+| Reader | Build | What shows | Setting to change |
+|---|---|---|---|
+| Apple Books (Mac, iPhone, iPad) | default | the closest to the page: fonts, panels, grids, SVG | none: the book asks for its own fonts (`com.apple.ibooks.display-options.xml`); if a font was picked by hand, Aa → Original |
+| Thorium, calibre viewer | default | as Apple Books | none |
+| Boox (NeoReader) | `--profile eink` | fonts, rules, tables; grids stacked | font menu → the book's embedded/original font; turn off "override publisher style" if on |
+| Kobo, PocketBook | `--profile eink` | as Boox | font → Publisher default |
+| Kindle (Send to Kindle) | `--profile eink` | Mrs Eaves headings, tables, code; Amazon's body font unless changed | Aa → Font → Publisher Font. Check diagrams in Kindle Previewer first: the conversion is Amazon's |
+| Aquile Reader (Windows) | default | fonts once the setting is on; its enhanced rendering re-lays pages | Settings → use the book's original font (experimental); try both enhanced rendering modes |
 
 ## What a reader changes, whatever we do
 
@@ -150,12 +169,13 @@ Baskerville stack) or send a PDF. Never send the font files themselves. Inter is
   For diagram-heavy books, mention that a tablet or landscape reads better.
 - Readers may override fonts (Kindle and Apple Books let the reader choose) and invert
   colours in night mode. The ink panel inverts with it.
-- Kindle: Send to Kindle takes EPUB and converts it. If the brand faces do not show there,
-  rebuild with `--no-obfuscate` for his own device.
+- E-ink readers may drop background colours: that is why `--profile eink` turns the filled
+  ink panels into ruled ones and darkens the greys (the SVG diagrams' too).
 
 ## Troubleshooting
 
-- *Headings in Times*: the face did not load. Check `OEBPS/fonts/` has MrsEavesOT-Italic.ttf
+- *Headings in Times*: first the reader's font setting (table above), then whether the book
+  was built with `--obfuscate`. Then check `OEBPS/fonts/` has MrsEavesOT-Italic.ttf
   and that `../h3nr7-design/assets/fonts/` holds the real file, not an LFS pointer.
 - *A section missing from the contents*: its heading is not an h2 at the same depth as the
   others; use `--split h3` or `--split none`.

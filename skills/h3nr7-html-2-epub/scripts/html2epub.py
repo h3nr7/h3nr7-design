@@ -13,8 +13,11 @@ What it does, in order:
    data: URIs) and inline SVG. Scripts, iframes, video and remote images are dropped.
 2. Fonts come from the h3nr7-design skill (assets/fonts/fonts.json + the TTFs), never
    from the page: every @font-face in the page is removed and replaced by the
-   bundled faces the page's font stacks ask for. Fonts are IDPF-obfuscated in the
-   package unless --no-obfuscate (Mrs Eaves is licensed; see SKILL.md).
+   bundled faces the page's font stacks ask for. Fonts are stored plainly;
+   --obfuscate applies IDPF obfuscation, which several readers cannot undo
+   (Kindle, Aquile, many e-ink apps), so it is off by default. Apple Books is
+   told to use the book's fonts (META-INF/com.apple.ibooks.display-options.xml).
+   --profile eink restyles filled panels as ruled ones and darkens the greys.
 3. Makes the CSS e-reader safe: resolves var(--x) to literal light-theme values
    (SVG diagrams included), drops dark-mode and print blocks, replaces clamp(),
    color-mix(), :is()/:where() and viewport units, removes min-widths and fixed
@@ -558,6 +561,11 @@ class Book:
         vars_ = collect_vars(all_css)
         if not vars_:
             vars_ = collect_vars((self.design / "assets" / "h3nr7.css").read_text())
+        if self.a.profile == "eink":
+            # e-ink has ~16 greys and no backlight: pale greys vanish, so step every grey down one
+            vars_.update({"--colour-page": "#ffffff", "--colour-surface": "#ffffff",
+                          "--colour-hover": "#e2e2e5", "--colour-ink-muted": "#3f4045",
+                          "--colour-ink-faint": "#595a5f", "--colour-line": "#9a9ba0"})
 
         css_out = []
         for css, base in css_parts:
@@ -585,6 +593,8 @@ class Book:
         if any("eaves" in f.lower() for f in self.fonts):
             note("Mrs Eaves is embedded: this EPUB is for Henry's own reading. Share with --no-display-font, or as PDF.")
         epub_css = (HERE / "assets" / "epub.css").read_text(encoding="utf-8")
+        if self.a.profile == "eink":
+            epub_css += "\n" + (HERE / "assets" / "epub-eink.css").read_text(encoding="utf-8")
         (self.build / "OEBPS" / "css" / "book.css").write_text(
             "/* fonts: h3nr7-design */\n" + "\n".join(font_css) +
             "\n\n/* the page's own CSS, made e-reader safe */\n" + page_css +
@@ -914,6 +924,10 @@ class Book:
 </spine>
 </package>"""
         (self.build / "OEBPS" / "content.opf").write_text(opf, encoding="utf-8")
+        # Apple Books ignores embedded fonts unless the book says it specifies them
+        (self.build / "META-INF" / "com.apple.ibooks.display-options.xml").write_text(
+            '<?xml version="1.0" encoding="utf-8"?>\n<display_options><platform name="*">'
+            '<option name="specified-fonts">true</option></platform></display_options>', encoding="utf-8")
         (self.build / "META-INF" / "container.xml").write_text(
             '<?xml version="1.0" encoding="utf-8"?>\n<container version="1.0" '
             'xmlns="urn:oasis:names:tc:opendocument:xmlns:container"><rootfiles>'
@@ -924,7 +938,7 @@ class Book:
     def package(self) -> Path:
         out = Path(self.a.output or self.src.with_suffix(".epub")).resolve()
         out.parent.mkdir(parents=True, exist_ok=True)
-        obfuscate = self.fonts and not self.a.no_obfuscate
+        obfuscate = bool(self.fonts) and self.a.obfuscate
         key = hashlib.sha1(re.sub(r"[\x20\x09\x0d\x0a]", "", self.uid).encode()).digest()
         with zipfile.ZipFile(out, "w") as z:
             z.writestr(zipfile.ZipInfo("mimetype"), "application/epub+zip", compress_type=zipfile.ZIP_STORED)
@@ -1013,7 +1027,13 @@ def main():
     ap.add_argument("--no-cover", action="store_true")
     ap.add_argument("--no-display-font", action="store_true",
                     help="leave Mrs Eaves out (for a copy that goes to other people)")
-    ap.add_argument("--no-obfuscate", action="store_true", help="store fonts unobfuscated")
+    ap.add_argument("--obfuscate", action="store_true",
+                    help="IDPF-obfuscate embedded fonts (Apple Books, Thorium and calibre undo it; "
+                         "Kindle, Aquile and many e-ink readers then ignore the fonts)")
+    ap.add_argument("--no-obfuscate", action="store_true", help=argparse.SUPPRESS)  # old default, now a no-op
+    ap.add_argument("--profile", default="screen", choices=["screen", "eink"],
+                    help="screen: Apple Books, tablets, desktop readers. eink: Kindle, Boox, Kobo, PocketBook "
+                         "(filled panels become ruled, greys darken for e-ink contrast)")
     ap.add_argument("--keep-build", help="keep the unpacked book in this folder (for preview.py)")
     ap.add_argument("--no-check", action="store_true")
     a = ap.parse_args()
