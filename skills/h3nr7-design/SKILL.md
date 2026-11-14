@@ -111,6 +111,36 @@ themselves are never sent or published.
 If `fonts.json` lists no Mrs Eaves face (a build made without the files), say so instead of
 quietly substituting; the fallback stack is a last resort, not a choice.
 
+### Adobe-served vs bundled fonts: the vertical-metrics gap
+
+h3nr7.com's Mrs Eaves and Inter come from the Adobe Fonts kit; the files in `assets/fonts/` are
+the same designs but **not the same font files**. Glyph shapes and widths match, but the files
+declare different ascent and descent, and a browser uses those to place text inside a line box.
+With the same `line-height`, the same boxes and the same margins, the display title still sits
+about 3px higher than on the site and the title-to-standfirst gap looks looser.
+
+| Face | Adobe-served (the site) | Bundled file | Effect with `line-height: 0.95` at ~32px |
+|---|---|---|---|
+| Mrs Eaves Italic | ascent 0.839 · descent 0.267 | 0.617 · 0.250 | bundled title ~3px high |
+| Inter (18pt) | ascent 1.127 · descent 0.344 | 0.969 · 0.241 | standfirst under 1px off |
+
+Rules:
+
+- **Any `@font-face` for a bundled file carries the overrides** (`ascent-override`,
+  `descent-override`, `line-gap-override: 0%`). Link `assets/fonts/fonts.css` — it has them —
+  or let `scripts/inline.py` embed the fonts, which now writes them from the `metrics` entries
+  in `fonts.json`. Never hand-write a bare `@font-face` for these files.
+- **Layout boxes need no change.** Do not nudge margins or line-heights to compensate; the
+  boxes already match the site (wordmark top 48, title 102, standfirst 137, date 161, rule 229
+  at 1280px wide). Only the baseline inside each box moves.
+- **When comparing a page with h3nr7.com**, a few pixels of vertical difference in display type
+  with identical box positions means missing overrides, not wrong spacing. Check boxes first,
+  then glyph position (`Range.getBoundingClientRect()` on the text node).
+- **Pages that run on h3nr7.com itself** use the kit (`mrs-eaves`, `inter-18pt`) and need
+  nothing here.
+- The site loads Inter at weights 400 and 700 (plus italics), not 600. The bundled SemiBold is
+  the nearest file, so semibold text is the one place a bundled page can differ in weight.
+
 ## Logo and imagery
 
 | Asset | Use it for |

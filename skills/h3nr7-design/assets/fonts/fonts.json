@@ -7,7 +7,12 @@
       "style": "italic",
       "weight": 400,
       "file": "MrsEavesOT-Italic.woff2",
-      "desktop": "MrsEavesOT-Italic.ttf"
+      "desktop": "MrsEavesOT-Italic.ttf",
+      "metrics": {
+        "ascent-override": "83.9%",
+        "descent-override": "26.7%",
+        "line-gap-override": "0%"
+      }
     },
     {
       "family": "Inter",
@@ -15,7 +20,12 @@
       "style": "normal",
       "weight": 400,
       "file": "Inter-Regular.woff2",
-      "desktop": "Inter-Regular.ttf"
+      "desktop": "Inter-Regular.ttf",
+      "metrics": {
+        "ascent-override": "112.7%",
+        "descent-override": "34.4%",
+        "line-gap-override": "0%"
+      }
     },
     {
       "family": "Inter",
@@ -23,7 +33,12 @@
       "style": "normal",
       "weight": 600,
       "file": "Inter-SemiBold.woff2",
-      "desktop": "Inter-SemiBold.ttf"
+      "desktop": "Inter-SemiBold.ttf",
+      "metrics": {
+        "ascent-override": "112.7%",
+        "descent-override": "34.4%",
+        "line-gap-override": "0%"
+      }
     },
     {
       "family": "Inter",
@@ -31,7 +46,13 @@
       "style": "italic",
       "weight": 400,
       "file": "Inter-Italic.woff2",
-      "desktop": "Inter-Italic.ttf"
+      "desktop": "Inter-Italic.ttf",
+      "metrics": {
+        "ascent-override": "112.7%",
+        "descent-override": "34.4%",
+        "line-gap-override": "0%"
+      }
     }
-  ]
+  ],
+  "_metrics_note": "Vertical metrics of the Adobe Fonts faces h3nr7.com serves (mrs-eaves, inter-18pt), measured in Chrome at 1000px with canvas fontBoundingBox. The bundled files have the same glyphs but different ascent/descent, so every @font-face for them must carry these overrides. See SKILL.md."
 }

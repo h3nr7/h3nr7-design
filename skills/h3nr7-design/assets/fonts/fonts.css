@@ -1,0 +1,28 @@
+/* h3nr7 bundled fonts, for pages that link the files by path (not the base64 route in
+   scripts/inline.py, which writes the same rules). Link this BEFORE h3nr7.css.
+
+   The *-override lines are not optional. h3nr7.com serves Mrs Eaves and Inter from an Adobe
+   Fonts kit; these files have the same glyphs but different ascent/descent, so without the
+   overrides every baseline sits at a different height in its line box (the display title
+   ~3px higher than on the site). The numbers are the Adobe faces' metrics. See SKILL.md,
+   "Adobe-served vs bundled fonts". */
+@font-face {
+  font-family: 'Mrs Eaves OT'; font-style: italic; font-weight: 400; font-display: swap;
+  src: url('MrsEavesOT-Italic.woff2') format('woff2');
+  ascent-override: 83.9%; descent-override: 26.7%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap;
+  src: url('Inter-Regular.woff2') format('woff2');
+  ascent-override: 112.7%; descent-override: 34.4%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Inter'; font-style: normal; font-weight: 600; font-display: swap;
+  src: url('Inter-SemiBold.woff2') format('woff2');
+  ascent-override: 112.7%; descent-override: 34.4%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Inter'; font-style: italic; font-weight: 400; font-display: swap;
+  src: url('Inter-Italic.woff2') format('woff2');
+  ascent-override: 112.7%; descent-override: 34.4%; line-gap-override: 0%;
+}

@@ -32,6 +32,16 @@ The bundled web font is the desktop file with its CFF table rewritten: Chrome's 
 rejects the 1996 original ("CFF: Failed to parse Top DICT Data") — the foundry's own web kit
 included — and a rejected `@font-face` fails silently. Outlines and features are unchanged.
 
+**Vertical metrics differ from the Adobe faces.** The bundled files share outlines and advance
+widths with the kit's `mrs-eaves` and `inter-18pt` but not their ascent/descent (measured in
+Chrome at 1000px: Mrs Eaves Italic 0.839/0.267 on the site vs 0.617/0.250 bundled; Inter
+1.127/0.344 vs 0.969/0.241). `line-height` is a fixed multiple, so boxes are identical, but the
+text sits at a different height inside each: the bundled title renders about 3px higher. Every
+`@font-face` for the bundled files therefore sets `ascent-override`, `descent-override` and
+`line-gap-override: 0%` to the site's numbers. They live in `assets/fonts/fonts.json`
+(`metrics`), `assets/fonts/fonts.css` and `scripts/inline.py` writes them. Do not adjust
+margins to fix a baseline that is off; fix the overrides.
+
 ## Feature settings
 
 Exactly what h3nr7.com sets (`packages/ui/src/styles/fonts.css`):

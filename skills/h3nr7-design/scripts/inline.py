@@ -69,9 +69,11 @@ def font_faces(families: set[str] | None) -> tuple[str, int]:
         if not path.is_file():
             print(f"  font missing, skipped: {f['file']}", file=sys.stderr)
             continue
+        # Match the Adobe-served faces' vertical metrics, or baselines sit ~3px off the site's.
+        m = "".join(f"{k}:{v};" for k, v in f.get("metrics", {}).items())
         rules.append(
             f"@font-face{{font-family:'{f['family']}';font-style:{f['style']};font-weight:{f['weight']};"
-            f"font-display:swap;src:url({data_uri(path)}) format('woff2');}}"
+            f"font-display:swap;{m}src:url({data_uri(path)}) format('woff2');}}"
         )
     return "<style>/* h3nr7-design fonts, see SKILL.md */\n" + "\n".join(rules) + "\n</style>", len(rules)
 
