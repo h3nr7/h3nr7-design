@@ -111,6 +111,36 @@ themselves are never sent or published.
 If `fonts.json` lists no Mrs Eaves face (a build made without the files), say so instead of
 quietly substituting; the fallback stack is a last resort, not a choice.
 
+### Adobe-served vs bundled fonts: the vertical-metrics gap
+
+h3nr7.com's Mrs Eaves and Inter come from the Adobe Fonts kit; the files in `assets/fonts/` are
+the same designs but **not the same font files**. Glyph shapes and widths match, but the files
+declare different ascent and descent, and a browser uses those to place text inside a line box.
+With the same `line-height`, the same boxes and the same margins, the display title still sits
+about 3px higher than on the site and the title-to-standfirst gap looks looser.
+
+| Face | Adobe-served (the site) | Bundled file | Effect with `line-height: 0.95` at ~32px |
+|---|---|---|---|
+| Mrs Eaves Italic | ascent 0.839 · descent 0.267 | 0.617 · 0.250 | bundled title ~3px high |
+| Inter (18pt) | ascent 1.127 · descent 0.344 | 0.969 · 0.241 | standfirst under 1px off |
+
+Rules:
+
+- **Any `@font-face` for a bundled file carries the overrides** (`ascent-override`,
+  `descent-override`, `line-gap-override: 0%`). Link `assets/fonts/fonts.css` — it has them —
+  or let `scripts/inline.py` embed the fonts, which now writes them from the `metrics` entries
+  in `fonts.json`. Never hand-write a bare `@font-face` for these files.
+- **Layout boxes need no change.** Do not nudge margins or line-heights to compensate; the
+  boxes already match the site (wordmark top 48, title 102, standfirst 137, date 161, rule 229
+  at 1280px wide). Only the baseline inside each box moves.
+- **When comparing a page with h3nr7.com**, a few pixels of vertical difference in display type
+  with identical box positions means missing overrides, not wrong spacing. Check boxes first,
+  then glyph position (`Range.getBoundingClientRect()` on the text node).
+- **Pages that run on h3nr7.com itself** use the kit (`mrs-eaves`, `inter-18pt`) and need
+  nothing here.
+- The site loads Inter at weights 400 and 700 (plus italics), not 600. The bundled SemiBold is
+  the nearest file, so semibold text is the one place a bundled page can differ in weight.
+
 ## Logo and imagery
 
 | Asset | Use it for |
@@ -123,12 +153,20 @@ quietly substituting; the fallback stack is a last resort, not a choice.
 | `assets/images/portrait-600.jpg`, `-1200.jpg` | Henry's portrait. Only where it is his profile. |
 | `assets/icons/*.svg` | The site's icons, `currentColor`. |
 
-- The mark is a drawing in Mrs Eaves Bold Italic. Use the files; never re-typeset it, stretch,
-  rotate, outline, shadow or recolour it beyond ink/black/white.
+- The mark is five glyphs in Mrs Eaves Bold Italic placed by hand. Use the files; never re-typeset it
+  by eye, stretch, rotate, outline, shadow or recolour it beyond ink/black/white. To generate it in code
+  at another size or format, use the **h3nr7-logo** skill (`skills/h3nr7-logo/` in the repo): it holds the
+  exact layout and a build script, and needs the Bold Italic font file, which is not bundled here.
 - Clear space: at least the width of the mark's "n" on every side; the tiles show the intended
   margins (the mark fills about 51% of the width). Below about 48px tall, use the glyph instead.
 - In running headers the signature is the **text wordmark** — `h3nr7` set lowercase in display
   italic (`.h3-wordmark` / `.h3-landing-name`) — not the stacked mark.
+- **The wordmark is always a link to the site**, in every tech doc, article, write-up and
+  one-pager: `<p class="h3-wordmark"><a href="https://h3nr7.com/"><span data-scramble>h3nr7</span></a></p>`.
+  Use the absolute URL for anything that lives off h3nr7.com (an artifact, a file, an email); on
+  the site itself it is `/`. The link inherits the muted wordmark colour with no underline and
+  no sweep — it signals itself with the pointer and the scramble on hover, as on the site. Never
+  ship a bare, unlinked `h3nr7` in a masthead.
 - Portrait: square, 8px radius (never a circle), 64px in a card; the initials "HH" underneath
   as the fallback.
 - No stock imagery. An empty image slot is `.h3-gridfield` — a near-black square grid with the
@@ -171,7 +209,7 @@ Minimal page:
 <body>
 <main class="h3-page">
   <header class="h3-masthead">
-    <p class="h3-wordmark">h3nr7</p>
+    <p class="h3-wordmark"><a href="https://h3nr7.com/"><span data-scramble>h3nr7</span></a></p>
     <h1>Title in display italic</h1>
     <p class="h3-standfirst">What this is, in one line.</p>
     <p class="h3-date">1 October 2026</p>

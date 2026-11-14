@@ -29,7 +29,7 @@ same at every width.
 
 ```html
 <header class="h3-masthead">
-  <p class="h3-wordmark"><a href="/">h3nr7</a></p>   <!-- muted: the site, not the piece -->
+  <p class="h3-wordmark"><a href="/"><span data-scramble>h3nr7</span></a></p>   <!-- muted: the site, not the piece -->
   <h1>WebGl terrain mesh</h1>                         <!-- display italic, name size -->
   <p class="h3-standfirst">Create terrain mesh from NASA satellite data</p>
   <p class="h3-date">18 May 2020</p>
@@ -37,6 +37,8 @@ same at every width.
 <span class="h3-rule h3-rule-soft" role="presentation"></span>
 ```
 
+The wordmark is always a link home: `/` on h3nr7.com, `https://h3nr7.com/` in anything that lives
+elsewhere (artifact, file, email). It inherits the muted colour, no underline or sweep.
 Wordmark and title are the same size; colour alone separates them. 24px from wordmark down
 to title; standfirst sits on the title (4px); the date sits on the standfirst with no gap. On
 the CV the `h1` *is* the wordmark ("iam h3nr7", ink), followed by a role line
@@ -95,8 +97,10 @@ italic — one document, not two. Entry titles are never links.
 Every in-text link: `.h3-link` (or any `a` inside `.h3-prose`, `.h3-landing-links`,
 `.h3-footer`). Two hairlines painted as backgrounds: a full-width `--colour-line` rail at rest,
 and an ink line that grows from 0 to 100% width, left to right, over 200ms on hover/focus.
-`padding-bottom: 2px` keeps it clear of descenders; `box-decoration-break: clone` underlines
-every line of a wrapped link. Colour by context: ink in prose; muted → ink on the landing
+No `padding-bottom`: the inline box already ends ~5.5px below the baseline at 16px (Inter's descent,
+with the overrides in `assets/fonts/fonts.css`), which clears descenders. A 2px pad put the line ~8px
+under the text and read as detached. (h3nr7.com's own stylesheet still has the 2px; this is a
+deliberate change.) `box-decoration-break: clone` underlines every line of a wrapped link. Colour by context: ink in prose; muted → ink on the landing
 links (they are the content, so they step back); ink inside a faint footer (the actionable
 words are the darkest in the sentence).
 

@@ -307,7 +307,9 @@ figcaption { font-size: var(--text-xs); color: var(--colour-ink-faint); margin-t
 /* Two hairlines: a grey rail at rest, an ink line that sweeps in left to right.
    Controls inside prose keep their own look: hence the :not(). */
 .h3-link, .h3-prose a:not(.h3-cta, .h3-button, .h3-icon-button), .h3-landing-links a, .h3-footer a {
-  padding-bottom: 2px;
+  /* No padding under the inline box. With Inter's full descent (see fonts.css) the box already runs
+     ~5.5px below the baseline at 16px, clear of descenders; the old 2px put the line ~8px down. */
+  padding-bottom: 0;
   background-image: linear-gradient(var(--colour-ink), var(--colour-ink)), linear-gradient(var(--colour-line), var(--colour-line));
   background-repeat: no-repeat;
   background-position: 0 100%, 0 100%;
