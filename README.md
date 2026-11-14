@@ -13,6 +13,8 @@ changes, this follows it, not the other way round.
 skills/h3nr7-design/        the skill — this folder is what gets zipped and uploaded
 skills/h3nr7-logo/          a second skill: how the stacked logo mark is built from Mrs Eaves OT Bold Italic
                             (layout in em, build script). Package it with `python scripts/package.py --skill h3nr7-logo`
+skills/h3nr7-html-2-epub/   a third skill: an h3nr7 page, Claude artifact or Claude doc → EPUB 3 that keeps the look,
+                            using h3nr7-design's own CSS and fonts. Package it with `--skill h3nr7-html-2-epub`
   SKILL.md                  entry point: essentials, tokens, fonts, logo rules, workflow
   references/               tokens · typography · components · motion · brand-assets · voice · outputs
   assets/h3nr7.css          portable stylesheet: tokens, base type, every h3- component
