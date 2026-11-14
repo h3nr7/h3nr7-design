@@ -187,7 +187,7 @@ now." More in `references/voice.md`.
 ## Building something
 
 1. **Pick the template** in `assets/templates/`:
-   `page.html` (article, report, write-up, one-pager) · `cv.html` (CV, bio, profile) ·
+   `page.html` (article, report, write-up, one-pager) · `techdoc.html` (tech doc: architecture plan, cheat sheet, learning notes; see Tech docs) · `cv.html` (CV, bio, profile) ·
    `landing.html` (home, portfolio index, link page) · `slides.html` (16:9 deck, prints to PDF)
    · `social-card.html` (1200×630 og image, cover). `assets/specimen.html` shows every
    component at once.
@@ -224,6 +224,46 @@ Minimal page:
 </html>
 ```
 
+## Tech docs
+
+Architecture plans, cheat sheets and learning notes use their own layout, not the article
+masthead. It applies **only** to tech docs: the global tokens, `h3nr7.css` and every other
+template are unchanged. Start from `assets/templates/techdoc.html`, which loads
+`assets/techdoc.css` (every class is `.h3-doc-*`) after `h3nr7.css`.
+
+**Opening spacing, from the top.** This is the part to keep exactly:
+
+| Step | Spec |
+|---|---|
+| Mark | The stacked mark, inlined from `assets/logo/h3nr7-mark.svg` so it takes `currentColor`, 56px wide, linked to `https://h3nr7.com/` |
+| Gap | `6rem` (`--space-24`) between the mark and the label line |
+| Label | One `.h3-label` line: document type, revision, date ("Architecture plan · Rev 1 · 14 November 2026"). `1rem` below |
+| Title | `.h3-doc-title`: display italic at the statement size (`--text-landing`), leading 0.95, `20ch` measure, `1.5rem` below |
+| Rule | `.h3-rule`, ink, `1.5rem` below |
+| Meta | `.h3-doc-meta`: three columns, each a faint uppercase label over a plain value (Owner, Website, and one that suits the piece). One column on a phone |
+
+**Then, in reading order.**
+
+- **The idea in one line.** `.h3-doc-panel`: accent ground, so it inverts in dark mode. A label,
+  the whole document as one display-italic statement, a hairline, three short supporting lines.
+- **Sections are headed by takeaways.** A `.h3-label` with the number and topic ("01 · Prompt
+  caching"), then a full-sentence display-italic heading that states the finding
+  (`.h3-doc-takeaway`), then one muted line (`.h3-doc-sub`). Never an uppercase label as the
+  heading itself.
+- **Explanation beside example.** `.h3-cols` 3 + 3: prose on the left, a muted use case on the right.
+- **Numbered grids** (`.h3-doc-grid`, three columns): an ink hairline, a faint `01`, a display-italic
+  title, a short Inter line.
+- **Diagrams** sit in `.h3-doc-figure`: surface ground, 1px line border, 4px radius. Nodes are
+  surface with a faint stroke and 8px radius, names Inter semibold 13px over a muted 11.5px line;
+  emphasis is a hover-grey fill on one kind of node; connectors are 1.25px muted with small filled
+  heads, dashed for asynchronous edges; zones are dashed outlines with a tiny uppercase label.
+  Draw with the CSS role variables. Caption in faint Inter.
+- **Tables** (`.h3-doc-table`): hairline, header in the label style, wrapped in `.h3-doc-table-wrap`.
+- **Conclusion.** A second `.h3-doc-panel`: label, one headline, hairline, a two-by-two numbered
+  grid (`.h3-doc-two`), a closing display-italic sentence (`.h3-doc-close`).
+- **References** last, as plain links to the sources that were checked, then the closing rule and
+  one footer line in Henry's voice.
+
 ## What it is not
 
 Anything that would look at home on a SaaS landing page is wrong here: gradients, drop
@@ -236,7 +276,7 @@ with borders and shadows, hero banners with a button stack. When unsure, take so
 ```
 SKILL.md
 references/  tokens.md · typography.md · components.md · motion.md · brand-assets.md · voice.md · outputs.md
-assets/      h3nr7.css · h3-scramble.js · tokens.json · specimen.html
+assets/      h3nr7.css · techdoc.css · h3-scramble.js · tokens.json · specimen.html
              logo/ · icons/ · images/ · fonts/ · reference/ · templates/
 scripts/     inline.py   (make an HTML file self-contained, fonts embedded)
 ```

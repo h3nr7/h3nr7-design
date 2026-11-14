@@ -1,0 +1,60 @@
+/*
+ * h3nr7 tech-doc layout. Scoped: every rule is under .h3-doc-*, nothing here
+ * changes h3nr7.css or any other template. Load it after h3nr7.css and only
+ * on tech docs (architecture plans, cheat sheets, learning notes).
+ *
+ * Opening spacing, from the mark down:
+ *   mark 56px wide · 6rem · label · 1rem · title (statement size) · 1.5rem ·
+ *   ink rule · 1.5rem · meta columns
+ * Sections are headed by a takeaway sentence, not a topic.
+ */
+
+/* Tech-doc layout, built on the system's tokens. */
+.h3-doc-opening { padding-top: var(--space-4); }
+.h3-doc-opening .h3-doc-mark { display: inline-block; color: var(--colour-ink); line-height: 0; }
+.h3-doc-opening .h3-doc-mark svg { width: 56px; height: auto; }
+.h3-doc-opening .h3-label { margin: var(--space-24) 0 var(--space-4); }
+.h3-doc-title { font-family: var(--font-display); font-variant-ligatures: common-ligatures discretionary-ligatures contextual; font-style: italic; font-size: var(--text-landing); line-height: var(--leading-display); font-weight: var(--weight-regular); margin: 0 0 var(--space-6); max-width: 20ch; }
+.h3-doc-opening .h3-rule { margin: 0 0 var(--space-6); }
+.h3-doc-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8); font-size: var(--text-sm); }
+.h3-doc-meta .h3-label { margin: 0 0 var(--space-1); }
+.h3-doc-meta p { margin: 0; }
+.h3-doc-panel { background: var(--colour-accent); color: var(--colour-accent-ink); border-radius: var(--radius-xl); padding: var(--space-12) var(--space-8) var(--space-8); margin: var(--space-16) 0; }
+.h3-doc-panel .h3-label { color: var(--colour-accent-ink); opacity: .6; margin: 0 0 var(--space-12); }
+.h3-doc-panel .h3-doc-statement { font-family: var(--font-display); font-variant-ligatures: common-ligatures discretionary-ligatures contextual; font-style: italic; font-size: var(--text-3xl); line-height: var(--leading-display); font-weight: var(--weight-regular); margin: 0 0 var(--space-8); max-width: 24ch; }
+.h3-doc-panel hr { border: 0; border-top: 1px solid currentColor; opacity: .25; margin: 0 0 var(--space-6); }
+.h3-doc-panel .h3-doc-three { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8); font-size: var(--text-sm); opacity: .85; }
+.h3-doc-panel .h3-doc-three p { margin: 0; }
+.h3-doc-panel .h3-doc-two { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-8) var(--space-8); margin: 0 0 var(--space-8); }
+.h3-doc-panel .h3-doc-two > div { border-top: 1px solid currentColor; padding-top: var(--space-3); }
+.h3-doc-panel .h3-doc-two .h3-doc-n { font-size: var(--text-xs); opacity: .6; margin: 0 0 var(--space-2); }
+.h3-doc-panel .h3-doc-two h3 { font-family: var(--font-display); font-variant-ligatures: common-ligatures discretionary-ligatures contextual; font-style: italic; font-size: var(--text-lg); font-weight: var(--weight-regular); line-height: var(--leading-tight); margin: 0 0 var(--space-1); }
+.h3-doc-panel .h3-doc-two p { font-size: var(--text-sm); margin: 0; opacity: .85; }
+.h3-doc-panel .h3-doc-close { font-family: var(--font-display); font-variant-ligatures: common-ligatures discretionary-ligatures contextual; font-style: italic; font-size: var(--text-xl); line-height: var(--leading-tight); margin: var(--space-4) 0 0; }
+.h3-doc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8); margin: var(--space-8) 0 var(--space-16); }
+.h3-doc-grid > div { border-top: 1px solid var(--colour-ink); padding-top: var(--space-3); }
+.h3-doc-grid .h3-doc-n { font-size: var(--text-xs); color: var(--colour-ink-faint); margin: 0 0 var(--space-2); }
+.h3-doc-grid h3 { font-family: var(--font-display); font-variant-ligatures: common-ligatures discretionary-ligatures contextual; font-style: italic; font-size: var(--text-lg); font-weight: var(--weight-regular); line-height: var(--leading-tight); margin: 0 0 var(--space-1); }
+.h3-doc-grid p { font-size: var(--text-sm); color: var(--colour-ink-muted); margin: 0; }
+.h3-doc-section { margin: var(--space-16) 0 0; }
+.h3-doc-section .h3-doc-num { margin: 0 0 var(--space-3); }
+.h3-doc-takeaway { font-family: var(--font-display); font-variant-ligatures: common-ligatures discretionary-ligatures contextual; font-style: italic; font-size: var(--text-2xl); line-height: var(--leading-tight); font-weight: var(--weight-regular); margin: 0 0 var(--space-1); max-width: 28ch; }
+.h3-doc-sub { color: var(--colour-ink-muted); margin: 0 0 var(--space-8); max-width: var(--measure); }
+.h3-doc-body .h3-prose p { margin: 0; }
+.h3-doc-body .h3-doc-uc { margin: 0 0 var(--space-2); }
+.h3-doc-body .h3-doc-uctext { margin: 0; font-size: var(--text-sm); color: var(--colour-ink-muted); }
+.h3-doc-figure { margin: var(--space-8) 0 0; background: var(--colour-surface); border: 1px solid var(--colour-line); border-radius: var(--radius-md); padding: var(--space-4); }
+.h3-doc-figure svg { display: block; width: 100%; height: auto; max-width: 760px; }
+.h3-doc-figure figcaption { font-size: var(--text-xs); color: var(--colour-ink-faint); margin: var(--space-3) 0 0; }
+.h3-doc-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); margin: var(--space-8) 0 var(--space-4); }
+.h3-doc-table th { text-align: left; font-size: var(--text-2xs); text-transform: uppercase; letter-spacing: .08em; font-weight: var(--weight-regular); color: var(--colour-ink-faint); padding: 0 var(--space-3) var(--space-2) 0; border-bottom: 1px solid var(--colour-ink); }
+.h3-doc-table td { padding: var(--space-2) var(--space-3) var(--space-2) 0; border-bottom: 1px solid var(--colour-line); vertical-align: top; }
+.h3-doc-table td:first-child { color: var(--colour-ink-faint); white-space: nowrap; }
+.h3-doc-refs { list-style: none; padding: 0; margin: 0; font-size: var(--text-sm); }
+.h3-doc-refs li { padding: var(--space-2) 0; border-bottom: 1px solid var(--colour-line); }
+@media (max-width: 48rem) {
+  .h3-doc-meta, .h3-doc-grid, .h3-doc-panel .h3-doc-three, .h3-doc-panel .h3-doc-two { grid-template-columns: 1fr; gap: var(--space-4); }
+  .h3-doc-panel { padding: var(--space-8) var(--space-4); }
+  .h3-doc-opening .h3-label { margin-top: var(--space-16); }
+}
+@media print { .h3-doc-section { break-inside: avoid; } .h3-doc-panel { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }

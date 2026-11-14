@@ -195,6 +195,14 @@ This is the only acceptable empty-image state: it is the WebGL wireframe seen he
 under the pointer a tile drains to `grayscale(1)` over 450ms. A single image is not cropped.
 "Show more (n)" is a `.h3-button` under the grid.
 
+## Tech-doc layout
+
+`assets/techdoc.css` (loaded after `h3nr7.css`) holds the `.h3-doc-*` classes for tech docs only:
+`.h3-doc-opening`, `-mark`, `-title`, `-meta`, `-panel` (with `-statement`, `-three`, `-two`,
+`-close`), `-grid`, `-section`, `-takeaway`, `-sub`, `-body`, `-figure`, `-table`, `-refs`. It
+changes nothing in the base set. Spacing and order are in SKILL.md under "Tech docs"; the working
+example is `assets/templates/techdoc.html`.
+
 ## Loading bar
 
 `.h3-loading-bar` — fixed 2px line across the top: a `--colour-line` track with a 40% ink
