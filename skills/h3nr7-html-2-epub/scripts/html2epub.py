@@ -464,6 +464,29 @@ def svg_element(text: str, vars_: dict[str, str]) -> etree._Element:
     return el
 
 
+def size_svg(el, in_figure: bool) -> None:
+    """Give an inline SVG its size in attributes and an inline style, so it stays the
+    right size in readers that ignore the book's stylesheet (Aquile's rendering modes,
+    some e-ink apps). Diagrams scale to the page; marks and icons stay small."""
+    vb = (el.get("viewBox") or "").replace(",", " ").split()
+    try:
+        vw, vh = float(vb[2]), float(vb[3])
+    except (IndexError, ValueError):
+        return
+    if vw <= 0 or vh <= 0:
+        return
+    if in_figure:
+        w = vw
+        style = "display:block; width:100%; max-width:100%; height:auto"
+    else:
+        w = min(vw, 56.0)  # the h3nr7 mark is 56px wide in the tech-doc opening; icons are smaller
+        style = f"display:block; width:{w:g}px; height:auto; max-width:100%"
+    el.set("width", f"{w:g}")
+    el.set("height", f"{w * vh / vw:.1f}".rstrip("0").rstrip("."))
+    old = el.get("style")
+    el.set("style", (old.rstrip("; ") + "; " if old else "") + style)
+
+
 def slug(text: str) -> str:
     s = re.sub(r"[^\w\s-]", "", text.lower()).strip()
     return re.sub(r"[\s_]+", "-", s)[:60] or "s"
@@ -743,6 +766,8 @@ class Book:
         has_svg = False
         for ph in list(html_el.iter(f"{{{XHTML_NS}}}h3svg")):
             el = svg_element(svgs[int(ph.get("data-i"))], vars_)
+            in_figure = any(a.tag == f"{{{XHTML_NS}}}figure" for a in ph.iterancestors())
+            size_svg(el, in_figure)
             el.tail = ph.tail
             ph.getparent().replace(ph, el)
             has_svg = True
@@ -867,7 +892,7 @@ class Book:
 <html xmlns="{XHTML_NS}" xmlns:epub="{EPUB_NS}" lang="{self.lang}" xml:lang="{self.lang}">
 <head><meta charset="utf-8"/><title>Contents</title><link rel="stylesheet" type="text/css" href="css/book.css"/></head>
 <body>
-<nav epub:type="toc" id="toc"><p class="h3-label">Contents</p><ol>{''.join(items)}</ol></nav>
+<nav epub:type="toc" id="toc"><h2 class="h3-label">Contents</h2><ol>{''.join(items)}</ol></nav>
 <nav epub:type="landmarks" hidden="hidden"><ol>
 <li><a epub:type="bodymatter" href="{self.chapters[0][0]}">Start</a></li>
 </ol></nav>
