@@ -30,6 +30,13 @@ Rules:
 - On a photograph, only over a flat, quiet area with enough contrast; otherwise use a tile.
 - Squares (avatars, app icons, social profile pictures, a closing slide) take the dark tile.
 
+## Building the mark in code
+
+The stacked mark is `h 3 r` over `n 7` in Mrs Eaves OT Bold Italic at one size, with fixed offsets
+between glyphs. The layout, a build script and the font caveat (the Bold Italic file is not bundled,
+and the regular Italic cannot stand in) are in the separate **h3nr7-logo** skill. Use the SVGs in
+`assets/logo/` unless the mark has to be generated.
+
 ## The text wordmark
 
 In running layouts the signature is not the mark but the name set as type: **h3nr7**,

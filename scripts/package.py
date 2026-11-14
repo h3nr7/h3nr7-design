@@ -3,6 +3,7 @@ Validate the skill and zip it for upload to Claude (Desktop or claude.ai).
 
     python scripts/package.py                    # -> dist/h3nr7-design.zip
     python scripts/package.py --allow-no-display # build even without the Mrs Eaves files
+    python scripts/package.py --skill h3nr7-logo # the logo-construction skill -> dist/h3nr7-logo.zip
 
 Upload: Claude → Customize → Skills → + → Create skill → Upload a skill, and pick the ZIP.
 Code execution must be on (Settings → Capabilities → "Code execution and file creation").
@@ -67,13 +68,20 @@ def display_faces() -> list[dict]:
 def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--allow-no-display", action="store_true", help="package without the Mrs Eaves files")
+    ap.add_argument("--skill", default="h3nr7-design", help="folder under skills/ to package (default h3nr7-design)")
     args = ap.parse_args()
+
+    global SKILL
+    SKILL = ROOT / "skills" / args.skill
+    if not (SKILL / "SKILL.md").is_file():
+        sys.exit(f"not packaged: skills/{args.skill}/SKILL.md not found")
 
     problems = validate()
     if problems:
         sys.exit("not packaged:\n  " + "\n  ".join(problems))
-    faces = display_faces()
-    if not faces and not args.allow_no_display:
+    # Only the design system carries the display face; the logo skill ships SVGs and a build script.
+    faces = display_faces() if SKILL.name == "h3nr7-design" else []
+    if not faces and SKILL.name == "h3nr7-design" and not args.allow_no_display:
         sys.exit("not packaged: no Mrs Eaves files in the skill. Put them in source/fonts/ and run "
                  "scripts/build_fonts.py first (or pass --allow-no-display).")
 
@@ -88,7 +96,8 @@ def main() -> None:
             z.write(p, rel.as_posix())
             count += 1
             size += p.stat().st_size
-    print(f"display faces: {', '.join(f['family'] + ' ' + f['subfamily'] for f in faces) or 'NONE'}")
+    if SKILL.name == "h3nr7-design":
+        print(f"display faces: {', '.join(f['family'] + ' ' + f['subfamily'] for f in faces) or 'NONE'}")
     print(f"wrote {out}: {count} files, {size // 1024} KB raw, {out.stat().st_size // 1024} KB zipped")
 
 

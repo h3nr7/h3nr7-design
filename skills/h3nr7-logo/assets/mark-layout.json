@@ -1,0 +1,81 @@
+{
+  "_note": "Layout of the stacked h3r / n7 mark, measured from the shipped h3nr7-mark-black.svg (itself built from the Illustrator master). Units are em of the font size; origin = the baseline origin of the 'h'; y points DOWN. bbox_em is each glyph's outline box in its own y-up font space, so scripts/build_mark.py can check it was given the right glyph and weight. See SKILL.md.",
+  "font": {
+    "family": "Mrs Eaves OT",
+    "style": "italic",
+    "weight": 700,
+    "subfamily": "Bold Italic",
+    "bundled": false,
+    "note": "Not bundled: only the regular Italic ships with h3nr7-design and its outlines are narrower, so it does not reproduce the mark."
+  },
+  "master_font_size": 483.2744,
+  "glyphs": [
+    {
+      "char": "h",
+      "row": 1,
+      "x": 0.0,
+      "y": 0.0,
+      "bbox_em": [
+        0.028,
+        -0.0117,
+        0.408,
+        0.6172
+      ]
+    },
+    {
+      "char": "3",
+      "row": 1,
+      "x": 0.38,
+      "y": 0.0,
+      "bbox_em": [
+        0.0094,
+        -0.1866,
+        0.439,
+        0.4502
+      ]
+    },
+    {
+      "char": "r",
+      "row": 1,
+      "x": 0.824,
+      "y": 0.0,
+      "bbox_em": [
+        0.033,
+        0.0,
+        0.3431,
+        0.3486
+      ]
+    },
+    {
+      "char": "n",
+      "row": 2,
+      "x": 0.099,
+      "y": 0.608,
+      "bbox_em": [
+        0.033,
+        -0.0117,
+        0.415,
+        0.3496
+      ]
+    },
+    {
+      "char": "7",
+      "row": 2,
+      "x": 0.541,
+      "y": 0.713,
+      "bbox_em": [
+        0.0529,
+        -0.196,
+        0.452,
+        0.5106
+      ]
+    }
+  ],
+  "ink_em": {
+    "x": 0.028,
+    "y": -0.61719,
+    "w": 1.13911,
+    "h": 1.52615
+  },
+  "shipped_viewbox": "271.50 203.00 550.75 737.75"
+}

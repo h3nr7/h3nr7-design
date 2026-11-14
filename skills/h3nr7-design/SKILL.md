@@ -153,8 +153,10 @@ Rules:
 | `assets/images/portrait-600.jpg`, `-1200.jpg` | Henry's portrait. Only where it is his profile. |
 | `assets/icons/*.svg` | The site's icons, `currentColor`. |
 
-- The mark is a drawing in Mrs Eaves Bold Italic. Use the files; never re-typeset it, stretch,
-  rotate, outline, shadow or recolour it beyond ink/black/white.
+- The mark is five glyphs in Mrs Eaves Bold Italic placed by hand. Use the files; never re-typeset it
+  by eye, stretch, rotate, outline, shadow or recolour it beyond ink/black/white. To generate it in code
+  at another size or format, use the **h3nr7-logo** skill (`skills/h3nr7-logo/` in the repo): it holds the
+  exact layout and a build script, and needs the Bold Italic font file, which is not bundled here.
 - Clear space: at least the width of the mark's "n" on every side; the tiles show the intended
   margins (the mark fills about 51% of the width). Below about 48px tall, use the glyph instead.
 - In running headers the signature is the **text wordmark** — `h3nr7` set lowercase in display
