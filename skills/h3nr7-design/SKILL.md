@@ -159,6 +159,12 @@ Rules:
   margins (the mark fills about 51% of the width). Below about 48px tall, use the glyph instead.
 - In running headers the signature is the **text wordmark** — `h3nr7` set lowercase in display
   italic (`.h3-wordmark` / `.h3-landing-name`) — not the stacked mark.
+- **The wordmark is always a link to the site**, in every tech doc, article, write-up and
+  one-pager: `<p class="h3-wordmark"><a href="https://h3nr7.com/"><span data-scramble>h3nr7</span></a></p>`.
+  Use the absolute URL for anything that lives off h3nr7.com (an artifact, a file, an email); on
+  the site itself it is `/`. The link inherits the muted wordmark colour with no underline and
+  no sweep — it signals itself with the pointer and the scramble on hover, as on the site. Never
+  ship a bare, unlinked `h3nr7` in a masthead.
 - Portrait: square, 8px radius (never a circle), 64px in a card; the initials "HH" underneath
   as the fallback.
 - No stock imagery. An empty image slot is `.h3-gridfield` — a near-black square grid with the
@@ -201,7 +207,7 @@ Minimal page:
 <body>
 <main class="h3-page">
   <header class="h3-masthead">
-    <p class="h3-wordmark">h3nr7</p>
+    <p class="h3-wordmark"><a href="https://h3nr7.com/"><span data-scramble>h3nr7</span></a></p>
     <h1>Title in display italic</h1>
     <p class="h3-standfirst">What this is, in one line.</p>
     <p class="h3-date">1 October 2026</p>

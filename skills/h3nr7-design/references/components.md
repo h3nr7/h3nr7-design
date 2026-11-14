@@ -29,7 +29,7 @@ same at every width.
 
 ```html
 <header class="h3-masthead">
-  <p class="h3-wordmark"><a href="/">h3nr7</a></p>   <!-- muted: the site, not the piece -->
+  <p class="h3-wordmark"><a href="/"><span data-scramble>h3nr7</span></a></p>   <!-- muted: the site, not the piece -->
   <h1>WebGl terrain mesh</h1>                         <!-- display italic, name size -->
   <p class="h3-standfirst">Create terrain mesh from NASA satellite data</p>
   <p class="h3-date">18 May 2020</p>
@@ -37,6 +37,8 @@ same at every width.
 <span class="h3-rule h3-rule-soft" role="presentation"></span>
 ```
 
+The wordmark is always a link home: `/` on h3nr7.com, `https://h3nr7.com/` in anything that lives
+elsewhere (artifact, file, email). It inherits the muted colour, no underline or sweep.
 Wordmark and title are the same size; colour alone separates them. 24px from wordmark down
 to title; standfirst sits on the title (4px); the date sits on the standfirst with no gap. On
 the CV the `h1` *is* the wordmark ("iam h3nr7", ink), followed by a role line
