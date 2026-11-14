@@ -5,7 +5,7 @@ The in-text link: two hairlines painted as backgrounds — a full-width `colour-
 ## Use
 
 - `.h3-link`, or any `a` inside `.h3-prose`, `.h3-landing-links`, `.h3-footer`.
-- `padding-bottom: 2px` keeps the line clear of descenders; `box-decoration-break: clone` underlines every line of a wrapped link.
+- No `padding-bottom`: with Inter's full descent the line already sits ~5.5px below the baseline at 16px, clear of descenders (a 2px pad put it ~8px down and read as detached). `box-decoration-break: clone` underlines every line of a wrapped link.
 - Colour by context: ink in prose; muted → ink on landing links; ink inside a faint footer.
 - `.h3-hollow` (opt-in, display-size text that opens elsewhere): hover drains the fill and leaves a 0.6px ink contour. Large type only; never on links with an icon.
 

@@ -97,8 +97,10 @@ italic — one document, not two. Entry titles are never links.
 Every in-text link: `.h3-link` (or any `a` inside `.h3-prose`, `.h3-landing-links`,
 `.h3-footer`). Two hairlines painted as backgrounds: a full-width `--colour-line` rail at rest,
 and an ink line that grows from 0 to 100% width, left to right, over 200ms on hover/focus.
-`padding-bottom: 2px` keeps it clear of descenders; `box-decoration-break: clone` underlines
-every line of a wrapped link. Colour by context: ink in prose; muted → ink on the landing
+No `padding-bottom`: the inline box already ends ~5.5px below the baseline at 16px (Inter's descent,
+with the overrides in `assets/fonts/fonts.css`), which clears descenders. A 2px pad put the line ~8px
+under the text and read as detached. (h3nr7.com's own stylesheet still has the 2px; this is a
+deliberate change.) `box-decoration-break: clone` underlines every line of a wrapped link. Colour by context: ink in prose; muted → ink on the landing
 links (they are the content, so they step back); ink inside a faint footer (the actionable
 words are the darkest in the sentence).
 
