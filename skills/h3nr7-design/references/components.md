@@ -197,11 +197,23 @@ under the pointer a tile drains to `grayscale(1)` over 450ms. A single image is 
 
 ## Tech-doc layout
 
-`assets/techdoc.css` (loaded after `h3nr7.css`) holds the `.h3-doc-*` classes for tech docs only:
-`.h3-doc-opening`, `-mark`, `-title`, `-meta`, `-panel` (with `-statement`, `-three`, `-two`,
-`-close`), `-grid`, `-section`, `-takeaway`, `-sub`, `-body`, `-figure`, `-table`, `-refs`. It
-changes nothing in the base set. Spacing and order are in SKILL.md under "Tech docs"; the working
-example is `assets/templates/techdoc.html`.
+`assets/techdoc.css` (loaded after `h3nr7.css`) holds the classes for tech docs only. It changes
+nothing in the base set. Spacing, order and the rules for the body are in SKILL.md under "Tech
+docs"; the working example is `assets/templates/techdoc.html`, and the specimen shows its body.
+
+- **Opening** (uses `.h3-label` and `.h3-rule` from `h3nr7.css`; never published): `.h3-doc-opening`,
+  `-mark`, `-title`, `-meta`.
+- **Body**, inside `.h3-doc-content` (needs only the tokens): `.h3-doc-label`, `-panel` (with
+  `-statement`, `-three`, `-two`, `-n`, `-close`), `-grid`, `-section`, `-num`, `-takeaway`,
+  `-sub`, `-cols` (with `-uc`, `-uctext`), `-source`, `-scroll`, `-figure`, `-table`, `-wrap`,
+  `-refs`. Plain `p`, lists, `blockquote`, `a`, `h2`–`h4`, `strong`, `dl`, `pre`, `code` and `hr`
+  are styled inside the body without a class.
+- **Diagrams**: `.h3-d-node`, `-soft`, `-em`, `-zone`, `-line`, `-async`, `-arrow`, `-life`, and
+  for text `-t`, `-m`, `-l`, `-num`.
+
+### Known differences
+
+Where a tech doc rebuilt in this vocabulary differs from the hand-styled original it replaced.
 
 ## Loading bar
 

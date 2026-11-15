@@ -229,7 +229,11 @@ Minimal page:
 Architecture plans, cheat sheets and learning notes use their own layout, not the article
 masthead. It applies **only** to tech docs: the global tokens, `h3nr7.css` and every other
 template are unchanged. Start from `assets/templates/techdoc.html`, which loads
-`assets/techdoc.css` (every class is `.h3-doc-*`) after `h3nr7.css`.
+`assets/techdoc.css` (every class is `.h3-doc-*` or `.h3-d-*`) after `h3nr7.css`.
+
+A tech doc has two parts. The **opening** (mark, label, title, rule, meta) uses `h3nr7.css`
+classes. The **body** is everything inside `<div class="h3-doc-content">`, between the opening
+and the closing rule.
 
 **Opening spacing, from the top.** This is the part to keep exactly:
 
@@ -246,23 +250,47 @@ template are unchanged. Start from `assets/templates/techdoc.html`, which loads
 
 - **The idea in one line.** `.h3-doc-panel`: accent ground, so it inverts in dark mode. A label,
   the whole document as one display-italic statement, a hairline, three short supporting lines.
-- **Sections are headed by takeaways.** A `.h3-label` with the number and topic ("01 · Prompt
+- **Sections are headed by takeaways.** A `.h3-doc-label` with the number and topic ("01 · Prompt
   caching"), then a full-sentence display-italic heading that states the finding
   (`.h3-doc-takeaway`), then one muted line (`.h3-doc-sub`). Never an uppercase label as the
   heading itself.
-- **Explanation beside example.** `.h3-cols` 3 + 3: prose on the left, a muted use case on the right.
-- **Numbered grids** (`.h3-doc-grid`, three columns): an ink hairline, a faint `01`, a display-italic
+- **Explanation beside example.** `.h3-doc-cols`, two children: prose on the left, a muted use case
+  (`.h3-doc-uc` label, `.h3-doc-uctext`) on the right. Stacked on a phone.
+- **Numbered grids** (`.h3-doc-grid`, as many 13.5rem columns as fit): an ink hairline, a faint `01`, a display-italic
   title, a short Inter line.
 - **Diagrams** sit in `.h3-doc-figure`: surface ground, 1px line border, 4px radius. Nodes are
   surface with a faint stroke and 8px radius, names Inter semibold 13px over a muted 11.5px line;
   emphasis is a hover-grey fill on one kind of node; connectors are 1.25px muted with small filled
   heads, dashed for asynchronous edges; zones are dashed outlines with a tiny uppercase label.
-  Draw with the CSS role variables. Caption in faint Inter.
-- **Tables** (`.h3-doc-table`): hairline, header in the label style, wrapped in `.h3-doc-table-wrap`.
+  Draw with the `.h3-d-*` classes: `h3-d-node`, `-soft`, `-em` (the one emphasised kind),
+  `-zone`, `-line`, `-async`, `-arrow` (marker heads), `-life` (lifelines); text `h3-d-t` (name),
+  `-m` (muted line), `-l` (tiny label), `-num`. A wide diagram goes in `.h3-doc-scroll` inside
+  the figure, so it scrolls on a phone instead of shrinking. Caption in faint Inter.
+- **Images** only in `.h3-doc-figure`, with a caption. See the rules below.
+- **Code**: `pre` and inline `code` are styled inside the body; follow a block with
+  `.h3-doc-source` if the commands came from somewhere.
+- **Tables** (`.h3-doc-table`): hairline, header in the label style, wrapped in `.h3-doc-scroll`.
+  A first cell that needs to wrap takes `.h3-doc-wrap`.
 - **Conclusion.** A second `.h3-doc-panel`: label, one headline, hairline, a two-by-two numbered
   grid (`.h3-doc-two`), a closing display-italic sentence (`.h3-doc-close`).
-- **References** last, as plain links to the sources that were checked, then the closing rule and
-  one footer line in Henry's voice.
+- **References** last (`.h3-doc-refs`), as plain links to the sources that were checked, then the
+  closing rule and one footer line in Henry's voice.
+
+**Rules for the body.** The body is published to h3nr7.com as it is, under the site's own
+masthead, and the site styles it with its copy of `techdoc.css` and nothing else. So:
+
+- Inside `.h3-doc-content`, use only the classes `techdoc.css` defines. No `<style>` additions, no
+  `style` attributes. If something cannot be built from them, change `techdoc.css`, not the page.
+- Diagrams are inline SVG drawn with the `.h3-d-*` classes, not `fill` and `stroke` attributes. The
+  root `svg` has a `viewBox` and a non-empty `aria-label`.
+- An image goes inside a figure: `<figure class="h3-doc-figure"><img src alt><figcaption>`. Alt text
+  is required. Raster only (PNG, JPEG, WebP, GIF), from a local file, which `scripts/inline.py`
+  embeds. A diagram is never an image: an `<img>` cannot follow the theme.
+- No `h1` inside the body; the title lives in the opening. Sections are headed by `h2`.
+- A body is at most 50,000 characters, not counting image data.
+
+Before handing a tech doc over, run `python scripts/check_techdoc.py page.html`: it checks the body
+against these rules and names anything that would be refused.
 
 ## What it is not
 
@@ -279,4 +307,5 @@ references/  tokens.md · typography.md · components.md · motion.md · brand-a
 assets/      h3nr7.css · techdoc.css · h3-scramble.js · tokens.json · specimen.html
              logo/ · icons/ · images/ · fonts/ · reference/ · templates/
 scripts/     inline.py   (make an HTML file self-contained, fonts embedded)
+             check_techdoc.py   (check a tech doc's body against the rules above)
 ```

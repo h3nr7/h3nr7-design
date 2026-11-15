@@ -40,8 +40,12 @@
     </div>
   </header>
 
+  <!-- The body: everything h3nr7.com publishes. Inside it, use only classes
+       techdoc.css defines; no <style>, no style attributes, no h1. -->
+  <div class="h3-doc-content">
+
   <div class="h3-doc-panel">
-    <p class="h3-label">The idea in one line</p>
+    <p class="h3-doc-label">The idea in one line</p>
     <p class="h3-doc-statement">The whole document as one display-italic statement.</p>
     <hr>
     <div class="h3-doc-three">
@@ -60,39 +64,54 @@
   </div>
 
   <section class="h3-doc-section" id="s1">
-    <p class="h3-label h3-doc-num">01 · Topic name</p>
+    <p class="h3-doc-label h3-doc-num">01 · Topic name</p>
     <h2 class="h3-doc-takeaway">A full sentence that states the finding</h2>
     <p class="h3-doc-sub">One muted line of context.</p>
-    <div class="h3-cols h3-doc-body">
-      <div class="h3-span-3 h3-prose"><p>The explanation, in Inter, on its own column.</p></div>
-      <div class="h3-span-3">
-        <p class="h3-label h3-doc-uc">Example use case</p>
+    <div class="h3-doc-cols">
+      <div><p>The explanation, in Inter, on its own column. Inline <code>code</code> sits in the mono face.</p></div>
+      <div>
+        <p class="h3-doc-label h3-doc-uc">Example use case</p>
         <p class="h3-doc-uctext">A concrete case, in muted Inter.</p>
       </div>
     </div>
     <figure class="h3-doc-figure">
-      <svg viewBox="0 0 760 120" role="img" aria-label="Every arrow starts or ends at the API server" font-family="var(--font-body)">
-        <defs><marker id="h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--colour-ink-muted)"/></marker></defs>
-        <rect x="24" y="36" width="140" height="48" rx="8" fill="var(--colour-surface)" stroke="var(--colour-ink-faint)"/>
-        <text x="94" y="58" text-anchor="middle" font-size="13" font-weight="600" fill="var(--colour-ink)">Client</text>
-        <text x="94" y="74" text-anchor="middle" font-size="11.5" fill="var(--colour-ink-muted)">browser</text>
-        <path d="M164 60H300" fill="none" stroke="var(--colour-ink-muted)" stroke-width="1.25" marker-end="url(#h)"/>
-        <rect x="300" y="36" width="160" height="48" rx="8" fill="var(--colour-hover)" stroke="var(--colour-ink-muted)"/>
-        <text x="380" y="58" text-anchor="middle" font-size="13" font-weight="600" fill="var(--colour-ink)">API server</text>
-        <text x="380" y="74" text-anchor="middle" font-size="11.5" fill="var(--colour-ink-muted)">the one emphasised node</text>
-        <path d="M460 60H596" fill="none" stroke="var(--colour-ink-muted)" stroke-width="1.25" stroke-dasharray="4 4" marker-end="url(#h)"/>
-        <rect x="596" y="36" width="140" height="48" rx="8" fill="var(--colour-surface)" stroke="var(--colour-ink-faint)"/>
-        <text x="666" y="58" text-anchor="middle" font-size="13" font-weight="600" fill="var(--colour-ink)">Worker</text>
-        <text x="666" y="74" text-anchor="middle" font-size="11.5" fill="var(--colour-ink-muted)">asynchronous</text>
-      </svg>
+      <div class="h3-doc-scroll">
+        <svg viewBox="0 0 760 120" role="img" aria-label="Every arrow starts or ends at the API server">
+          <defs><marker id="h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="h3-d-arrow" d="M0 0L10 5L0 10z"/></marker></defs>
+          <rect class="h3-d-node" x="24" y="36" width="140" height="48" rx="8"/>
+          <text class="h3-d-t" x="94" y="58" text-anchor="middle">Client</text>
+          <text class="h3-d-m" x="94" y="74" text-anchor="middle">browser</text>
+          <path class="h3-d-line" d="M164 60H300" marker-end="url(#h)"/>
+          <rect class="h3-d-em" x="300" y="36" width="160" height="48" rx="8"/>
+          <text class="h3-d-t" x="380" y="58" text-anchor="middle">API server</text>
+          <text class="h3-d-m" x="380" y="74" text-anchor="middle">the one emphasised node</text>
+          <path class="h3-d-async" d="M460 60H596" marker-end="url(#h)"/>
+          <rect class="h3-d-node" x="596" y="36" width="140" height="48" rx="8"/>
+          <text class="h3-d-t" x="666" y="58" text-anchor="middle">Worker</text>
+          <text class="h3-d-m" x="666" y="74" text-anchor="middle">asynchronous</text>
+        </svg>
+      </div>
       <figcaption>diagram · what it shows</figcaption>
     </figure>
   </section>
 
   <section class="h3-doc-section">
-    <p class="h3-label h3-doc-num">At a glance</p>
+    <p class="h3-doc-label h3-doc-num">02 · Commands</p>
+    <h2 class="h3-doc-takeaway">Code sits on a surface, in the mono face</h2>
+    <p class="h3-doc-sub">A short line on what the block does.</p>
+<pre><code>kubectl get pods -A
+kubectl describe pod web-7d4b9 -n shop</code></pre>
+    <p class="h3-doc-source">Source: where the commands were checked, and when.</p>
+    <figure class="h3-doc-figure">
+      <img src="../images/portrait-600.jpg" alt="Henry YP Ho, in black and white" width="600" height="600">
+      <figcaption>image · a raster from a local file, always in a figure, always with alt text</figcaption>
+    </figure>
+  </section>
+
+  <section class="h3-doc-section">
+    <p class="h3-doc-label h3-doc-num">At a glance</p>
     <h2 class="h3-doc-takeaway">Tables are hairline, with the header in the label style</h2>
-    <div class="h3-doc-table-wrap">
+    <div class="h3-doc-scroll">
       <table class="h3-doc-table">
         <thead><tr><th>#</th><th>Item</th><th>Note</th></tr></thead>
         <tbody><tr><td>1</td><td>First</td><td>Plain value</td></tr><tr><td>2</td><td>Second</td><td>Plain value</td></tr></tbody>
@@ -101,7 +120,7 @@
   </section>
 
   <div class="h3-doc-panel">
-    <p class="h3-label">Conclusion</p>
+    <p class="h3-doc-label">Conclusion</p>
     <p class="h3-doc-statement">One display-italic headline.</p>
     <hr>
     <div class="h3-doc-two">
@@ -114,12 +133,14 @@
   </div>
 
   <section class="h3-doc-section">
-    <p class="h3-label h3-doc-num">References</p>
+    <p class="h3-doc-label h3-doc-num">References</p>
     <h2 class="h3-doc-takeaway">Checked on 14 November 2026</h2>
     <ul class="h3-doc-refs">
-      <li><a class="h3-link" href="https://h3nr7.com/">Plain links to the sources that were checked</a></li>
+      <li><a href="https://h3nr7.com/">Plain links to the sources that were checked</a></li>
     </ul>
   </section>
+
+  </div>
 
   <span class="h3-rule h3-rule-close" role="presentation"></span>
   <footer class="h3-footer">
