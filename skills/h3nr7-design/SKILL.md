@@ -264,8 +264,8 @@ and the closing rule.
   heads, dashed for asynchronous edges; zones are dashed outlines with a tiny uppercase label.
   Draw with the `.h3-d-*` classes: `h3-d-node`, `-soft`, `-em` (the one emphasised kind),
   `-zone`, `-line`, `-async`, `-arrow` (marker heads), `-life` (lifelines); text `h3-d-t` (name),
-  `-m` (muted line), `-l` (tiny label), `-num`. A wide diagram goes in `.h3-doc-scroll` inside
-  the figure, so it scrolls on a phone instead of shrinking. Caption in faint Inter.
+  `-m` (muted line), `-l` (tiny label), `-num`. On a phone a diagram shrinks to fit the column,
+  text and all, rather than scroll (a `.h3-doc-scroll` around it is harmless). Caption in faint Inter.
 - **Images** only in `.h3-doc-figure`, with a caption. See the rules below.
 - **Code**: `pre` and inline `code` are styled inside the body; follow a block with
   `.h3-doc-source` if the commands came from somewhere.
