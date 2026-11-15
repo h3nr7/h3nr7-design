@@ -277,6 +277,12 @@ def expand_is(selector: str) -> list[str]:
         depth += {"(": 1, ")": -1}.get(selector[k], 0)
         k += 1
     head, inner, tail = selector[:m.start()], selector[m.end():k - 1], selector[k:]
+    # An ancestor-only :where(), as in techdoc.css's `:where(.h3-doc-content) p`, is
+    # there to weigh nothing so every component class beats it. Expanded, it would
+    # weigh a class and outrank them; a book has no host page to scope against, so
+    # the ancestor is dropped instead.
+    if m.group(1) == "where" and tail[:1].isspace() and (not head or head[-1] in " >+~"):
+        return expand_is(head + tail.lstrip())
     out = []
     for alt in _split_args(inner):
         out += expand_is(head + alt + tail)

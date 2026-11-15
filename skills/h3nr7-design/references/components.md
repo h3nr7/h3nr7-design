@@ -197,11 +197,37 @@ under the pointer a tile drains to `grayscale(1)` over 450ms. A single image is 
 
 ## Tech-doc layout
 
-`assets/techdoc.css` (loaded after `h3nr7.css`) holds the `.h3-doc-*` classes for tech docs only:
-`.h3-doc-opening`, `-mark`, `-title`, `-meta`, `-panel` (with `-statement`, `-three`, `-two`,
-`-close`), `-grid`, `-section`, `-takeaway`, `-sub`, `-body`, `-figure`, `-table`, `-refs`. It
-changes nothing in the base set. Spacing and order are in SKILL.md under "Tech docs"; the working
-example is `assets/templates/techdoc.html`.
+`assets/techdoc.css` (loaded after `h3nr7.css`) holds the classes for tech docs only. It changes
+nothing in the base set. Spacing, order and the rules for the body are in SKILL.md under "Tech
+docs"; the working example is `assets/templates/techdoc.html`, and the specimen shows its body.
+
+- **Opening** (uses `.h3-label` and `.h3-rule` from `h3nr7.css`; never published): `.h3-doc-opening`,
+  `-mark`, `-title`, `-meta`.
+- **Body**, inside `.h3-doc-content` (needs only the tokens): `.h3-doc-label`, `-panel` (with
+  `-statement`, `-three`, `-two`, `-n`, `-close`), `-grid`, `-section`, `-num`, `-takeaway`,
+  `-sub`, `-cols` (with `-uc`, `-uctext`), `-source`, `-scroll`, `-figure`, `-table`, `-wrap`,
+  `-refs`. Plain `p`, lists, `blockquote`, `a`, `h2`–`h4`, `strong`, `dl`, `pre`, `code` and `hr`
+  are styled inside the body without a class.
+- **Diagrams**: `.h3-d-node`, `-soft`, `-em`, `-zone`, `-line`, `-async`, `-arrow`, `-life`, and
+  for text `-t`, `-m`, `-l`, `-num`.
+
+### Known differences
+
+Where a tech doc rebuilt in this vocabulary differs from the hand-styled original it replaced:
+`examples/kubernetes-cheat-sheet.html` against the original artifact, compared at 1280 and 390
+wide, light and dark. Text and code are unchanged. Each difference is the vocabulary's choice,
+kept on purpose; change `techdoc.css` if one should go the other way.
+
+| Where | Original | Rebuilt |
+|---|---|---|
+| Opening (not published) | Meta labels at `--text-2xs`; a 3.5rem-tall mark | The template's opening: labels at `--text-sm`, the 56px-wide mark |
+| Sections | A takeaway with no label, 6rem above it | A numbered `.h3-doc-label` above each takeaway ("01 · The picture"), as SKILL.md asks; 4rem above the label |
+| Panels | Square corners; one rule above the supporting lines | `--radius-xl` corners, an `hr` above them |
+| Conclusion | Statement at `--text-2xl`, 28ch (inline style); one rule above the four ideas | Statement at `--text-3xl`; a rule above each idea (`.h3-doc-two`) |
+| Diagrams | Scaled to the column, about 1.3× at 1280 | Drawn at their own size, at most 760px and centred, so node names stay 13px |
+| Numbered grid | Faint rule; titles at `--text-xl`; text in ink | Ink rule; titles at `--text-lg`; text muted |
+| Tables | First column ink, the rest muted; rows ruled above; no gap under the heading | First column faint, the rest ink; header ruled in ink; 2rem above the table |
+| Figures | `--space-6` padding | `--space-4` padding |
 
 ## Loading bar
 

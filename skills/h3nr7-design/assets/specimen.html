@@ -6,6 +6,7 @@
 <title>h3nr7 design system</title>
 <link rel="icon" href="logo/h3nr7-glyph.png">
 <link rel="stylesheet" href="h3nr7.css">
+<link rel="stylesheet" href="techdoc.css">
 <style>
   /* Specimen-only layout. Everything else on this page is h3nr7.css. */
   .spec section { margin-top: var(--space-16); }
@@ -256,6 +257,110 @@
 <figure class="ic"><span><svg aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
   <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
 </svg></span><figcaption>youtube</figcaption></figure></div>
+  </section>
+
+  <section>
+    <h2 class="h3-label">Tech-doc body</h2>
+    <p class="cap">techdoc.css · everything inside .h3-doc-content, the part h3nr7.com publishes · cut from templates/techdoc.html</p>
+    <div class="h3-doc-content">
+
+  <div class="h3-doc-panel">
+    <p class="h3-doc-label">The idea in one line</p>
+    <p class="h3-doc-statement">The whole document as one display-italic statement.</p>
+    <hr>
+    <div class="h3-doc-three">
+      <p>First supporting line.</p>
+      <p>Second supporting line.</p>
+      <p>Third supporting line.</p>
+    </div>
+  </div>
+
+  <h2 class="h3-doc-takeaway">A numbered grid for principles, steps or habits</h2>
+  <p class="h3-doc-sub">One muted line under the takeaway.</p>
+  <div class="h3-doc-grid">
+    <div><p class="h3-doc-n">01</p><h3>First</h3><p>A short Inter line.</p></div>
+    <div><p class="h3-doc-n">02</p><h3>Second</h3><p>A short Inter line.</p></div>
+    <div><p class="h3-doc-n">03</p><h3>Third</h3><p>A short Inter line.</p></div>
+  </div>
+
+  <section class="h3-doc-section" id="s1">
+    <p class="h3-doc-label h3-doc-num">01 · Topic name</p>
+    <h2 class="h3-doc-takeaway">A full sentence that states the finding</h2>
+    <p class="h3-doc-sub">One muted line of context.</p>
+    <div class="h3-doc-cols">
+      <div><p>The explanation, in Inter, on its own column. Inline <code>code</code> sits in the mono face.</p></div>
+      <div>
+        <p class="h3-doc-label h3-doc-uc">Example use case</p>
+        <p class="h3-doc-uctext">A concrete case, in muted Inter.</p>
+      </div>
+    </div>
+    <figure class="h3-doc-figure">
+      <div class="h3-doc-scroll">
+        <svg viewBox="0 0 760 120" role="img" aria-label="Every arrow starts or ends at the API server">
+          <defs><marker id="h" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path class="h3-d-arrow" d="M0 0L10 5L0 10z"/></marker></defs>
+          <rect class="h3-d-node" x="24" y="36" width="140" height="48" rx="8"/>
+          <text class="h3-d-t" x="94" y="58" text-anchor="middle">Client</text>
+          <text class="h3-d-m" x="94" y="74" text-anchor="middle">browser</text>
+          <path class="h3-d-line" d="M164 60H300" marker-end="url(#h)"/>
+          <rect class="h3-d-em" x="300" y="36" width="160" height="48" rx="8"/>
+          <text class="h3-d-t" x="380" y="58" text-anchor="middle">API server</text>
+          <text class="h3-d-m" x="380" y="74" text-anchor="middle">the one emphasised node</text>
+          <path class="h3-d-async" d="M460 60H596" marker-end="url(#h)"/>
+          <rect class="h3-d-node" x="596" y="36" width="140" height="48" rx="8"/>
+          <text class="h3-d-t" x="666" y="58" text-anchor="middle">Worker</text>
+          <text class="h3-d-m" x="666" y="74" text-anchor="middle">asynchronous</text>
+        </svg>
+      </div>
+      <figcaption>diagram · what it shows</figcaption>
+    </figure>
+  </section>
+
+  <section class="h3-doc-section">
+    <p class="h3-doc-label h3-doc-num">02 · Commands</p>
+    <h2 class="h3-doc-takeaway">Code sits on a surface, in the mono face</h2>
+    <p class="h3-doc-sub">A short line on what the block does.</p>
+<pre><code>kubectl get pods -A
+kubectl describe pod web-7d4b9 -n shop</code></pre>
+    <p class="h3-doc-source">Source: where the commands were checked, and when.</p>
+    <figure class="h3-doc-figure">
+      <img src="images/portrait-600.jpg" alt="Henry YP Ho, in black and white" width="600" height="600">
+      <figcaption>image · a raster from a local file, always in a figure, always with alt text</figcaption>
+    </figure>
+  </section>
+
+  <section class="h3-doc-section">
+    <p class="h3-doc-label h3-doc-num">At a glance</p>
+    <h2 class="h3-doc-takeaway">Tables are hairline, with the header in the label style</h2>
+    <div class="h3-doc-scroll">
+      <table class="h3-doc-table">
+        <thead><tr><th>#</th><th>Item</th><th>Note</th></tr></thead>
+        <tbody><tr><td>1</td><td>First</td><td>Plain value</td></tr><tr><td>2</td><td>Second</td><td>Plain value</td></tr></tbody>
+      </table>
+    </div>
+  </section>
+
+  <div class="h3-doc-panel">
+    <p class="h3-doc-label">Conclusion</p>
+    <p class="h3-doc-statement">One display-italic headline.</p>
+    <hr>
+    <div class="h3-doc-two">
+      <div><p class="h3-doc-n">01</p><h3>First</h3><p>Supporting line.</p></div>
+      <div><p class="h3-doc-n">02</p><h3>Second</h3><p>Supporting line.</p></div>
+      <div><p class="h3-doc-n">03</p><h3>Third</h3><p>Supporting line.</p></div>
+      <div><p class="h3-doc-n">04</p><h3>Fourth</h3><p>Supporting line.</p></div>
+    </div>
+    <p class="h3-doc-close">A closing display-italic sentence.</p>
+  </div>
+
+  <section class="h3-doc-section">
+    <p class="h3-doc-label h3-doc-num">References</p>
+    <h2 class="h3-doc-takeaway">Checked on 14 November 2026</h2>
+    <ul class="h3-doc-refs">
+      <li><a href="https://h3nr7.com/">Plain links to the sources that were checked</a></li>
+    </ul>
+  </section>
+
+  </div>
   </section>
 
   <span class="h3-rule h3-rule-close" role="presentation"></span>

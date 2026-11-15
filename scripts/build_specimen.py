@@ -62,10 +62,18 @@ def main() -> None:
         for n in ("x", "github", "linkedin", "youtube")
     )
 
+    # The tech-doc body is cut from its template, so the specimen always shows the
+    # vocabulary techdoc.css defines and the template uses, never a copy of it.
+    techdoc = (ASSETS / "templates" / "techdoc.html").read_text(encoding="utf-8")
+    start = techdoc.index('<div class="h3-doc-content">')
+    end = techdoc.index('<span class="h3-rule h3-rule-close"')
+    doc_body = techdoc[start:end].rstrip().replace('src="../images/', 'src="images/')
+
     html = TEMPLATE
     for key, value in {
         "MARK": mark, "GLYPH": glyph, "SWATCHES": swatches, "SCALE": scale, "SPACES": spaces,
         "RADII": radii, "ICONS": icons, "CHAT": chat, "LINK": link, "SOCIAL": social,
+        "DOCBODY": doc_body,
     }.items():
         html = html.replace(f"{{{{{key}}}}}", value)
     out = ASSETS / "specimen.html"
@@ -81,6 +89,7 @@ TEMPLATE = """<!doctype html>
 <title>h3nr7 design system</title>
 <link rel="icon" href="logo/h3nr7-glyph.png">
 <link rel="stylesheet" href="h3nr7.css">
+<link rel="stylesheet" href="techdoc.css">
 <style>
   /* Specimen-only layout. Everything else on this page is h3nr7.css. */
   .spec section { margin-top: var(--space-16); }
@@ -229,6 +238,12 @@ TEMPLATE = """<!doctype html>
   <section>
     <h2 class="h3-label">Icons</h2>
     <div>{{ICONS}}</div>
+  </section>
+
+  <section>
+    <h2 class="h3-label">Tech-doc body</h2>
+    <p class="cap">techdoc.css · everything inside .h3-doc-content, the part h3nr7.com publishes · cut from templates/techdoc.html</p>
+    {{DOCBODY}}
   </section>
 
   <span class="h3-rule h3-rule-close" role="presentation"></span>

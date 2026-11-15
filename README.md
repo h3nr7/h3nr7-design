@@ -9,6 +9,10 @@ Everything here is derived from the site itself — `h3nr7/packages/ui/src/style
 `apps/web/app/components/icons.tsx` — and the logo master `../h3nr7-design.ai`. When the site
 changes, this follows it, not the other way round.
 
+One exception: `skills/h3nr7-design/assets/techdoc.css`. The tech-doc vocabulary is owned here,
+and h3nr7.com keeps a copy of the file to render tech docs published from Claude artifacts. Change
+it here first; the site syncs from this repository.
+
 ```
 skills/h3nr7-design/        the skill — this folder is what gets zipped and uploaded
 skills/h3nr7-logo/          a second skill: how the stacked logo mark is built from Mrs Eaves OT Bold Italic
@@ -21,13 +25,15 @@ skills/h3nr7-html-2-epub/   a third skill: an h3nr7 page, Claude artifact or Cla
   assets/h3-scramble.js     the split-flap hover roll, vanilla JS
   assets/tokens.json        the same tokens as data
   assets/specimen.html      every token and component on one page (open it in a browser)
-  assets/templates/         page · cv · landing · slides · social-card
+  assets/templates/         page · techdoc · cv · landing · slides · social-card
+  assets/techdoc.css        the tech-doc layout; its classes are the whole vocabulary of a tech-doc body
   assets/logo/              the mark (SVG outlines + PNG), tiles, favicon glyph
   assets/icons/             the site's icons, currentColor
   assets/images/            portrait
   assets/fonts/             Mrs Eaves (local only, see below) + Inter, with fonts.json
   assets/reference/         screenshots of the v4 site
   scripts/inline.py         make an HTML file self-contained, fonts embedded
+  scripts/check_techdoc.py  check a tech doc's body against the publishing rules
 scripts/                    build tooling for this repo
 source/fonts/               drop the Mrs Eaves files here (gitignored)
 ```
