@@ -153,7 +153,7 @@ def main():
         t.set("class", "h3-doc-table")
         for attr in ("style", "border", "width"):
             t.attrib.pop(attr, None)
-        wrap = lhtml.Element("div", {"class": "h3-doc-table-wrap"})
+        wrap = lhtml.Element("div", {"class": "h3-doc-scroll"})
         t.getparent().replace(t, wrap)
         wrap.append(t)
     for h in root.iter("h2"):

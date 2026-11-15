@@ -11,7 +11,7 @@
   border-top: 2px solid #17171a; border-bottom: 1px solid #17171a; padding: 1.5rem 0 !important;
 }
 .k-dark *, .h3-doc-panel * { color: #17171a !important; opacity: 1 !important; }
-.k-dark .k-dark-label, .h3-doc-panel .h3-label { color: #595a5f !important; }
+.k-dark .k-dark-label, .h3-doc-panel .h3-doc-label, .h3-doc-panel .h3-label { color: #595a5f !important; }
 .k-dark-grid, .h3-doc-panel hr, .h3-doc-panel .h3-doc-two > div { border-color: #17171a !important; }
 
 /* Surfaces are white on white on paper: give them a hairline instead. */

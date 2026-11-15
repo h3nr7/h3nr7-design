@@ -1,7 +1,19 @@
 /*
- * h3nr7 tech-doc layout. Scoped: every rule is under .h3-doc-*, nothing here
- * changes h3nr7.css or any other template. Load it after h3nr7.css and only
- * on tech docs (architecture plans, cheat sheets, learning notes).
+ * h3nr7 tech-doc layout. Every rule is under an .h3-doc-* or .h3-d-* name;
+ * nothing here changes h3nr7.css or any other template. Load it after
+ * h3nr7.css and only on tech docs (architecture plans, cheat sheets,
+ * learning notes).
+ *
+ * Two parts:
+ *   the opening (mark, label, title, rule, meta): leans on h3nr7.css
+ *     (.h3-label, .h3-rule). It is never published.
+ *   the body, .h3-doc-content: needs only the tokens. h3nr7.com carries a
+ *     copy of this file and renders a stored body inside its own page, where
+ *     h3nr7.css is not loaded. The classes defined here are the whole
+ *     vocabulary a body may use: the site's copy is its allowlist.
+ *
+ * Element rules in the body are written :where(.h3-doc-content) p, which
+ * weighs (0,0,1), so any .h3-doc-* class rule wins whatever the order.
  *
  * Opening spacing, from the mark down:
  *   mark 56px wide · 6rem · label · 1rem · title (statement size) · 1.5rem ·
@@ -9,7 +21,7 @@
  * Sections are headed by a takeaway sentence, not a topic.
  */
 
-/* Tech-doc layout, built on the system's tokens. */
+/* ------------------------------------------------------------ opening */
 .h3-doc-opening { padding-top: var(--space-4); }
 .h3-doc-opening .h3-doc-mark { display: inline-block; color: var(--colour-ink); line-height: 0; }
 .h3-doc-opening .h3-doc-mark svg { width: 56px; height: auto; }
@@ -19,8 +31,72 @@
 .h3-doc-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8); font-size: var(--text-sm); }
 .h3-doc-meta .h3-label { margin: 0 0 var(--space-1); }
 .h3-doc-meta p { margin: 0; }
+
+/* ------------------------------------------------------- body: reset */
+/* (0,0,0): what h3nr7.css's reset would otherwise supply. Everything after
+   this beats it. */
+:where(.h3-doc-content), :where(.h3-doc-content) :where(*, ::before, ::after) { box-sizing: border-box; }
+:where(.h3-doc-content) :where(h2, h3, h4, p, ul, ol, li, dl, dt, dd, figure, blockquote, pre, table, hr) { margin: 0; padding: 0; }
+:where(.h3-doc-content) :where(h2, h3, h4) { font-size: inherit; font-weight: inherit; }
+
+/* ---------------------------------------------------- body: elements */
+.h3-doc-content {
+  color: var(--colour-ink);
+  font-family: var(--font-body);
+  line-height: var(--leading-normal);
+  font-kerning: normal;
+  font-variant-ligatures: common-ligatures contextual;
+}
+/* Display: Mrs Eaves italic with its ligatures; never tracked, never bold. */
+:where(.h3-doc-content) :is(h2, h3) {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-weight: var(--weight-regular);
+  font-synthesis: style;
+  font-variant-ligatures: common-ligatures discretionary-ligatures contextual;
+  letter-spacing: normal;
+  text-rendering: optimizeLegibility;
+}
+/* A bare h2 reads as a takeaway: sections are headed by a sentence. */
+:where(.h3-doc-content) h2 { font-size: var(--text-2xl); line-height: var(--leading-tight); margin: var(--space-16) 0 var(--space-4); max-width: 28ch; }
+:where(.h3-doc-content) h3 { font-size: var(--text-xl); line-height: var(--leading-tight); margin: var(--space-8) 0 var(--space-1); }
+:where(.h3-doc-content) h4 { font-family: var(--font-body); font-style: normal; font-size: var(--text-base); font-weight: var(--weight-regular); line-height: var(--leading-normal); color: var(--colour-ink-faint); margin: 0 0 var(--space-1); }
+:where(.h3-doc-content) p { margin: 0 0 var(--space-4); }
+:where(.h3-doc-content) :is(ul, ol) { margin: 0 0 var(--space-4); padding: 0; list-style-position: inside; }
+:where(.h3-doc-content) ul { list-style-type: disc; list-style-type: '⁌ '; }
+:where(.h3-doc-content) ol { list-style-type: decimal; }
+:where(.h3-doc-content) li { margin: 0 0 var(--space-2); }
+:where(.h3-doc-content) li > p:first-child { display: inline; }
+:where(.h3-doc-content) :is(p, ul, ol, blockquote) { max-width: var(--measure); }
+:where(.h3-doc-content) blockquote { margin: var(--space-8) 0; padding-left: var(--space-4); border-left: 1px solid var(--colour-line); color: var(--colour-ink-muted); font-style: italic; }
+:where(.h3-doc-content) strong { font-weight: var(--weight-semibold); }
+:where(.h3-doc-content) hr { border: 0; border-top: 1px solid var(--colour-line); margin: var(--space-8) 0; }
+:where(.h3-doc-content) dl { margin: 0 0 var(--space-4); }
+:where(.h3-doc-content) dt { font-size: var(--text-2xs); text-transform: uppercase; letter-spacing: 0.08em; color: var(--colour-ink-faint); }
+:where(.h3-doc-content) dd { margin: 0 0 var(--space-3); }
+/* Links: a grey rail at rest, an ink line that sweeps in (h3nr7.css .h3-link). */
+:where(.h3-doc-content) a {
+  color: inherit;
+  text-decoration: none;
+  padding-bottom: 0;
+  background-image: linear-gradient(currentColor, currentColor), linear-gradient(var(--colour-line), var(--colour-line));
+  background-repeat: no-repeat;
+  background-position: 0 100%, 0 100%;
+  background-size: 0 1px, 100% 1px;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  transition: background-size var(--duration-normal) var(--ease-out), color var(--duration-fast) ease;
+}
+:where(.h3-doc-content) a:is(:hover, :focus-visible) { background-size: 100% 1px, 100% 1px; }
+:where(.h3-doc-content) :is(code, pre) { font-family: var(--font-mono); font-size: 0.9em; }
+:where(.h3-doc-content) pre { background: var(--colour-surface); border-radius: var(--radius-lg); padding: var(--space-4); overflow-x: auto; font-size: var(--text-xs); line-height: var(--leading-normal); margin: 0 0 var(--space-6); }
+:where(.h3-doc-content) pre code { font-size: inherit; }
+:where(.h3-doc-content) :not(pre) > code { font-size: 0.86em; }
+
+/* -------------------------------------------------------- body: parts */
+.h3-doc-label { font-family: var(--font-body); font-style: normal; font-variant-ligatures: common-ligatures contextual; font-variant-numeric: normal; font-size: var(--text-sm); text-transform: uppercase; letter-spacing: 0.08em; color: var(--colour-ink-faint); margin: 0; }
 .h3-doc-panel { background: var(--colour-accent); color: var(--colour-accent-ink); border-radius: var(--radius-xl); padding: var(--space-12) var(--space-8) var(--space-8); margin: var(--space-16) 0; }
-.h3-doc-panel .h3-label { color: var(--colour-accent-ink); opacity: .6; margin: 0 0 var(--space-12); }
+.h3-doc-panel .h3-doc-label { color: var(--colour-accent-ink); opacity: .6; margin: 0 0 var(--space-12); }
 .h3-doc-panel .h3-doc-statement { font-family: var(--font-display); font-variant-ligatures: common-ligatures discretionary-ligatures contextual; font-style: italic; font-size: var(--text-3xl); line-height: var(--leading-display); font-weight: var(--weight-regular); margin: 0 0 var(--space-8); max-width: 24ch; }
 .h3-doc-panel hr { border: 0; border-top: 1px solid currentColor; opacity: .25; margin: 0 0 var(--space-6); }
 .h3-doc-panel .h3-doc-three { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8); font-size: var(--text-sm); opacity: .85; }
@@ -31,7 +107,7 @@
 .h3-doc-panel .h3-doc-two h3 { font-family: var(--font-display); font-variant-ligatures: common-ligatures discretionary-ligatures contextual; font-style: italic; font-size: var(--text-lg); font-weight: var(--weight-regular); line-height: var(--leading-tight); margin: 0 0 var(--space-1); }
 .h3-doc-panel .h3-doc-two p { font-size: var(--text-sm); margin: 0; opacity: .85; }
 .h3-doc-panel .h3-doc-close { font-family: var(--font-display); font-variant-ligatures: common-ligatures discretionary-ligatures contextual; font-style: italic; font-size: var(--text-xl); line-height: var(--leading-tight); margin: var(--space-4) 0 0; }
-.h3-doc-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8); margin: var(--space-8) 0 var(--space-16); }
+.h3-doc-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(13.5rem, 1fr)); gap: var(--space-8); margin: var(--space-8) 0 var(--space-16); }
 .h3-doc-grid > div { border-top: 1px solid var(--colour-ink); padding-top: var(--space-3); }
 .h3-doc-grid .h3-doc-n { font-size: var(--text-xs); color: var(--colour-ink-faint); margin: 0 0 var(--space-2); }
 .h3-doc-grid h3 { font-family: var(--font-display); font-variant-ligatures: common-ligatures discretionary-ligatures contextual; font-style: italic; font-size: var(--text-lg); font-weight: var(--weight-regular); line-height: var(--leading-tight); margin: 0 0 var(--space-1); }
@@ -40,21 +116,58 @@
 .h3-doc-section .h3-doc-num { margin: 0 0 var(--space-3); }
 .h3-doc-takeaway { font-family: var(--font-display); font-variant-ligatures: common-ligatures discretionary-ligatures contextual; font-style: italic; font-size: var(--text-2xl); line-height: var(--leading-tight); font-weight: var(--weight-regular); margin: 0 0 var(--space-1); max-width: 28ch; }
 .h3-doc-sub { color: var(--colour-ink-muted); margin: 0 0 var(--space-8); max-width: var(--measure); }
-.h3-doc-body .h3-prose p { margin: 0; }
-.h3-doc-body .h3-doc-uc { margin: 0 0 var(--space-2); }
-.h3-doc-body .h3-doc-uctext { margin: 0; font-size: var(--text-sm); color: var(--colour-ink-muted); }
+/* Two equal columns side by side; stacked on a phone. */
+.h3-doc-cols { display: grid; grid-template-columns: 1fr; gap: var(--space-8); align-items: start; }
+.h3-doc-cols > * > :last-child { margin-bottom: 0; }
+.h3-doc-cols > * > :is(h2, h3, h4):first-child { margin-top: 0; }
+.h3-doc-cols .h3-doc-uc { margin: 0 0 var(--space-2); }
+.h3-doc-cols .h3-doc-uctext { margin: 0; font-size: var(--text-sm); color: var(--colour-ink-muted); }
+.h3-doc-source { color: var(--colour-ink-faint); font-size: var(--text-xs); margin: 0 0 var(--space-4); }
+/* Anything wider than a phone: a table, a wide diagram. */
+.h3-doc-scroll { overflow-x: auto; }
 .h3-doc-figure { margin: var(--space-8) 0 0; background: var(--colour-surface); border: 1px solid var(--colour-line); border-radius: var(--radius-md); padding: var(--space-4); }
-.h3-doc-figure svg { display: block; width: 100%; height: auto; max-width: 760px; }
+.h3-doc-figure svg { display: block; width: 100%; height: auto; max-width: 760px; font-family: var(--font-body); }
+.h3-doc-figure .h3-doc-scroll svg { min-width: 38rem; }
+.h3-doc-figure img { display: block; max-width: 100%; height: auto; }
 .h3-doc-figure figcaption { font-size: var(--text-xs); color: var(--colour-ink-faint); margin: var(--space-3) 0 0; }
 .h3-doc-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); margin: var(--space-8) 0 var(--space-4); }
+.h3-doc-scroll > .h3-doc-table { min-width: 34rem; }
 .h3-doc-table th { text-align: left; font-size: var(--text-2xs); text-transform: uppercase; letter-spacing: .08em; font-weight: var(--weight-regular); color: var(--colour-ink-faint); padding: 0 var(--space-3) var(--space-2) 0; border-bottom: 1px solid var(--colour-ink); }
 .h3-doc-table td { padding: var(--space-2) var(--space-3) var(--space-2) 0; border-bottom: 1px solid var(--colour-line); vertical-align: top; }
 .h3-doc-table td:first-child { color: var(--colour-ink-faint); white-space: nowrap; }
-.h3-doc-refs { list-style: none; padding: 0; margin: 0; font-size: var(--text-sm); }
-.h3-doc-refs li { padding: var(--space-2) 0; border-bottom: 1px solid var(--colour-line); }
+/* A first cell long enough to need wrapping. */
+.h3-doc-table td.h3-doc-wrap { white-space: normal; }
+.h3-doc-refs { list-style: none; padding: 0; margin: 0; max-width: none; font-size: var(--text-sm); }
+.h3-doc-refs li { margin: 0; padding: var(--space-2) 0; border-bottom: 1px solid var(--colour-line); }
+
+/* ----------------------------------------------------- body: diagrams */
+/* Inline SVG drawn with classes, not fill/stroke attributes, so a diagram
+   follows the theme and carries no colour of its own. */
+.h3-d-node { fill: var(--colour-surface); stroke: var(--colour-ink-faint); stroke-width: 1; }
+.h3-d-soft { fill: var(--colour-surface); stroke: var(--colour-line); stroke-width: 1; }
+.h3-d-em { fill: var(--colour-hover); stroke: var(--colour-ink-muted); stroke-width: 1.25; }
+.h3-d-zone { fill: none; stroke: var(--colour-ink-faint); stroke-width: 1; stroke-dasharray: 3 3; }
+.h3-d-line { fill: none; stroke: var(--colour-ink-muted); stroke-width: 1.25; }
+.h3-d-async { fill: none; stroke: var(--colour-ink-muted); stroke-width: 1.25; stroke-dasharray: 4 4; }
+.h3-d-arrow { fill: var(--colour-ink-muted); stroke: none; }
+.h3-d-life { fill: none; stroke: var(--colour-line); stroke-width: 1; stroke-dasharray: 3 4; }
+.h3-d-t { fill: var(--colour-ink); font-size: 13px; font-weight: 600; }
+.h3-d-m { fill: var(--colour-ink-muted); font-size: 11.5px; }
+.h3-d-l { fill: var(--colour-ink-faint); font-size: 9.5px; text-transform: uppercase; letter-spacing: 0.08em; }
+.h3-d-num { fill: var(--colour-ink); font-size: 10.5px; font-weight: 600; font-variant-numeric: lining-nums tabular-nums; }
+
+/* -------------------------------------------------------------- media */
+@media (min-width: 48rem) {
+  .h3-doc-cols { grid-template-columns: 1fr 1fr; gap: var(--space-12); }
+}
 @media (max-width: 48rem) {
   .h3-doc-meta, .h3-doc-grid, .h3-doc-panel .h3-doc-three, .h3-doc-panel .h3-doc-two { grid-template-columns: 1fr; gap: var(--space-4); }
   .h3-doc-panel { padding: var(--space-8) var(--space-4); }
   .h3-doc-opening .h3-label { margin-top: var(--space-16); }
 }
-@media print { .h3-doc-section { break-inside: avoid; } .h3-doc-panel { -webkit-print-color-adjust: exact; print-color-adjust: exact; } }
+@media print {
+  .h3-doc-section { break-inside: avoid; }
+  .h3-doc-panel { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  :where(.h3-doc-content) pre { border: 1px solid var(--colour-line); }
+  :where(.h3-doc-content) a { background: none; }
+}
