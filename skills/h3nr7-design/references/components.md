@@ -213,7 +213,21 @@ docs"; the working example is `assets/templates/techdoc.html`, and the specimen 
 
 ### Known differences
 
-Where a tech doc rebuilt in this vocabulary differs from the hand-styled original it replaced.
+Where a tech doc rebuilt in this vocabulary differs from the hand-styled original it replaced:
+`examples/kubernetes-cheat-sheet.html` against the original artifact, compared at 1280 and 390
+wide, light and dark. Text and code are unchanged. Each difference is the vocabulary's choice,
+kept on purpose; change `techdoc.css` if one should go the other way.
+
+| Where | Original | Rebuilt |
+|---|---|---|
+| Opening (not published) | Meta labels at `--text-2xs`; a 3.5rem-tall mark | The template's opening: labels at `--text-sm`, the 56px-wide mark |
+| Sections | A takeaway with no label, 6rem above it | A numbered `.h3-doc-label` above each takeaway ("01 · The picture"), as SKILL.md asks; 4rem above the label |
+| Panels | Square corners; one rule above the supporting lines | `--radius-xl` corners, an `hr` above them |
+| Conclusion | Statement at `--text-2xl`, 28ch (inline style); one rule above the four ideas | Statement at `--text-3xl`; a rule above each idea (`.h3-doc-two`) |
+| Diagrams | Scaled to the column, about 1.3× at 1280 | Drawn at their own size, at most 760px and centred, so node names stay 13px |
+| Numbered grid | Faint rule; titles at `--text-xl`; text in ink | Ink rule; titles at `--text-lg`; text muted |
+| Tables | First column ink, the rest muted; rows ruled above; no gap under the heading | First column faint, the rest ink; header ruled in ink; 2rem above the table |
+| Figures | `--space-6` padding | `--space-4` padding |
 
 ## Loading bar
 

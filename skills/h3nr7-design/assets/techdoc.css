@@ -25,7 +25,7 @@
 .h3-doc-opening { padding-top: var(--space-4); }
 .h3-doc-opening .h3-doc-mark { display: inline-block; color: var(--colour-ink); line-height: 0; }
 .h3-doc-opening .h3-doc-mark svg { width: 56px; height: auto; }
-.h3-doc-opening .h3-label { margin: var(--space-24) 0 var(--space-4); }
+.h3-doc-opening > .h3-label { margin: var(--space-24) 0 var(--space-4); }
 .h3-doc-title { font-family: var(--font-display); font-variant-ligatures: common-ligatures discretionary-ligatures contextual; font-style: italic; font-size: var(--text-landing); line-height: var(--leading-display); font-weight: var(--weight-regular); margin: 0 0 var(--space-6); max-width: 20ch; }
 .h3-doc-opening .h3-rule { margin: 0 0 var(--space-6); }
 .h3-doc-meta { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-8); font-size: var(--text-sm); }
@@ -90,7 +90,6 @@
 :where(.h3-doc-content) a:is(:hover, :focus-visible) { background-size: 100% 1px, 100% 1px; }
 :where(.h3-doc-content) :is(code, pre) { font-family: var(--font-mono); font-size: 0.9em; }
 :where(.h3-doc-content) pre { background: var(--colour-surface); border-radius: var(--radius-lg); padding: var(--space-4); overflow-x: auto; font-size: var(--text-xs); line-height: var(--leading-normal); margin: 0 0 var(--space-6); }
-:where(.h3-doc-content) pre code { font-size: inherit; }
 :where(.h3-doc-content) :not(pre) > code { font-size: 0.86em; }
 
 /* -------------------------------------------------------- body: parts */
@@ -112,12 +111,14 @@
 .h3-doc-grid .h3-doc-n { font-size: var(--text-xs); color: var(--colour-ink-faint); margin: 0 0 var(--space-2); }
 .h3-doc-grid h3 { font-family: var(--font-display); font-variant-ligatures: common-ligatures discretionary-ligatures contextual; font-style: italic; font-size: var(--text-lg); font-weight: var(--weight-regular); line-height: var(--leading-tight); margin: 0 0 var(--space-1); }
 .h3-doc-grid p { font-size: var(--text-sm); color: var(--colour-ink-muted); margin: 0; }
+.h3-doc-grid .h3-doc-source { font-size: var(--text-xs); color: var(--colour-ink-faint); margin: var(--space-2) 0 0; }
 .h3-doc-section { margin: var(--space-16) 0 0; }
 .h3-doc-section .h3-doc-num { margin: 0 0 var(--space-3); }
 .h3-doc-takeaway { font-family: var(--font-display); font-variant-ligatures: common-ligatures discretionary-ligatures contextual; font-style: italic; font-size: var(--text-2xl); line-height: var(--leading-tight); font-weight: var(--weight-regular); margin: 0 0 var(--space-1); max-width: 28ch; }
 .h3-doc-sub { color: var(--colour-ink-muted); margin: 0 0 var(--space-8); max-width: var(--measure); }
 /* Two equal columns side by side; stacked on a phone. */
 .h3-doc-cols { display: grid; grid-template-columns: 1fr; gap: var(--space-8); align-items: start; }
+.h3-doc-cols > * { min-width: 0; }  /* else a long pre line widens the track and the page scrolls */
 .h3-doc-cols > * > :last-child { margin-bottom: 0; }
 .h3-doc-cols > * > :is(h2, h3, h4):first-child { margin-top: 0; }
 .h3-doc-cols .h3-doc-uc { margin: 0 0 var(--space-2); }
@@ -126,9 +127,10 @@
 /* Anything wider than a phone: a table, a wide diagram. */
 .h3-doc-scroll { overflow-x: auto; }
 .h3-doc-figure { margin: var(--space-8) 0 0; background: var(--colour-surface); border: 1px solid var(--colour-line); border-radius: var(--radius-md); padding: var(--space-4); }
-.h3-doc-figure svg { display: block; width: 100%; height: auto; max-width: 760px; font-family: var(--font-body); }
+/* Drawn at its own size (760 wide at most) and centred, so 13px names stay 13px. */
+.h3-doc-figure svg { display: block; width: 100%; height: auto; max-width: 760px; margin-inline: auto; font-family: var(--font-body); }
 .h3-doc-figure .h3-doc-scroll svg { min-width: 38rem; }
-.h3-doc-figure img { display: block; max-width: 100%; height: auto; }
+.h3-doc-figure img { display: block; max-width: 100%; height: auto; margin-inline: auto; }
 .h3-doc-figure figcaption { font-size: var(--text-xs); color: var(--colour-ink-faint); margin: var(--space-3) 0 0; }
 .h3-doc-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); margin: var(--space-8) 0 var(--space-4); }
 .h3-doc-scroll > .h3-doc-table { min-width: 34rem; }
@@ -163,7 +165,7 @@
 @media (max-width: 48rem) {
   .h3-doc-meta, .h3-doc-grid, .h3-doc-panel .h3-doc-three, .h3-doc-panel .h3-doc-two { grid-template-columns: 1fr; gap: var(--space-4); }
   .h3-doc-panel { padding: var(--space-8) var(--space-4); }
-  .h3-doc-opening .h3-label { margin-top: var(--space-16); }
+  .h3-doc-opening > .h3-label { margin-top: var(--space-16); }  /* the label line, not the meta labels */
 }
 @media print {
   .h3-doc-section { break-inside: avoid; }

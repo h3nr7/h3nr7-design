@@ -1,0 +1,617 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kubernetes cheat sheet — h3nr7</title>
+<meta name="description" content="How a YAML file becomes running Pods, the eight components and what breaks without each, the objects you create, kubectl, and the habits that prevent most outages.">
+<link rel="icon" href="../skills/h3nr7-design/assets/logo/h3nr7-glyph.png">
+<link rel="stylesheet" href="../skills/h3nr7-design/assets/h3nr7.css">
+<link rel="stylesheet" href="../skills/h3nr7-design/assets/techdoc.css">
+</head>
+<!--
+  The Kubernetes cheat sheet, rebuilt in techdoc.css's fixed vocabulary: no
+  local CSS, no style attributes. The fixture for publishing a tech doc to
+  h3nr7.com. Differences from the hand-styled original are listed in
+  skills/h3nr7-design/references/components.md under "Known differences".
+-->
+<body>
+<main class="h3-page h3-page-wide">
+
+  <header class="h3-doc-opening">
+    <a class="h3-doc-mark" href="https://h3nr7.com/" aria-label="h3nr7 — home"><svg xmlns="http://www.w3.org/2000/svg" viewBox="271.50 203.00 550.75 737.75" width="56" height="75" role="img" aria-label="h3nr7">
+<title>h3nr7</title>
+<g fill="currentColor">
+<path transform="matrix(483.2744,0,0,-483.2744,258.0474,501.42768)" d="M.027999878 0H.1329956L.15899658 .14379883C.17599488 .2396698 .22799683 .28559876 .2539978 .28559876 .28399659 .28559876 .2889862 .2616272 .27999879 .20970154L.2559967 .07714844C.24699402 .028274537 .2679901-.01171875 .32598878-.01171875 .35899354-.01171875 .3869934 .0002746582 .4079895 .01927185V.04623413C.3999939 .040252687 .3829956 .030273438 .37298585 .030273438 .35598756 .030273438 .35499574 .04423523 .35899354 .06617737L.3849945 .20980835C.4019928 .30360414 .36999513 .34960938 .31098939 .34960938 .2649994 .34960938 .21099854 .31759645 .17999268 .26765443L.24198914 .6171875 .07598877 .59825137 .07199097 .5722656C.12199402 .5722656 .12799073 .56121829 .11099243 .46894837L.027999878 0Z"/>
+<path transform="matrix(483.2744,0,0,-483.2744,519.4989,846.0023)" d="M.36898805 .33163453 .069992069-.109375C.039993287-.15437317 .053985597-.18536377 .07798767-.19337464 .11299133-.20536804 .1329956-.17436219 .1579895-.12837219L.44699098 .4036255 .45199586 .43164063H.26098634C.17098999 .43164063 .1579895 .44363404 .16999817 .5106354H.14898682L.056991579 .23562622H.08299255L.09098816 .2556305C.11099243 .30563355 .12599182 .33163453 .20899964 .33163453H.36898805Z"/>
+<path transform="matrix(483.2744,0,0,-483.2744,656.26559,501.42768)" d="M.34199525 .28163148C.34799195 .31462098 .32998658 .3486328 .28399659 .3486328 .2519989 .3486328 .21199036 .32662965 .18699646 .2676239 .18798828 .31669618 .16499329 .34570313 .115997318 .34570313 .083999637 .34570313 .052993776 .33169557 .032989503 .31469728V.28770448C.040985109 .29470826 .057998659 .30369569 .067993167 .30369569 .08198547 .30369569 .085998538 .28871156 .08198547 .26672364L.034988405 0H.13999939L.16099549 .11488342C.17799378 .2097168 .21699524 .28363038 .23999024 .28363038 .2559967 .28363038 .2539978 .27563478 .2559967 .26365663 .2579956 .25161744 .2709961 .23661804 .29100038 .23661804 .32598878 .23661804 .33898927 .265625 .34199525 .28163148Z"/>
+<path transform="matrix(483.2744,0,0,-483.2744,305.8916,795.25857)" d="M.26098634 .28559876C.29100038 .28559876 .29599 .2616272 .2869873 .20970154L.2630005 .07714844C.2539978 .028274537 .2749939-.01171875 .33299256-.01171875 .3659973-.01171875 .3939972 .0002746582 .4149933 .01927185V.04623413C.40699769 .040252687 .3899994 .030273438 .37998963 .030273438 .36299134 .030273438 .3619995 .04423523 .3659973 .06617737L.3919983 .20980835C.40899659 .30360414 .375 .34960938 .31599427 .34960938 .269989 .34960938 .21798706 .31759645 .18699646 .26765443 .18899536 .3136902 .16699219 .34570313 .115997318 .34570313 .083999637 .34570313 .052993776 .33169557 .032989503 .31469728V.28770448C.040985109 .29470826 .057998659 .30369569 .067993167 .30369569 .08198547 .30369569 .085998538 .28871156 .08198547 .26672364L.034988405 0H.13999939L.1659851 .1438446C.18299866 .2396698 .23498535 .28559876 .26098634 .28559876Z"/>
+<path transform="matrix(483.2744,0,0,-483.2744,441.6917,501.42768)" d="M.21199036 .11532593C.2579956 .10331726 .2649994 .05834961 .2649994 .025360108 .2649994-.07260132 .23199463-.14355469 .16699219-.14355469 .05999756-.14355469 .07899475-.050598146 .041992189-.050598146 .024993897-.050598146 .0129852299-.06060791 .009994507-.07559204 .0029907227-.11357117 .05899048-.18656922 .17599488-.18656922 .2619934-.18656922 .394989-.124572757 .394989-.00062561038 .394989 .07533264 .32798768 .12132263 .24499512 .14131165L.2889862 .16828919C.3639984 .21427918 .43899537 .26724244 .43899537 .33522035 .43899537 .41918946 .35398866 .4501953 .2659912 .4501953 .16299439 .4501953 .08799744 .38519288 .07598877 .32022096 .069992069 .28623963 .08198547 .2522583 .114990238 .2272644L.15299988 .258255C.14199829 .27923585 .13999939 .2992401 .14299011 .31822206 .1519928 .36720277 .18798828 .40318299 .23999024 .40318299 .2869873 .40318299 .31098939 .37020875 .31098939 .33122254 .31098939 .27523805 .28399659 .23226929 .24099732 .1962738L.15699768 .12532044C.14698792 .11732483 .1349945 .10432434 .1329956 .09233093 .1309967 .079330448 .14399719 .066345218 .1559906 .066345218 .1769867 .066345218 .19099427 .09832764 .21199036 .11532593Z"/>
+</g>
+</svg>
+</a>
+    <p class="h3-label">Learning note · Rev 2 · 14 November 2026</p>
+    <h1 class="h3-doc-title">Kubernetes cheat sheet</h1>
+    <span class="h3-rule" role="presentation"></span>
+    <div class="h3-doc-meta">
+      <div><p class="h3-label">Owner</p><p>Henry YP. Ho</p></div>
+      <div><p class="h3-label">Website</p><p>iam.h3nr7.com</p></div>
+      <div><p class="h3-label">Checked against</p><p>Kubernetes docs, v1.37</p></div>
+    </div>
+  </header>
+
+  <div class="h3-doc-content">
+
+  <div class="h3-doc-panel">
+    <p class="h3-doc-label">Kubernetes in one line</p>
+    <p class="h3-doc-statement">Declare the state you want; the cluster keeps making it true.</p>
+    <hr>
+    <div class="h3-doc-three">
+      <p>A spec is a record of intent, not a script that runs once.</p>
+      <p>Controllers compare desired with actual, and close the gap.</p>
+      <p>Labels join Services to Pods, so Pods can come and go.</p>
+    </div>
+  </div>
+
+  <section class="h3-doc-section">
+    <p class="h3-doc-label h3-doc-num">01 · The picture</p>
+  <h2 class="h3-doc-takeaway">Two paths meet at the Pods</h2>
+    <p class="h3-doc-sub">A spec goes in on the left and becomes running containers; a request comes in on the right and is routed to one of them.</p>
+
+    <figure class="h3-doc-figure">
+      <div class="h3-doc-scroll">
+      <svg viewBox="0 44 760 724" role="img" aria-label="A Deployment spec is applied to the API server, the control plane keeps four Pods running on two worker nodes, and a Service routes user requests to those Pods">
+        <defs>
+          <marker id="k-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="h3-d-arrow" d="M1 1L9 5L1 9z"/></marker>
+        </defs>
+
+        <rect class="h3-d-zone" x="24" y="236" width="712" height="520" rx="8"/>
+        <text class="h3-d-l" x="40" y="258">Kubernetes cluster</text>
+
+        <path class="h3-d-line" d="M260 104V139" marker-end="url(#k-arrow)"/>
+        <path class="h3-d-line" d="M260 196V267" marker-end="url(#k-arrow)"/>
+        <path class="h3-d-line" d="M260 460V519" marker-end="url(#k-arrow)"/>
+        <path class="h3-d-line" d="M636 104V299" marker-end="url(#k-arrow)"/>
+        <path class="h3-d-line" d="M636 356V415" marker-end="url(#k-arrow)"/>
+        <path class="h3-d-async" d="M636 488V608H481" marker-end="url(#k-arrow)"/>
+
+        <rect class="h3-d-soft" x="140" y="56" width="240" height="48" rx="8"/>
+        <text class="h3-d-t" x="260" y="84" text-anchor="middle">Engineer · CI · GitOps</text>
+        <text class="h3-d-m" x="272" y="126">writes or updates the spec</text>
+
+        <rect class="h3-d-node" x="140" y="140" width="240" height="56" rx="8"/>
+        <text class="h3-d-t" x="260" y="164" text-anchor="middle">Deployment spec</text>
+        <text class="h3-d-m" x="260" y="181" text-anchor="middle">desired state: checkout:v2, 4 replicas</text>
+        <text class="h3-d-m" x="272" y="222">applied to the API server</text>
+
+        <rect class="h3-d-zone" x="40" y="268" width="440" height="192" rx="8"/>
+        <text class="h3-d-l" x="56" y="290">Control plane</text>
+        <rect class="h3-d-node" x="56" y="300" width="408" height="56" rx="8"/>
+        <text class="h3-d-t" x="260" y="324" text-anchor="middle">API server</text>
+        <text class="h3-d-m" x="260" y="341" text-anchor="middle">validates every request, the only door to etcd</text>
+
+        <rect class="h3-d-node" x="56" y="372" width="125" height="72" rx="8"/>
+        <text class="h3-d-t" x="118.5" y="396" text-anchor="middle">Controllers</text>
+        <text class="h3-d-m" x="118.5" y="413" text-anchor="middle">keep actual</text>
+        <text class="h3-d-m" x="118.5" y="429" text-anchor="middle">state aligned</text>
+
+        <rect class="h3-d-node" x="197.5" y="372" width="125" height="72" rx="8"/>
+        <text class="h3-d-t" x="260" y="396" text-anchor="middle">Scheduler</text>
+        <text class="h3-d-m" x="260" y="413" text-anchor="middle">places pending</text>
+        <text class="h3-d-m" x="260" y="429" text-anchor="middle">Pods on nodes</text>
+
+        <rect class="h3-d-node" x="339" y="372" width="125" height="72" rx="8"/>
+        <text class="h3-d-t" x="401.5" y="396" text-anchor="middle">etcd</text>
+        <text class="h3-d-m" x="401.5" y="413" text-anchor="middle">stores</text>
+        <text class="h3-d-m" x="401.5" y="429" text-anchor="middle">cluster state</text>
+
+        <text class="h3-d-m" x="272" y="494">keeps the desired Pods running</text>
+
+        <rect class="h3-d-zone" x="40" y="520" width="440" height="220" rx="8"/>
+        <text class="h3-d-l" x="56" y="542">Worker nodes</text>
+
+        <rect class="h3-d-node" x="56" y="552" width="196" height="172" rx="8"/>
+        <text class="h3-d-t" x="72" y="574">Node 1</text>
+        <rect class="h3-d-em" x="72" y="584" width="74" height="48" rx="4"/>
+        <rect class="h3-d-em" x="162" y="584" width="74" height="48" rx="4"/>
+        <text class="h3-d-t" x="109" y="612" text-anchor="middle">Pod A</text>
+        <text class="h3-d-t" x="199" y="612" text-anchor="middle">Pod B</text>
+        <text class="h3-d-m" x="154" y="652" text-anchor="middle">label app=checkout</text>
+        <text class="h3-d-m" x="72" y="676">kubelet runs Pods</text>
+        <text class="h3-d-m" x="72" y="692">runtime runs containers</text>
+        <text class="h3-d-m" x="72" y="708">kube-proxy routes Services</text>
+
+        <rect class="h3-d-node" x="268" y="552" width="196" height="172" rx="8"/>
+        <text class="h3-d-t" x="284" y="574">Node 2</text>
+        <rect class="h3-d-em" x="284" y="584" width="74" height="48" rx="4"/>
+        <rect class="h3-d-em" x="374" y="584" width="74" height="48" rx="4"/>
+        <text class="h3-d-t" x="321" y="612" text-anchor="middle">Pod C</text>
+        <text class="h3-d-t" x="411" y="612" text-anchor="middle">Pod D</text>
+        <text class="h3-d-m" x="366" y="652" text-anchor="middle">label app=checkout</text>
+        <text class="h3-d-m" x="284" y="676">kubelet runs Pods</text>
+        <text class="h3-d-m" x="284" y="692">runtime runs containers</text>
+        <text class="h3-d-m" x="284" y="708">kube-proxy routes Services</text>
+
+        <rect class="h3-d-soft" x="548" y="56" width="176" height="48" rx="8"/>
+        <text class="h3-d-t" x="636" y="84" text-anchor="middle">Browser / client</text>
+        <text class="h3-d-m" x="648" y="174">HTTP(S)</text>
+        <text class="h3-d-m" x="648" y="190">request</text>
+
+        <rect class="h3-d-node" x="548" y="300" width="176" height="56" rx="8"/>
+        <text class="h3-d-t" x="636" y="324" text-anchor="middle">Ingress / Gateway</text>
+        <text class="h3-d-m" x="636" y="341" text-anchor="middle">external HTTP(S) entry</text>
+
+        <rect class="h3-d-node" x="548" y="416" width="176" height="72" rx="8"/>
+        <text class="h3-d-t" x="636" y="440" text-anchor="middle">Service</text>
+        <text class="h3-d-m" x="636" y="457" text-anchor="middle">stable app endpoint</text>
+        <text class="h3-d-m" x="636" y="473" text-anchor="middle">routes to ready Pods</text>
+
+        <text class="h3-d-m" x="648" y="532">selects Pods</text>
+        <text class="h3-d-m" x="648" y="548">labelled</text>
+        <text class="h3-d-m" x="648" y="564">app=checkout</text>
+
+        <text class="h3-d-num" x="152" y="158">1</text>
+        <text class="h3-d-num" x="68" y="318">2</text>
+        <text class="h3-d-num" x="68" y="390">3</text>
+        <text class="h3-d-num" x="209.5" y="390">4</text>
+        <text class="h3-d-num" x="464" y="542" text-anchor="end">5</text>
+        <text class="h3-d-num" x="560" y="434">6</text>
+        <text class="h3-d-num" x="560" y="318">7</text>
+      </svg>
+      </div>
+      <figcaption>The numbers match the seven steps below. Redrawn from ByteByteGo's “Kubernetes explained for busy engineers”, with each role checked against the Kubernetes docs.</figcaption>
+    </figure>
+  </section>
+
+  <section class="h3-doc-section">
+    <p class="h3-doc-label h3-doc-num">02 · Seven steps</p>
+  <h2 class="h3-doc-takeaway">Seven steps turn a YAML file into a running app</h2>
+    <p class="h3-doc-sub">The steps are ByteByteGo's. Under each is the detail the official docs add, and one correction.</p>
+    <div class="h3-doc-grid">
+      <div>
+        <p class="h3-doc-n">01</p>
+        <h3>Describe the desired state</h3>
+        <p>You write a <code>deployment.yaml</code>: which image, how many replicas, which labels. It says what should exist, not how to get there.</p>
+        <p class="h3-doc-source">An engineer, a CI job or a GitOps tool can be the one that applies it.</p>
+      </div>
+      <div>
+        <p class="h3-doc-n">02</p>
+        <h3>The API server validates and stores it</h3>
+        <p>The desired state goes into etcd, the persistent store for every Kubernetes resource: replica counts, existing Pods and nodes, and their assignments.</p>
+        <p class="h3-doc-source">Only the API server talks to etcd. <a href="https://kubernetes.io/docs/concepts/overview/components/">Components</a></p>
+      </div>
+      <div>
+        <p class="h3-doc-n">03</p>
+        <h3>Controllers close the gap</h3>
+        <p>The controller manager runs loops that compare desired with actual. A Deployment asking for four replicas gets a ReplicaSet, and the ReplicaSet gets four Pods.</p>
+        <p class="h3-doc-source">If a Pod dies later, the same loop replaces it. <a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployments</a></p>
+      </div>
+      <div>
+        <p class="h3-doc-n">04</p>
+        <h3>The scheduler picks a node</h3>
+        <p>Filtering removes nodes that cannot run the Pod: too little free CPU or memory, a placement rule. Scoring ranks the rest and the highest score wins.</p>
+        <p class="h3-doc-source">It works from resource requests, not live usage. <a href="https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/">Scheduler</a></p>
+      </div>
+      <div>
+        <p class="h3-doc-n">05</p>
+        <h3>Worker nodes run the Pods</h3>
+        <p>The kubelet sees the Pods bound to its node and asks the container runtime to pull the image and start the containers, then keeps checking them.</p>
+        <p class="h3-doc-source">A correction: the kubelet does not track assignments. The scheduler records each binding through the API server. <a href="https://kubernetes.io/docs/concepts/architecture/">Architecture</a></p>
+      </div>
+      <div>
+        <p class="h3-doc-n">06</p>
+        <h3>A Service gives them one address</h3>
+        <p>Pods are disposable and get a new IP each time. A Service is a stable name and virtual IP in front of every Pod whose labels match.</p>
+        <p class="h3-doc-source">Only Pods passing their readiness probe receive traffic. <a href="https://kubernetes.io/docs/concepts/services-networking/service/">Service</a></p>
+      </div>
+      <div>
+        <p class="h3-doc-n">07</p>
+        <h3>Ingress or Gateway lets users in</h3>
+        <p>A default Service is reachable only inside the cluster. An Ingress or Gateway is the HTTP(S) entry that maps a hostname and path to it.</p>
+        <p class="h3-doc-source">Ingress is frozen; Gateway API is recommended for new work. <a href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Ingress</a></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="h3-doc-section">
+    <p class="h3-doc-label h3-doc-num">03 · Who talks to whom</p>
+  <h2 class="h3-doc-takeaway">Every arrow starts or ends at the API server</h2>
+    <p class="h3-doc-sub">Nobody calls anybody directly: components write to the API server and watch it for work.</p>
+
+    <figure class="h3-doc-figure">
+      <div class="h3-doc-scroll">
+      <svg viewBox="0 0 760 500" role="img" aria-label="Sequence after kubectl apply: the spec is stored, controllers create Pods, the scheduler binds them to nodes, and the kubelet starts the containers and reports back, all through the API server">
+        <path class="h3-d-life" d="M70 52V484"/>
+        <path class="h3-d-life" d="M194 52V484"/>
+        <path class="h3-d-life" d="M318 52V484"/>
+        <path class="h3-d-life" d="M442 52V484"/>
+        <path class="h3-d-life" d="M566 52V484"/>
+        <path class="h3-d-life" d="M690 52V484"/>
+
+        <rect class="h3-d-soft" x="16" y="16" width="108" height="36" rx="8"/><text class="h3-d-t" x="70" y="39" text-anchor="middle">You / CI</text>
+        <rect class="h3-d-em" x="140" y="16" width="108" height="36" rx="8"/><text class="h3-d-t" x="194" y="39" text-anchor="middle">API server</text>
+        <rect class="h3-d-node" x="264" y="16" width="108" height="36" rx="8"/><text class="h3-d-t" x="318" y="39" text-anchor="middle">etcd</text>
+        <rect class="h3-d-node" x="388" y="16" width="108" height="36" rx="8"/><text class="h3-d-t" x="442" y="39" text-anchor="middle">Controllers</text>
+        <rect class="h3-d-node" x="512" y="16" width="108" height="36" rx="8"/><text class="h3-d-t" x="566" y="39" text-anchor="middle">Scheduler</text>
+        <rect class="h3-d-node" x="636" y="16" width="108" height="36" rx="8"/><text class="h3-d-t" x="690" y="39" text-anchor="middle">kubelet</text>
+
+        <text class="h3-d-m" x="132" y="92" text-anchor="middle">apply spec</text>
+        <path class="h3-d-line" d="M70 100H193" marker-end="url(#k-arrow)"/>
+
+        <text class="h3-d-m" x="256" y="136" text-anchor="middle">store desired state</text>
+        <path class="h3-d-line" d="M194 144H317" marker-end="url(#k-arrow)"/>
+
+        <text class="h3-d-m" x="318" y="180" text-anchor="middle">watch: a new Deployment</text>
+        <path class="h3-d-async" d="M194 188H441" marker-end="url(#k-arrow)"/>
+
+        <text class="h3-d-m" x="318" y="224" text-anchor="middle">create ReplicaSet, then 4 Pods</text>
+        <path class="h3-d-line" d="M442 232H195" marker-end="url(#k-arrow)"/>
+
+        <text class="h3-d-m" x="380" y="268" text-anchor="middle">watch: 4 Pods with no node</text>
+        <path class="h3-d-async" d="M194 276H565" marker-end="url(#k-arrow)"/>
+
+        <text class="h3-d-m" x="380" y="312" text-anchor="middle">bind each Pod to a node</text>
+        <path class="h3-d-line" d="M566 320H195" marker-end="url(#k-arrow)"/>
+
+        <text class="h3-d-m" x="442" y="356" text-anchor="middle">watch: Pods bound to my node</text>
+        <path class="h3-d-async" d="M194 364H689" marker-end="url(#k-arrow)"/>
+
+        <text class="h3-d-m" x="678" y="398" text-anchor="end">runtime pulls the image and starts the containers</text>
+        <path class="h3-d-line" d="M690 384V412"/>
+
+        <text class="h3-d-m" x="442" y="436" text-anchor="middle">report status: Running, then Ready</text>
+        <path class="h3-d-line" d="M690 444H195" marker-end="url(#k-arrow)"/>
+
+        <text class="h3-d-m" x="206" y="476">Ready Pods join the Service's EndpointSlices</text>
+      </svg>
+      </div>
+      <figcaption>Solid lines are writes, dashed lines are watches. Lose a Pod and the sequence restarts at the controllers, with no human in it.</figcaption>
+    </figure>
+  </section>
+
+  <section class="h3-doc-section">
+    <p class="h3-doc-label h3-doc-num">04 · Components</p>
+  <h2 class="h3-doc-takeaway">Eight components, and what breaks without each</h2>
+    <p class="h3-doc-sub">Four decide on the control plane, three do the work on every node, and one talks to the cloud.</p>
+    <div class="h3-doc-scroll">
+    <table class="h3-doc-table">
+      <thead><tr><th>Component</th><th>Lives on</th><th>Job</th><th>If it is down</th></tr></thead>
+      <tbody>
+        <tr><td>kube-apiserver</td><td>Control plane</td><td>Exposes the Kubernetes HTTP API; the front door for <code>kubectl</code>, CI and every other component</td><td>No changes or reads; running Pods keep running</td></tr>
+        <tr><td>etcd</td><td>Control plane</td><td>Consistent, highly available key-value store for all cluster data</td><td>Cluster state is unavailable. Back it up</td></tr>
+        <tr><td>kube-scheduler</td><td>Control plane</td><td>Finds Pods with no node and picks a suitable node for each</td><td>New Pods stay <code>Pending</code></td></tr>
+        <tr><td>kube-controller-manager</td><td>Control plane</td><td>Runs the control loops: Deployment, Node, Job, EndpointSlice and others</td><td>Nothing self-heals or scales</td></tr>
+        <tr><td>cloud-controller-manager</td><td>Control plane</td><td>Optional. Links the cluster to the cloud provider: load balancers, routes, node checks</td><td>No new cloud load balancers</td></tr>
+        <tr><td>kubelet</td><td>Every node</td><td>Agent that makes sure the containers of each Pod on its node are running</td><td>That node's Pods are no longer managed</td></tr>
+        <tr><td>Container runtime</td><td>Every node</td><td>Pulls images and runs containers, for example containerd or CRI-O</td><td>No containers start on that node</td></tr>
+        <tr><td>kube-proxy</td><td>Every node</td><td>Optional. Maintains the network rules that send a Service's virtual IP to one of its Pods</td><td>Service routing on that node goes stale</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p>Production control planes usually run across several machines. Managed services (EKS, GKE, AKS) run the control plane for you. kube-proxy is optional because some network plugins do Service routing themselves.</p>
+  </section>
+
+  <section class="h3-doc-section">
+    <p class="h3-doc-label h3-doc-num">05 · Objects</p>
+  <h2 class="h3-doc-takeaway">You create owners and addresses, rarely Pods</h2>
+    <p class="h3-doc-sub">A workload object owns the Pods, and a Service gives them an address.</p>
+
+    <h3>Workloads</h3>
+    <div class="h3-doc-scroll">
+    <table class="h3-doc-table">
+      <thead><tr><th>Object</th><th>Use it for</th><th>Behaviour</th></tr></thead>
+      <tbody>
+        <tr><td>Pod</td><td>The smallest deployable unit: one or more containers sharing network and storage</td><td>Disposable; a replacement gets a new IP</td></tr>
+        <tr><td>Deployment</td><td>Stateless apps where any Pod is interchangeable</td><td>Manages ReplicaSets; rolling updates and rollback</td></tr>
+        <tr><td>StatefulSet</td><td>Apps needing stable identity or per-Pod storage</td><td>Sticky names (<code>db-0</code>, <code>db-1</code>), ordered rollout</td></tr>
+        <tr><td>DaemonSet</td><td>One Pod per node: log shippers, monitoring, network plugins</td><td>A new node gets its Pod automatically</td></tr>
+        <tr><td>Job</td><td>A task that runs to completion once</td><td>Retries until it succeeds</td></tr>
+        <tr><td>CronJob</td><td>A Job on a schedule: backups, reports</td><td>One crontab line; make the task idempotent</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Networking</h3>
+    <div class="h3-doc-scroll">
+    <table class="h3-doc-table">
+      <thead><tr><th>Object</th><th>Use it for</th><th>Behaviour</th></tr></thead>
+      <tbody>
+        <tr><td>Service · ClusterIP</td><td>A stable in-cluster address for a set of Pods; the default type</td><td>Reachable only inside the cluster</td></tr>
+        <tr><td>Service · NodePort</td><td>The same port opened on every node</td><td>Port range 30000–32767 by default</td></tr>
+        <tr><td>Service · LoadBalancer</td><td>An external load balancer from the cloud provider</td><td>Builds on NodePort</td></tr>
+        <tr><td>Ingress</td><td>HTTP(S) routing by host and path</td><td>Stable, supported, but frozen: no new features</td></tr>
+        <tr><td>Gateway API</td><td><code>Gateway</code> and <code>HTTPRoute</code>: the successor to Ingress, with richer routing and a split between platform and app teams</td><td>Recommended for new work</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <blockquote>Ingress is not being removed, but the community Ingress NGINX controller was retired and the project advises moving to Gateway API or another controller. The Ingress2Gateway 1.0 tool translates existing manifests.</blockquote>
+
+    <h3>Configuration, storage and organisation</h3>
+    <div class="h3-doc-scroll">
+    <table class="h3-doc-table">
+      <thead><tr><th>Object</th><th>Use it for</th></tr></thead>
+      <tbody>
+        <tr><td>ConfigMap</td><td>Non-secret config as environment variables or mounted files</td></tr>
+        <tr><td>Secret</td><td>Passwords, tokens, TLS keys. Base64-encoded, not encrypted by default</td></tr>
+        <tr><td>PersistentVolumeClaim</td><td>A request for durable storage that outlives a Pod</td></tr>
+        <tr><td>Namespace</td><td>A named partition of the cluster for a team or an environment</td></tr>
+        <tr><td>HorizontalPodAutoscaler</td><td>Scales replicas on CPU, memory or custom metrics</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class="h3-doc-section">
+    <p class="h3-doc-label h3-doc-num">06 · Manifests</p>
+  <h2 class="h3-doc-takeaway">Three manifests reproduce the diagram</h2>
+    <p class="h3-doc-sub">The checkout app, end to end. The image name, hostname and ports are placeholders.</p>
+
+    <div class="h3-doc-cols">
+      <div>
+        <h3>Deployment</h3>
+        <p>The desired state from step 1.</p>
+<pre><code>apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: checkout
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: checkout
+  template:
+    metadata:
+      labels:
+        app: checkout     # the Service matches this
+    spec:
+      containers:
+        - name: checkout
+          image: registry.example.com/checkout:v2
+          ports:
+            - containerPort: 8080
+          resources:
+            requests: { cpu: 100m, memory: 128Mi }
+            limits:   { memory: 256Mi }
+          readinessProbe:   # gate traffic until ready
+            httpGet: { path: /ready, port: 8080 }
+            periodSeconds: 5
+          livenessProbe:    # restart if it hangs
+            httpGet: { path: /healthz, port: 8080 }
+            periodSeconds: 10</code></pre>
+      </div>
+      <div>
+        <h3>Service</h3>
+        <p>The stable endpoint from step 6.</p>
+<pre><code>apiVersion: v1
+kind: Service
+metadata:
+  name: checkout
+spec:
+  type: ClusterIP
+  selector:
+    app: checkout
+  ports:
+    - port: 80          # the Service listens here
+      targetPort: 8080  # the container listens here</code></pre>
+        <h3>HTTPRoute</h3>
+        <p>The entry point from step 7, attached to a Gateway your platform team or cloud supplies.</p>
+<pre><code>apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: checkout
+spec:
+  parentRefs:
+    - name: shared-gateway
+  hostnames:
+    - shop.example.com
+  rules:
+    - matches:
+        - path: { type: PathPrefix, value: /checkout }
+      backendRefs:
+        - name: checkout
+          port: 80</code></pre>
+      </div>
+    </div>
+
+    <h3>Day two on the same app</h3>
+<pre><code># Ship v3 with a rolling update, then watch it
+kubectl set image deployment/checkout checkout=registry.example.com/checkout:v3
+kubectl rollout status deployment/checkout
+
+# v3 is broken: go back to the previous revision
+kubectl rollout undo deployment/checkout
+
+# A sale is on: scale by hand, or let an autoscaler do it
+kubectl scale deployment/checkout --replicas=10
+kubectl autoscale deployment/checkout --min=4 --max=20</code></pre>
+    <p>A rollout starts only when the Pod template changes; scaling alone does not create a revision. By default a rolling update keeps at most 25% of Pods unavailable and adds at most 25% extra, and ten old ReplicaSets are kept for rollback.</p>
+  </section>
+
+  <section class="h3-doc-section">
+    <p class="h3-doc-label h3-doc-num">07 · kubectl</p>
+  <h2 class="h3-doc-takeaway">kubectl is one pattern: verb, resource, name</h2>
+    <p class="h3-doc-sub">The pattern is always <code>kubectl &lt;verb&gt; &lt;resource&gt; [name] [flags]</code>. Add <code>-n &lt;namespace&gt;</code> to pick a namespace and <code>-o yaml</code> or <code>-o wide</code> to change the output.</p>
+
+    <div class="h3-doc-cols">
+      <div>
+        <h3>Look</h3>
+<pre><code>kubectl get pods -o wide
+kubectl get deploy,svc,pods -l app=checkout
+kubectl get pods -A
+kubectl describe pod &lt;pod&gt;
+kubectl get events --sort-by=.metadata.creationTimestamp
+kubectl top pods</code></pre>
+        <h3>Change</h3>
+<pre><code>kubectl apply -f app.yaml
+kubectl diff -f app.yaml
+kubectl delete -f app.yaml
+kubectl scale deployment/checkout --replicas=6
+kubectl rollout history deployment/checkout
+kubectl rollout undo deployment/checkout --to-revision=2
+kubectl rollout restart deployment/checkout</code></pre>
+      </div>
+      <div>
+        <h3>Debug</h3>
+<pre><code>kubectl logs &lt;pod&gt; -f
+kubectl logs &lt;pod&gt; --previous
+kubectl exec -it &lt;pod&gt; -- sh
+kubectl port-forward svc/checkout 8080:80
+kubectl get endpointslices \
+  -l kubernetes.io/service-name=checkout
+kubectl debug -it &lt;pod&gt; --image=busybox</code></pre>
+        <p><code>describe pod</code> is the first stop when a Pod misbehaves: the events at the bottom usually say why. <code>logs --previous</code> shows the container that just crashed.</p>
+      </div>
+    </div>
+
+    <h3>Reading Pod status</h3>
+    <div class="h3-doc-scroll">
+    <table class="h3-doc-table">
+      <thead><tr><th>Status</th><th>Usual cause</th><th>Check</th></tr></thead>
+      <tbody>
+        <tr><td>Pending</td><td>No node has room, or a volume is not bound. Step 4 failed</td><td><code>describe pod</code>, then the events</td></tr>
+        <tr><td>ImagePullBackOff</td><td>Wrong image name or tag, or missing registry credentials. Step 5 failed</td><td>The image field and the pull secret</td></tr>
+        <tr><td>CrashLoopBackOff</td><td>The container starts and exits, repeatedly</td><td><code>logs --previous</code></td></tr>
+        <tr><td>Running, not Ready</td><td>The readiness probe is failing</td><td>Probe path and port, app start-up</td></tr>
+        <tr><td>Service returns nothing</td><td>The selector does not match the Pod labels. Step 6 failed</td><td><code>get endpointslices</code> shows no endpoints</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <section class="h3-doc-section">
+    <p class="h3-doc-label h3-doc-num">08 · When to use it</p>
+  <h2 class="h3-doc-takeaway">It earns its keep with many services, not one</h2>
+    <p class="h3-doc-sub">Kubernetes pays off when you run many containerised services that must stay up, scale and ship often. It is overhead for one small app. The capabilities are the ones the official overview lists; the judgement on fit is mine.</p>
+
+    <div class="h3-doc-cols">
+      <div>
+        <h3>A good fit</h3>
+        <ul>
+          <li><strong>Many services calling each other.</strong> Service discovery means <code>checkout</code> calls <code>payments</code> by name, not IP.</li>
+          <li><strong>Frequent releases, no downtime.</strong> Rolling updates, and one command to undo.</li>
+          <li><strong>Spiky traffic.</strong> Four replicas overnight, twenty during a sale.</li>
+          <li><strong>Things that must survive a dead node.</strong> Its Pods are recreated elsewhere.</li>
+          <li><strong>Mixed workloads on shared hardware.</strong> APIs, Jobs and CronJobs packed onto one node pool from their requests.</li>
+          <li><strong>One model across clouds.</strong> The same YAML on EKS, GKE, AKS or bare metal.</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Think twice</h3>
+        <ul>
+          <li><strong>One or two small services.</strong> A PaaS, Cloud Run, ECS/Fargate or a single VM is less to look after.</li>
+          <li><strong>Functions that sit idle.</strong> You pay for and manage idle nodes; serverless fits better.</li>
+          <li><strong>Nobody to own the platform.</strong> Upgrades, networking and security need steady attention. At least use a managed control plane.</li>
+          <li><strong>An app that is not containerised.</strong> Containerise it first, or leave it on VMs.</li>
+          <li><strong>Your primary database, with no operator experience.</strong> Possible, but a managed database is the safer start.</li>
+        </ul>
+      </div>
+    </div>
+    <p>Kubernetes is not an all-inclusive PaaS. It does not build your code or supply CI/CD, it ships no databases, message buses or caches, and it does not dictate logging, monitoring or alerting. You bring those.</p>
+  </section>
+
+  <section class="h3-doc-section">
+    <p class="h3-doc-label h3-doc-num">09 · Habits</p>
+  <h2 class="h3-doc-takeaway">Eleven habits prevent most outages</h2>
+    <p class="h3-doc-sub">Each one comes from the Kubernetes docs or the project blog; the links are in the references.</p>
+    <div class="h3-doc-scroll">
+    <table class="h3-doc-table">
+      <thead><tr><th>Do</th><th>Why</th></tr></thead>
+      <tbody>
+        <tr><td>Set CPU and memory requests</td><td>The scheduler places Pods by requests. Start modest (100m CPU, 128Mi) and tune from real usage</td></tr>
+        <tr><td>Set a memory limit</td><td>Without one a container can take all the memory on its node</td></tr>
+        <tr><td>Add a readiness probe</td><td>Traffic reaches a Pod only once the probe passes</td></tr>
+        <tr><td>Add a simple liveness probe</td><td>The kubelet restarts a hung container; clever checks cause needless restarts</td></tr>
+        <tr><td>Use a startup probe for slow starters</td><td>It holds off the other probes until the app has booted</td></tr>
+        <tr><td>Never run naked Pods</td><td>A bare Pod is not recreated if its node fails</td></tr>
+        <tr><td>Keep manifests in Git</td><td>Every change is reviewable and reversible</td></tr>
+        <tr><td>Label consistently</td><td>Selectors, queries and clean-up all depend on labels</td></tr>
+        <tr><td>Pin image tags</td><td><code>checkout:v2</code>, not <code>latest</code>: a rollback needs to know what ran</td></tr>
+        <tr><td>A namespace per team, with a quota</td><td>It stops one team starving another</td></tr>
+        <tr><td>Prefer Gateway API for new routing</td><td>Ingress is frozen; new features land in Gateway API</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3>Three mistakes behind most first-week outages</h3>
+    <ol>
+      <li><strong>Selector and label mismatch.</strong> The Service selects <code>app=checkout</code>, the Pods say <code>app=check-out</code>. The Service exists and routes nowhere.</li>
+      <li><strong>No readiness probe.</strong> Pods take traffic while still booting, so every deploy produces a burst of errors.</li>
+      <li><strong><code>port</code> and <code>targetPort</code> swapped.</strong> <code>port</code> is what the Service listens on, <code>targetPort</code> what the container listens on.</li>
+    </ol>
+  </section>
+
+  <section class="h3-doc-section">
+    <p class="h3-doc-label h3-doc-num">10 · Sources</p>
+  <h2 class="h3-doc-takeaway">References</h2>
+    <p class="h3-doc-sub">Checked against the live Kubernetes documentation on 14 November 2026, which describes v1.37.</p>
+    <div class="h3-doc-cols">
+      <div>
+        <h3>Source of the walkthrough</h3>
+        <ul>
+          <li>ByteByteGo, “Kubernetes explained for busy engineers” (diagram and seven steps). Related issue: <a href="https://blog.bytebytego.com/p/ep179-kubernetes-explained">EP179: Kubernetes explained</a></li>
+        </ul>
+        <h3>Architecture</h3>
+        <ul>
+          <li><a href="https://kubernetes.io/docs/concepts/overview/">Overview</a></li>
+          <li><a href="https://kubernetes.io/docs/concepts/overview/components/">Kubernetes components</a></li>
+          <li><a href="https://kubernetes.io/docs/concepts/architecture/">Cluster architecture</a></li>
+          <li><a href="https://kubernetes.io/docs/concepts/architecture/nodes/">Nodes</a></li>
+          <li><a href="https://kubernetes.io/docs/concepts/scheduling-eviction/kube-scheduler/">Kubernetes scheduler</a></li>
+          <li><a href="https://kubernetes.io/docs/reference/glossary/">Glossary</a></li>
+        </ul>
+        <h3>Workloads</h3>
+        <ul>
+          <li><a href="https://kubernetes.io/docs/concepts/workloads/">Workloads</a></li>
+          <li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/deployment/">Deployments</a></li>
+          <li><a href="https://kubernetes.io/docs/tasks/run-application/update-deployment-rolling/">Update a Deployment without downtime</a></li>
+          <li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/statefulset/">StatefulSets</a></li>
+          <li><a href="https://kubernetes.io/docs/concepts/workloads/controllers/cron-jobs/">CronJob</a></li>
+          <li><a href="https://kubernetes.io/docs/concepts/workloads/pods/probes/">Liveness, readiness and startup probes</a></li>
+          <li><a href="https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/">Pod lifecycle</a></li>
+          <li><a href="https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/">Resource management for Pods and containers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h3>Networking</h3>
+        <ul>
+          <li><a href="https://kubernetes.io/docs/concepts/services-networking/service/">Service</a></li>
+          <li><a href="https://kubernetes.io/docs/reference/networking/virtual-ips/">Virtual IPs and service proxies</a></li>
+          <li><a href="https://kubernetes.io/docs/concepts/services-networking/ingress/">Ingress</a></li>
+          <li><a href="https://kubernetes.io/blog/2025/11/11/ingress-nginx-retirement/">Ingress NGINX retirement</a></li>
+          <li><a href="https://kubernetes.io/blog/2026/03/20/ingress2gateway-1-0-release/">Ingress2Gateway 1.0</a></li>
+          <li><a href="https://kubernetes.io/docs/tasks/debug/debug-application/debug-service/">Debug Services</a></li>
+        </ul>
+        <h3>Practice</h3>
+        <ul>
+          <li><a href="https://kubernetes.io/docs/reference/kubectl/quick-reference/">kubectl quick reference</a></li>
+          <li><a href="https://kubernetes.io/blog/2025/11/25/configuration-good-practices/">Configuration good practices</a></li>
+          <li><a href="https://kubernetes.io/blog/2025/10/20/seven-kubernetes-pitfalls-and-how-to-avoid/">Seven common Kubernetes pitfalls</a></li>
+          <li><a href="https://kubernetes.io/docs/concepts/overview/working-with-objects/labels/">Labels and selectors</a></li>
+          <li><a href="https://kubernetes.io/docs/concepts/policy/resource-quotas/">Resource quotas</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="h3-doc-panel">
+    <p class="h3-doc-label">Conclusion</p>
+    <p class="h3-doc-statement">Four ideas explain most of Kubernetes</p>
+    <hr>
+    <div class="h3-doc-two">
+      <div><p class="h3-doc-n">01</p><h3>The spec is the record</h3><p>What you applied is what the cluster keeps working towards.</p></div>
+      <div><p class="h3-doc-n">02</p><h3>Loops, not scripts</h3><p>Controllers never finish; they compare and correct, for as long as the object exists.</p></div>
+      <div><p class="h3-doc-n">03</p><h3>Labels are the glue</h3><p>Services and controllers find Pods by label, so a Pod is always replaceable.</p></div>
+      <div><p class="h3-doc-n">04</p><h3>One door</h3><p>Everything reads and writes through the API server, which alone talks to etcd.</p></div>
+    </div>
+    <p class="h3-doc-close">Delete a Pod and nothing is wrong, only briefly smaller.</p>
+  </div>
+
+  </div>
+
+  <span class="h3-rule h3-rule-close" role="presentation"></span>
+  <footer class="h3-footer">
+    <p>A learning note, redrawn and fact-checked. Found a mistake? I am always up for a <a href="https://h3nr7.com/">chat</a>.</p>
+  </footer>
+</main>
+</body>
+</html>
