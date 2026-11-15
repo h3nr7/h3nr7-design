@@ -124,12 +124,15 @@
 .h3-doc-cols .h3-doc-uc { margin: 0 0 var(--space-2); }
 .h3-doc-cols .h3-doc-uctext { margin: 0; font-size: var(--text-sm); color: var(--colour-ink-muted); }
 .h3-doc-source { color: var(--colour-ink-faint); font-size: var(--text-xs); margin: 0 0 var(--space-4); }
-/* Anything wider than a phone: a table, a wide diagram. */
+/* A table wider than a phone scrolls; a diagram shrinks to fit instead. */
 .h3-doc-scroll { overflow-x: auto; }
-.h3-doc-figure { margin: var(--space-8) 0 0; background: var(--colour-surface); border: 1px solid var(--colour-line); border-radius: var(--radius-md); padding: var(--space-4); }
-/* Drawn at its own size (760 wide at most) and centred, so 13px names stay 13px. */
+/* Space below as well as above, so whatever follows (columns, a paragraph)
+   does not sit on the figure's border. */
+.h3-doc-figure { margin: var(--space-8) 0; background: var(--colour-surface); border: 1px solid var(--colour-line); border-radius: var(--radius-md); padding: var(--space-4); }
+.h3-doc-figure:last-child { margin-bottom: 0; }
+/* Drawn at its own size (760 wide at most) and centred; on a narrower screen
+   it shrinks to the column, text and all, rather than scroll. */
 .h3-doc-figure svg { display: block; width: 100%; height: auto; max-width: 760px; margin-inline: auto; font-family: var(--font-body); }
-.h3-doc-figure .h3-doc-scroll svg { min-width: 38rem; }
 .h3-doc-figure img { display: block; max-width: 100%; height: auto; margin-inline: auto; }
 .h3-doc-figure figcaption { font-size: var(--text-xs); color: var(--colour-ink-faint); margin: var(--space-3) 0 0; }
 .h3-doc-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); margin: var(--space-8) 0 var(--space-4); }
@@ -140,7 +143,8 @@
 /* A first cell long enough to need wrapping. */
 .h3-doc-table td.h3-doc-wrap { white-space: normal; }
 .h3-doc-refs { list-style: none; padding: 0; margin: 0; max-width: none; font-size: var(--text-sm); }
-.h3-doc-refs li { margin: 0; padding: var(--space-2) 0; border-bottom: 1px solid var(--colour-line); }
+/* No rule between items: each link carries its own underline. */
+.h3-doc-refs li { margin: 0; padding: var(--space-2) 0; }
 
 /* ----------------------------------------------------- body: diagrams */
 /* Inline SVG drawn with classes, not fill/stroke attributes, so a diagram
